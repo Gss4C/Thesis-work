@@ -61,7 +61,7 @@ class full_selector(Module):
                                          fatjets[idx].msoftdrop > 220 and
                                          fatjets[idx].tau3/(fatjets[idx].tau2) < 0.65
                                          ,range(0, len(fatjets))))
-        
+        self.tagmaker(fatjets, toptaggedFjets_idx, "FatJet_toptagged")
 
         #**********************
         #objects & boolean
