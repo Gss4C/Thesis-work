@@ -35,4 +35,8 @@ class full_selector(Module):
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                                             , range(0, len(muons))))
 
         #salvo nel branch l'info dell'indice buono dell'oggetto nell'evento
+        self.out.fillBranch("goodJet_idx",  goodJets_idx)
+        self.out.fillBranch("goodFjet_idx", goodFjets_idx)
+        self.out.fillBranch("goodEle_idx",  goodEle_idx)
+        self.out.fillBranch("goodMu_idx",   goodMu_idx)
         
