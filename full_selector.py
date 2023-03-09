@@ -46,6 +46,13 @@ class full_selector(Module):
         #**********************
         isGoodHLT = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight and HLT.PFMET120_PFMHT120_IDTight
         isGoodMET = MET.pt > 200
-        isGood
-        goodEvent = isGoodHLT and isGoodMET and 
+        
+        isGoodJet = len(goodJets_idx)
+        isGoodFjet = len(goodFjets_idx)
+        isGoodEle = len(goodEle_idx)
+        isGoodMu = len(goodMu_idx)
+
+        global_good_jet = isGoodJet or isGoodFjet
+        global_good_lepton = isGoodEle and isGoodMu
+        goodEvent = isGoodHLT and isGoodMET and global_good_jet and global_good_lepton
         return goodEvent
