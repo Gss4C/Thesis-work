@@ -15,6 +15,10 @@ class full_selector(Module):
         self.out.branch("Boosted",  "0", lenVar="ngoodJets")
         self.out.branch("Resolved", "0", lenVar="ngoodJets")
 
+    def deltaphis(self, collect1, collect2):
+        for i in range(len(collect1)):
+        
+
     def global_veto(self, MET, deltaphis, electrons, muons):
         # non voglio ci siano leptoni
         cond_MET = MET.pt > 200
@@ -36,3 +40,4 @@ class full_selector(Module):
         electron    = Collection(event, "Electron")
         muons       = Collection(event, "Muon")
         
+        delta_list = deltaphis(jets, MET)
