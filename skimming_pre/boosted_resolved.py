@@ -14,10 +14,20 @@ class full_selector(Module):
         self.out = wrappedOutputTree
         self.out.branch("Boosted",  "0", lenVar="ngoodJets")
         self.out.branch("Resolved", "0", lenVar="ngoodJets")
+    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        pass
+
+    #***************************************************#
+    # My functions
+    #***************************************************#
 
     def deltaphis(self, collect1, collect2):
+        deltas = []
         for i in range(len(collect1)):
-        
+            for j in range(len(collect2)):
+                deltaphi = collect1[i].phi - collect2[j].phi
+                deltas.append(deltaphi)
+        return deltas
 
     def global_veto(self, MET, deltaphis, electrons, muons):
         # non voglio ci siano leptoni
@@ -30,14 +40,15 @@ class full_selector(Module):
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
 
-    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
-        pass
+    
     def analyze(self,event): #qui raccolgo solo robaccia good
         HLT         = Object(event, "HLT")
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
         #fatjets     = Collection(event, "FatJet")
-        electron    = Collection(event, "Electron")
+        electrons    = Collection(event, "Electron")
         muons       = Collection(event, "Muon")
         
-        delta_list = deltaphis(jets, MET)
+        delta_list = self.deltaphis(jets, MET)
+        event_global_condition = self.global_veto(MET, delta_list, electrons, muons)
+        
