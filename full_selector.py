@@ -1,4 +1,5 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True  
@@ -25,7 +26,7 @@ class full_selector(Module):
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
         fatjets     = Collection(event, "FatJet")
-        electron   = Collection(event, "Electron")
+        electron    = Collection(event, "Electron")
         muons       = Collection(event, "Muon")
 
         #**********************#
