@@ -32,20 +32,20 @@ class full_selector(Module):
         #**********************#
         #Collections
         #**********************#
-        goodJets_idx    = list(filter(lambda idx: jets[idx].pt     > 30  and  abs(jets[idx].eta)               < 2.4 and jets[idx].jetID >= 3 and jets[idx].btagDeepB > 0.5 , range(0, len(jets)))) #l'ho scelto a caso 0.5 del btag
+        goodJets_idx    = list(filter(lambda idx: jets[idx].pt     > 30  and  abs(jets[idx].eta)               < 2.4 and jets[idx].jetId >= 3 and jets[idx].btagDeepB > 0.5 , range(0, len(jets)))) #l'ho scelto a caso 0.5 del btag
         goodFjets_idx   = list(filter(lambda idx: fatjets[idx].pt  > 200 and  abs(fatjets[idx].eta)            < 2.4 , range(0, len(fatjets))))
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
         #creating branches
-        self.out.fillBranch("goodJet_idx",  goodJets_idx)
-        self.out.fillBranch("goodFjet_idx", goodFjets_idx)
+        self.out.fillBranch("goodJets_idx",  goodJets_idx)
+        self.out.fillBranch("goodFjets_idx", goodFjets_idx)
         self.out.fillBranch("goodEle_idx",  goodEle_idx)
         self.out.fillBranch("goodMu_idx",   goodMu_idx)
 
         #**********************
         #objects & boolean
         #**********************
-        isGoodHLT = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight and HLT.PFMET120_PFMHT120_IDTight
+        isGoodHLT = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight or HLT.PFMET120_PFMHT120_IDTight
         isGoodMET = MET.pt > 200
         
         isGoodJet = len(goodJets_idx)
