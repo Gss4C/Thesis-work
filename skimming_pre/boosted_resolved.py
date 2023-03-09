@@ -15,8 +15,16 @@ class full_selector(Module):
         self.out.branch("Boosted",  "0", lenVar="ngoodJets")
         self.out.branch("Resolved", "0", lenVar="ngoodJets")
 
-    def global_veto(self, MET, deltaphi, electrons, muons):
+    def global_veto(self, MET, deltaphis, electrons, muons):
         # non voglio ci siano leptoni
+        cond_MET = MET.pt > 200
+        cond_phi = min(deltaphis)>0.6
+        if len(electrons)==0 and len(muons)==0:
+            cond_lep = True
+        else:
+            cond_lep = False
+        cond_global = cond_lep and cond_phi and cond_MET
+        return cond_global
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
