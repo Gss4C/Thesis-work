@@ -16,11 +16,12 @@ class full_selector(Module):
         self.out.branch("FatJet_isGood",   "O", lenVar="nFatJet")
         self.out.branch("Electron_isGood", "O", lenVar="nElectron")
         self.out.branch("Muon_isGood",     "O", lenVar="nMuon")
+        self.out.branch("FatJet_toptagged","O", lenVar="nFatJet")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
-    def goodmaker(self, collect, indici, branch = "no_branch"):
+    def tagmaker(self, collect, indici, branch = "no_branch"):
         goodList = []
         for index in range(0, len(collect)):
             #if index == indici[index]:
@@ -33,12 +34,12 @@ class full_selector(Module):
             
     def analyze(self,event):
         #creating collections for every event
-        HLT         = Object(event, "HLT")
-        MET         = Object(event, "MET")
-        jets        = Collection(event, "Jet")
-        fatjets     = Collection(event, "FatJet")
-        electron    = Collection(event, "Electron")
-        muons       = Collection(event, "Muon")
+        HLT      = Object(event, "HLT")
+        MET      = Object(event, "MET")
+        jets     = Collection(event, "Jet")
+        fatjets  = Collection(event, "FatJet")
+        electron = Collection(event, "Electron")
+        muons    = Collection(event, "Muon")
 
         #**********************#
         #Collections
@@ -48,10 +49,19 @@ class full_selector(Module):
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
         #creating branches
-        self.goodmaker(jets, goodJets_idx, "Jet_isGood")
-        self.goodmaker(fatjets, goodFjets_idx, "FatJet_isGood")
-        self.goodmaker(electron, goodEle_idx, "Electron_isGood")
-        self.goodmaker(muons, goodMu_idx, "Muon_isGood")
+        self.tagmaker(jets, goodJets_idx, "Jet_isGood")
+        self.tagmaker(fatjets, goodFjets_idx, "FatJet_isGood")
+        self.tagmaker(electron, goodEle_idx, "Electron_isGood")
+        self.tagmaker(muons, goodMu_idx, "Muon_isGood")
+        
+        #toptag
+        toptaggedFjets_idx = list(filter(lambda idx: 
+                                         fatjets[idx].pt >        400 and  
+                                         fatjets[idx].msoftdrop > 105 and 
+                                         fatjets[idx].msoftdrop > 220 and
+                                         fatjets[idx].tau3/(fatjets[idx].tau2) < 0.65
+                                         ,range(0, len(fatjets))))
+        
 
         #**********************
         #objects & boolean
