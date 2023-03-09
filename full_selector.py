@@ -5,7 +5,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 class full_selector(Module):
     def __init__(self):
-
+        pass
     def beginJob(self):
         pass
     def endJob(self):
@@ -49,5 +49,5 @@ class full_selector(Module):
         isGoodJet = len(list(filter(lambda idx: jets[idx].btagDeepB >= 0.4184 , goodJets_idx)))
         isGoodFjet = len(goodFjets_idx)
         
-        goodEvent = isGoodHLT and isGoodMET and (isGoodJet or )
+        goodEvent = isGoodHLT and isGoodMET and (isGoodJet or isGoodFjet)
         return goodEvent
