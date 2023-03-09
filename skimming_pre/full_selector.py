@@ -12,10 +12,10 @@ class full_selector(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Jet_gidx",      "O", lenVar="nJet") #O sta per booleano
-        self.out.branch("FatJet_gidx",   "O", lenVar="nFatJet")
-        self.out.branch("Electron_gidx", "O", lenVar="nElectron")
-        self.out.branch("Muon_gidx",     "O", lenVar="nMuon")
+        self.out.branch("Jet_isGood",      "O", lenVar="nJet") #O sta per booleano
+        self.out.branch("FatJet_isGood",   "O", lenVar="nFatJet")
+        self.out.branch("Electron_isGood", "O", lenVar="nElectron")
+        self.out.branch("Muon_isGood",     "O", lenVar="nMuon")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -48,10 +48,10 @@ class full_selector(Module):
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
         #creating branches
-        self.goodmaker(jets, goodJets_idx, "Jet_gidx")
-        self.goodmaker(fatjets, goodFjets_idx, "FatJet_gidx")
-        self.goodmaker(electron, goodEle_idx, "Electron_gidx")
-        self.goodmaker(muons, goodMu_idx, "Muon_gidx")
+        self.goodmaker(jets, goodJets_idx, "Jet_isGood")
+        self.goodmaker(fatjets, goodFjets_idx, "FatJet_isGood")
+        self.goodmaker(electron, goodEle_idx, "Electron_isGood")
+        self.goodmaker(muons, goodMu_idx, "Muon_isGood")
 
         #**********************
         #objects & boolean
