@@ -21,12 +21,14 @@ class full_selector(Module):
         pass
 
     def goodmaker(self, collect, indici, branch = "no_branch"):
+        goodList = []
         for index in range(0, len(collect)):
             if index == indici[index]:
                 isGood = True
             else:
                 isGood = False
-            self.out.fillBranch(branch , isGood)
+            goodList.append(isGood)
+        self.out.fillBranch(branch , goodList)
             
     def analyze(self,event):
         #creating collections for every event
