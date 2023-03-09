@@ -23,7 +23,8 @@ class full_selector(Module):
     def goodmaker(self, collect, indici, branch = "no_branch"):
         goodList = []
         for index in range(0, len(collect)):
-            if index == indici[index]:
+            #if index == indici[index]:
+            if index in indici:
                 isGood = True
             else:
                 isGood = False
@@ -51,18 +52,6 @@ class full_selector(Module):
         self.goodmaker(fatjets, goodFjets_idx, "FatJet_gidx")
         self.goodmaker(electron, goodEle_idx, "Electron_gidx")
         self.goodmaker(muons, goodMu_idx, "Muon_gidx")
-        
-       ''' for index in range(0,len(jets)):
-            if index == goodJets_idx[index]:
-                validator = True
-            else:
-                validator = False
-            self.out.fillBranch("Jet_gidx",  validator)
-
-
-        self.out.fillBranch("FatJets_gidx", goodFjets_idx)
-        self.out.fillBranch("goodEle_gidx",  goodEle_idx)
-        self.out.fillBranch("Muon_gidx",   goodMu_idx)'''
 
         #**********************
         #objects & boolean
