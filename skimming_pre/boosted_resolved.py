@@ -15,6 +15,7 @@ class full_selector(Module):
         self.out.branch("goodJets_idx", "F" , lenVar="ngoodJets")
     def global_veto(self, MET, jets, muons, electrons):
         # non voglio ci siano leptoni
+    def 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass

@@ -36,10 +36,13 @@ class full_selector(Module):
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
         #creating branches
+        
+        '''
         self.out.fillBranch("Jet_gidx",  goodJets_idx)
         self.out.fillBranch("FatJets_gidx", goodFjets_idx)
         self.out.fillBranch("goodEle_gidx",  goodEle_idx)
         self.out.fillBranch("Muon_gidx",   goodMu_idx)
+        '''
 
         #**********************
         #objects & boolean
