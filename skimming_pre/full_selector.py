@@ -12,10 +12,10 @@ class full_selector(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("goodJets_idx", "F" , lenVar="ngoodJets")
-        self.out.branch("goodFjets_idx", "F", lenVar="ngoodFjets")
-        self.out.branch("goodEle_idx", "F"  , lenVar="ngoodEle")
-        self.out.branch("goodMu_idx", "F"   , lenVar="ngoodMu")
+        self.out.branch("Jet_gidx", "F" , lenVar="ngoodJets")
+        self.out.branch("FatJet_gidx", "F", lenVar="ngoodFjets")
+        self.out.branch("Electron_gidx", "F"  , lenVar="ngoodEle")
+        self.out.branch("Muon_gidx", "F"   , lenVar="ngoodMu")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -36,10 +36,10 @@ class full_selector(Module):
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
         #creating branches
-        self.out.fillBranch("goodJets_idx",  goodJets_idx)
-        self.out.fillBranch("goodFjets_idx", goodFjets_idx)
-        self.out.fillBranch("goodEle_idx",  goodEle_idx)
-        self.out.fillBranch("goodMu_idx",   goodMu_idx)
+        self.out.fillBranch("Jet_gidx",  goodJets_idx)
+        self.out.fillBranch("FatJets_gidx", goodFjets_idx)
+        self.out.fillBranch("goodEle_gidx",  goodEle_idx)
+        self.out.fillBranch("Muon_gidx",   goodMu_idx)
 
         #**********************
         #objects & boolean
