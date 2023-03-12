@@ -21,6 +21,17 @@ class full_selector(Module):
     # My functions
     #***************************************************#
 
+    """def tagmaker(self, collect, indici, branch = "no_branch"):
+        goodList = []
+        for index in range(0, len(collect)):
+            #if index == indici[index]:
+            if index in indici:
+                isGood = True
+            else:
+                isGood = False
+            goodList.append(isGood)
+        self.out.fillBranch(branch , goodList)"""
+
     def deltaphis(self, collect1, collect2):
         deltas = []
         for i in range(len(collect1)):
@@ -96,7 +107,9 @@ class full_selector(Module):
                     fj_sdm.append(jet.msoftdrop)
                 if max(fj_sdm) >= 40:
                     boost = True
-
+            #ora devo riempire i branches
+            self.out.fillBranch("Boosted", boost)
+            self.out.fillBranch("Resolved", resolv)
         else:
             eventsavior = False
         return eventsavior
