@@ -55,7 +55,7 @@ class full_selector(Module):
         HLT         = Object(event, "HLT")
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
-        #fatjets     = Collection(event, "FatJet")
+        fatjets     = Collection(event, "FatJet")
         electrons    = Collection(event, "Electron")
         muons       = Collection(event, "Muon")
         
@@ -87,6 +87,15 @@ class full_selector(Module):
                                 event_combo_pt.append(tlv.pt)
                 if max(event_combo_pt)>250:
                     resolv = True
+            #***********************#
+            #   Boosted test   #
+            #***********************#
+            if len(jets) and len(fatjets):
+                fj_sdm = []
+                for jet in fatjets:
+                    fj_sdm.append(jet.msoftdrop)
+                if max(fj_sdm) >= 40:
+                    boost = True
 
         else:
             eventsavior = False
