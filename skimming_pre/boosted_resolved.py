@@ -12,8 +12,8 @@ class full_selector(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Boosted",  "0", lenVar="ngoodJets")
-        self.out.branch("Resolved", "0", lenVar="ngoodJets")
+        self.out.branch("Boosted",  "0")
+        self.out.branch("Resolved", "0")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
@@ -39,8 +39,18 @@ class full_selector(Module):
             cond_lep = False
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
-
     
+    def HT(jets):
+        somma = 0
+        count = 0
+        leastthree = False
+        for jet in jets:
+            if jet.isGood: 
+                somma += jet.pt 
+                count += 1
+        if count >= 3: leastthree = True
+        return somma, leastthree
+
     def analyze(self,event): #qui raccolgo solo robaccia good
         HLT         = Object(event, "HLT")
         MET         = Object(event, "MET")
@@ -52,3 +62,17 @@ class full_selector(Module):
         delta_list = self.deltaphis(jets, MET)
         event_global_condition = self.global_veto(MET, delta_list, electrons, muons)
         
+        if event_global_condition:
+            eventsavior = True
+            boost  = False
+            resolv = False
+            ht, three= self.HT(jets)
+            if ht>200 and three:
+                #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
+                for jet in jets: 
+                    
+                resolv = True
+
+        else:
+            eventsavior = False
+        return eventsavior
