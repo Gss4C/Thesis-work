@@ -66,12 +66,27 @@ class full_selector(Module):
             eventsavior = True
             boost  = False
             resolv = False
+            #***********************#
+            #   Resolved test   #
+            #***********************#
             ht, three= self.HT(jets)
             if ht>200 and three:
                 #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
+                event_combo_pt = []
+                tlv1 = ROOT.TLorentzVector()
+                tlv2 = ROOT.TLorentzVector()
+                tlv3 = ROOT.TLorentzVector()
                 for jet in jets: 
-                    
-                resolv = True
+                    for jit in jets:
+                        for jot in jets:
+                            if not (jet == jit) and not (jot == jet):
+                                tlv1.SetPtEtaPhiE(jet.pt , jet.eta , jet.phi , jet.mass)
+                                tlv2.SetPtEtaPhiE(jit.pt , jit.eta , jit.phi , jit.mass)
+                                tlv3.SetPtEtaPhiE(jot.pt , jot.eta , jot.phi , jot.mass)
+                                tlv = tlv1+tlv2+tlv3
+                                event_combo_pt.append(tlv.pt)
+                if max(event_combo_pt)>250:
+                    resolv = True
 
         else:
             eventsavior = False
