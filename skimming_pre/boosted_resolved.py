@@ -25,7 +25,7 @@ class boosted_resolved(Module):
         deltas = []
         for i in range(len(collect)):
             if collect[i].isGood:
-                deltaphi = collect[i].phi - object.phi
+                deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
         return deltas
 
@@ -41,8 +41,10 @@ class boosted_resolved(Module):
         # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
         cond_MET = MET.pt        >200
         cond_phi = min(deltaphis)>0.6
+
         goodEle  = self.collect_list_gfilter(electrons)
         goodMu   = self.collect_list_gfilter(muons)
+
         if len(goodEle)==0 and len(goodMu)==0:
             cond_lep = True
         else:
@@ -85,17 +87,21 @@ class boosted_resolved(Module):
             if ht>200 and three:
                 #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
                 event_combo_pt = []
-                tlv1 = ROOT.TLorentzVector()
-                tlv2 = ROOT.TLorentzVector()
-                tlv3 = ROOT.TLorentzVector()
+                #tlv1 = ROOT.TLorentzVector()
+                #tlv2 = ROOT.TLorentzVector()
+                #tlv3 = ROOT.TLorentzVector()
 
                 for i in range(len(jets)):
                     for j in range(i):
                         for k in range(j):
                             if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
-                                tlv1.SetPtEtaPhiM(jets[i].pt , jets[i].eta , jets[i].phi , jets[i].mass)
-                                tlv2.SetPtEtaPhiM(jets[j].pt , jets[j].eta , jets[j].phi , jets[j].mass)
-                                tlv3.SetPtEtaPhiM(jets[k].pt , jets[k].eta , jets[k].phi , jets[k].mass)
+                                #tlv1.SetPtEtaPhiM(jets[i].pt , jets[i].eta , jets[i].phi , jets[i].mass)
+                                #tlv2.SetPtEtaPhiM(jets[j].pt , jets[j].eta , jets[j].phi , jets[j].mass)
+                                #tlv3.SetPtEtaPhiM(jets[k].pt , jets[k].eta , jets[k].phi , jets[k].mass)
+                                tlv1 = jets[i].P4()
+                                tlv2 = jets[j].P4()
+                                tlv3 = jets[k].P4()
+
                                 tlv = tlv1+tlv2+tlv3
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
