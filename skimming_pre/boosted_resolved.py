@@ -12,8 +12,8 @@ class boosted_resolved(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Boosted",  "0")
-        self.out.branch("Resolved", "0")
+        self.out.branch("Boosted",  "I")
+        self.out.branch("Resolved", "I")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
