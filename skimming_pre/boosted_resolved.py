@@ -105,17 +105,6 @@ class boosted_resolved(Module):
                                 tlv = tlv1+tlv2+tlv3
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
-                '''for jet in jets: 
-                    for jit in jets:
-                        for jot in jets:
-                            if not (jet == jit) and not (jot == jet):
-                                if(jet.isGood and jot.isGood and jit.isGood):
-                                    tlv1.SetPtEtaPhiM(jet.pt , jet.eta , jet.phi , jet.mass)
-                                    tlv2.SetPtEtaPhiM(jit.pt , jit.eta , jit.phi , jit.mass)
-                                    tlv3.SetPtEtaPhiM(jot.pt , jot.eta , jot.phi , jot.mass)
-                                    tlv = tlv1+tlv2+tlv3
-                                    if tlv.Pt() > 250: #devo aggiungere btag
-                                        event_combo_pt.append(tlv.Pt())'''
                 if len(event_combo_pt):
                     resolv = True
             #***********************#
@@ -123,9 +112,10 @@ class boosted_resolved(Module):
             #***********************#
             if len(jets) and len(fatjets):
                 fj_sdm = []
-                for jet in fatjets:
-                    fj_sdm.append(jet.msoftdrop)
+                for fjet in fatjets:
+                    fj_sdm.append(fjet.msoftdrop)
                 if max(fj_sdm) >= 40:
+                    
                     boost = True
             #ora devo riempire i branches
             self.out.fillBranch("Boosted", boost)
