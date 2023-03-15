@@ -3,7 +3,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True 
 
-class full_selector(Module):
+class boosted_resolved(Module):
     def __init__(self):
         pass
     def beginJob(self):
@@ -32,7 +32,7 @@ class full_selector(Module):
             goodList.append(isGood)
         self.out.fillBranch(branch , goodList)"""
 
-    def deltaphis(self, collect1, collect2):
+    def deltaphis(self, collect1, collect2): #MET è un oggetto enon una collection
         deltas = []
         for i in range(len(collect1)):
             for j in range(len(collect2)):
@@ -91,12 +91,14 @@ class full_selector(Module):
                     for jit in jets:
                         for jot in jets:
                             if not (jet == jit) and not (jot == jet):
-                                tlv1.SetPtEtaPhiE(jet.pt , jet.eta , jet.phi , jet.mass)
-                                tlv2.SetPtEtaPhiE(jit.pt , jit.eta , jit.phi , jit.mass)
-                                tlv3.SetPtEtaPhiE(jot.pt , jot.eta , jot.phi , jot.mass)
-                                tlv = tlv1+tlv2+tlv3
-                                event_combo_pt.append(tlv.pt)
-                if max(event_combo_pt)>250:
+                                if(jet.isGood and jot.isGood and jit.isGood):
+                                    tlv1.SetPtEtaPhiM(jet.pt , jet.eta , jet.phi , jet.mass)
+                                    tlv2.SetPtEtaPhiM(jit.pt , jit.eta , jit.phi , jit.mass)
+                                    tlv3.SetPtEtaPhiM(jot.pt , jot.eta , jot.phi , jot.mass)
+                                    tlv = tlv1+tlv2+tlv3
+                                    if tlv.pt > 250 or #bitaggare :
+                                        event_combo_pt.append(tlv.pt)
+                if len(event_combo_pt):
                     resolv = True
             #***********************#
             #   Boosted test   #
