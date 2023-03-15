@@ -24,15 +24,26 @@ class boosted_resolved(Module):
     def deltaphis(self, collect, object): #MET è un oggetto enon una collection
         deltas = []
         for i in range(len(collect)):
-            deltaphi = collect[i].phi - object.phi
-            deltas.append(deltaphi)
+            if collect[i].isGood:
+                deltaphi = collect[i].phi - object.phi
+                deltas.append(deltaphi)
         return deltas
+
+    def collect_list_gfilter(self, collection):
+        collect_list = []
+        for i in range(len(collection)):
+            if collection[i].isGood:
+                collect_list.append(collection[i])
+        return collect_list
+
 
     def global_veto(self, MET, deltaphis, electrons, muons):
         # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
-        cond_MET = MET.pt > 200
+        cond_MET = MET.pt        >200
         cond_phi = min(deltaphis)>0.6
-        if len(electrons)==0 and len(muons)==0:
+        goodEle  = self.collect_list_gfilter(electrons)
+        goodMu   = self.collect_list_gfilter(muons)
+        if len(goodEle)==0 and len(goodMu)==0:
             cond_lep = True
         else:
             cond_lep = False
@@ -56,7 +67,7 @@ class boosted_resolved(Module):
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
         fatjets     = Collection(event, "FatJet")
-        electrons    = Collection(event, "Electron")
+        electrons   = Collection(event, "Electron")
         muons       = Collection(event, "Muon")
         
         delta_list = self.deltaphis(jets, MET)
@@ -69,6 +80,7 @@ class boosted_resolved(Module):
             #***********************#
             #   Resolved test   #
             #***********************#
+            
             ht, three= self.HT(jets)
             if ht>200 and three:
                 #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
