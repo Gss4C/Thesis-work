@@ -21,17 +21,6 @@ class boosted_resolved(Module):
     # My functions
     #***************************************************#
 
-    """def tagmaker(self, collect, indici, branch = "no_branch"):
-        goodList = []
-        for index in range(0, len(collect)):
-            #if index == indici[index]:
-            if index in indici:
-                isGood = True
-            else:
-                isGood = False
-            goodList.append(isGood)
-        self.out.fillBranch(branch , goodList)"""
-
     def deltaphis(self, collect, object): #MET è un oggetto enon una collection
         deltas = []
         for i in range(len(collect)):
@@ -50,7 +39,7 @@ class boosted_resolved(Module):
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
     
-    def HT(jets):
+    def HT(self, jets):
         #calcola HT e controlla che abbia almeno 3 jets nell'evento
         somma = 0
         count = 0
