@@ -32,12 +32,11 @@ class boosted_resolved(Module):
             goodList.append(isGood)
         self.out.fillBranch(branch , goodList)"""
 
-    def deltaphis(self, collect1, collect2): #MET è un oggetto enon una collection
+    def deltaphis(self, collect, object): #MET è un oggetto enon una collection
         deltas = []
-        for i in range(len(collect1)):
-            for j in range(len(collect2)):
-                deltaphi = collect1[i].phi - collect2[j].phi
-                deltas.append(deltaphi)
+        for i in range(len(collect)):
+            deltaphi = collect[i].phi - object.phi
+            deltas.append(deltaphi)
         return deltas
 
     def global_veto(self, MET, deltaphis, electrons, muons):
