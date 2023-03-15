@@ -40,7 +40,7 @@ class boosted_resolved(Module):
         return deltas
 
     def global_veto(self, MET, deltaphis, electrons, muons):
-        # non voglio ci siano leptoni
+        # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
         cond_MET = MET.pt > 200
         cond_phi = min(deltaphis)>0.6
         if len(electrons)==0 and len(muons)==0:
@@ -51,6 +51,7 @@ class boosted_resolved(Module):
         return cond_global
     
     def HT(jets):
+        #calcola HT e controlla che abbia almeno 3 jets nell'evento
         somma = 0
         count = 0
         leastthree = False
