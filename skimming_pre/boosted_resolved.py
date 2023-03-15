@@ -96,7 +96,7 @@ class boosted_resolved(Module):
                                     tlv2.SetPtEtaPhiM(jit.pt , jit.eta , jit.phi , jit.mass)
                                     tlv3.SetPtEtaPhiM(jot.pt , jot.eta , jot.phi , jot.mass)
                                     tlv = tlv1+tlv2+tlv3
-                                    if tlv.pt > 250 or #bitaggare :
+                                    if tlv.pt > 250: #devo aggiungere btag
                                         event_combo_pt.append(tlv.pt)
                 if len(event_combo_pt):
                     resolv = True
@@ -114,4 +114,4 @@ class boosted_resolved(Module):
             self.out.fillBranch("Resolved", resolv)
         else:
             eventsavior = False
-        return eventsavior
+        return eventsavior #ciao
