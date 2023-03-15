@@ -88,7 +88,18 @@ class boosted_resolved(Module):
                 tlv1 = ROOT.TLorentzVector()
                 tlv2 = ROOT.TLorentzVector()
                 tlv3 = ROOT.TLorentzVector()
-                for jet in jets: 
+
+                for i in range(len(jets)):
+                    for j in range(i):
+                        for k in range(j):
+                            if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
+                                tlv1.SetPtEtaPhiM(jets[i].pt , jets[i].eta , jets[i].phi , jets[i].mass)
+                                tlv2.SetPtEtaPhiM(jets[j].pt , jets[j].eta , jets[j].phi , jets[j].mass)
+                                tlv3.SetPtEtaPhiM(jets[k].pt , jets[k].eta , jets[k].phi , jets[k].mass)
+                                tlv = tlv1+tlv2+tlv3
+                                if tlv.Pt() > 250:
+                                    event_combo_pt.append(tlv.Pt())
+                '''for jet in jets: 
                     for jit in jets:
                         for jot in jets:
                             if not (jet == jit) and not (jot == jet):
@@ -98,7 +109,7 @@ class boosted_resolved(Module):
                                     tlv3.SetPtEtaPhiM(jot.pt , jot.eta , jot.phi , jot.mass)
                                     tlv = tlv1+tlv2+tlv3
                                     if tlv.Pt() > 250: #devo aggiungere btag
-                                        event_combo_pt.append(tlv.Pt())
+                                        event_combo_pt.append(tlv.Pt())'''
                 if len(event_combo_pt):
                     resolv = True
             #***********************#
