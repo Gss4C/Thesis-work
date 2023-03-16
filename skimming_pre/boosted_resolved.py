@@ -28,6 +28,11 @@ class boosted_resolved(Module):
                 deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
         return deltas
+    
+    def deltaR(self, object1, object2):
+        quad = object1.eta*object1.eta + object2.eta*object2.eta
+        distance = math.sqrt(quad)
+        return distance
 
     def deltaRs(self, collection, object):
         deltaR_list = []
@@ -43,7 +48,6 @@ class boosted_resolved(Module):
             if collection[i].isGood:
                 collect_list.append(collection[i])
         return collect_list
-
 
 
     def global_veto(self, MET, deltaphis, electrons, muons):
@@ -118,10 +122,12 @@ class boosted_resolved(Module):
 
                     if fjet.msoftdrop>150 and fjet.msoftdrop<220 and tau32 < 0.65:
                         good_jets_list = self.collect_list_gfilter(jets)
-                        delti          = self.deltaRs(good_jets_list, fjet)
-                        for delto in delti:
-                            if delto > 0.8:
-                                boost = True
+
+                        for jet in good_jets_list:
+                            if jet.btagDeepB > 0.1241:
+                                delta = self.deltaR(jet,fjet)
+                                if delta<0.8:
+                                    boost = True
             #ora devo riempire i branches
             self.out.fillBranch("Boosted", int(boost))
             self.out.fillBranch("Resolved", int(resolv))
