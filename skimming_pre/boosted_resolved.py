@@ -29,12 +29,21 @@ class boosted_resolved(Module):
                 deltas.append(deltaphi)
         return deltas
 
+    def deltaRs(self, collection, object):
+        deltaR_list = []
+        for coso in collection:
+            quadrato = coso.eta*coso.eta + object.eta*object.eta
+            deltaR = sqrt(quadrato)
+            deltaR_list.append(deltaR)
+        return deltaR_list
+
     def collect_list_gfilter(self, collection):
         collect_list = []
         for i in range(len(collection)):
             if collection[i].isGood:
                 collect_list.append(collection[i])
         return collect_list
+
 
 
     def global_veto(self, MET, deltaphis, electrons, muons):
@@ -111,15 +120,18 @@ class boosted_resolved(Module):
             #   Boosted test   #
             #***********************#
             if len(jets) and len(fatjets):
-                fj_sdm = []
                 for fjet in fatjets:
-                    fj_sdm.append(fjet.msoftdrop)
-                if max(fj_sdm) >= 40:
-                    
-                    boost = True
+                    tau32 = fjet.tau3/fjet.tau2
+
+                    if fjet.msoftdrop>150 and fjet.msoftdrop<220 and tau32 < 0.65:
+                        good_jets_list = self.collect_list_gfilter(jets)
+                        delti          = self.deltaRs(good_jets_list, fjet)
+                        for delto in delti:
+                            if delto > 0.8:
+                                boost = True
             #ora devo riempire i branches
-            self.out.fillBranch("Boosted", boost)
-            self.out.fillBranch("Resolved", resolv)
+            self.out.fillBranch("Boosted", int(boost))
+            self.out.fillBranch("Resolved", int(resolv))
         else:
             eventsavior = False
-        return eventsavior #ciao
+        return eventsavior 
