@@ -34,21 +34,12 @@ class boosted_resolved(Module):
         distance = math.sqrt(quad)
         return distance
 
-    def deltaRs(self, collection, object):
-        deltaR_list = []
-        for coso in collection:
-            quadrato = coso.eta*coso.eta + object.eta*object.eta
-            deltaR = sqrt(quadrato)
-            deltaR_list.append(deltaR)
-        return deltaR_list
-
     def collect_list_gfilter(self, collection):
         collect_list = []
         for i in range(len(collection)):
             if collection[i].isGood:
                 collect_list.append(collection[i])
         return collect_list
-
 
     def global_veto(self, MET, deltaphis, electrons, muons):
         # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
@@ -119,10 +110,8 @@ class boosted_resolved(Module):
             if len(jets) and len(fatjets):
                 for fjet in fatjets:
                     tau32 = fjet.tau3/fjet.tau2
-
                     if fjet.msoftdrop>150 and fjet.msoftdrop<220 and tau32 < 0.65:
                         good_jets_list = self.collect_list_gfilter(jets)
-
                         for jet in good_jets_list:
                             if jet.btagDeepB > 0.1241:
                                 delta = self.deltaR(jet,fjet)
