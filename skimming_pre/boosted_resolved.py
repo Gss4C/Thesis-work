@@ -1,6 +1,7 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection , Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
+import math
 ROOT.PyConfig.IgnoreCommandLineOptions = True 
 
 class boosted_resolved(Module):
@@ -14,14 +15,14 @@ class boosted_resolved(Module):
         self.out = wrappedOutputTree
         self.out.branch("Boosted",  "I")
         self.out.branch("Resolved", "I")
+        self.out.branch("Jet_isForward", "O", lenVar="nJet")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     #***************************************************#
     # My functions
     #***************************************************#
-
-    def deltaphis(self, collect, object): #MET è un oggetto enon una collection
+    def deltaphis(self, collect, object): #MET is un oggetto enon una collection
         deltas = []
         for i in range(len(collect)):
             if collect[i].isGood:
@@ -56,6 +57,16 @@ class boosted_resolved(Module):
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
     
+    def forward_jet_tagger(self, jet_collection, branch = "Jet_isForward"):
+        # mi tagga i jet definibili forward
+        forward_list = []
+        for jet in jet_collection:
+            single_jet_forward = False
+            if(abs(jet.eta)>2.4):
+                single_jet_forward = True
+            forward_list.append(single_jet_forward)
+        self.out.fillBranch(branch, forward_list)
+    
     def HT(self, jets):
         #calcola HT e controlla che abbia almeno 3 jets nell'evento
         somma = 0
@@ -83,10 +94,11 @@ class boosted_resolved(Module):
             eventsavior = True
             boost  = False
             resolv = False
+            self.forward_jet_tagger(jets, "Jet_isForward")
+
             #***********************#
             #   Resolved test   #
             #***********************#
-            
             ht, three= self.HT(jets)
             if ht>200 and three:
                 #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
@@ -95,9 +107,9 @@ class boosted_resolved(Module):
                     for j in range(i):
                         for k in range(j):
                             if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
-                                tlv1 = jets[i].P4()
-                                tlv2 = jets[j].P4()
-                                tlv3 = jets[k].P4()
+                                tlv1 = jets[i].p4()
+                                tlv2 = jets[j].p4()
+                                tlv3 = jets[k].p4()
 
                                 tlv = tlv1+tlv2+tlv3
                                 if tlv.Pt() > 250:
