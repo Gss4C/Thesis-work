@@ -18,7 +18,6 @@ class boosted_resolved(Module):
         self.out.branch("Jet_isForward", "O", lenVar="nJet")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-
     #***************************************************#
     # My functions
     #***************************************************#
@@ -95,7 +94,6 @@ class boosted_resolved(Module):
             boost  = False
             resolv = False
             self.forward_jet_tagger(jets, "Jet_isForward")
-
             #***********************#
             #   Resolved test   #
             #***********************#
@@ -107,6 +105,7 @@ class boosted_resolved(Module):
                     for j in range(i):
                         for k in range(j):
                             if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
+                                terna = []
                                 tlv1 = jets[i].p4()
                                 tlv2 = jets[j].p4()
                                 tlv3 = jets[k].p4()
@@ -114,6 +113,10 @@ class boosted_resolved(Module):
                                 tlv = tlv1+tlv2+tlv3
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
+                                    
+                                    terna.append(i)
+                                    terna.append(j)
+                                    terna.append(k)
                 if len(event_combo_pt):
                     resolv = True
             #***********************#
