@@ -14,10 +14,6 @@ n_events_ss = float(tree_ss.GetEntries())
 e_cut_global = n_events_ss/n_events_s
 print("Global veto efficiency: ", e_cut_global)'''
 
-BST          = False
-RSL          = False
-there_is_fwd = False
-
 xor_boost   = 0
 xor_res     = 0
 boost_w_fj  = 0
@@ -42,8 +38,11 @@ for event in range(tree_ss.GetEntries()):
     TR   = Collection(tree_ss, "TopRes")
     #Boost = Object(tree_ss, "Boosted")
     #Res = Object(tree_ss, "Resolved")
+    #xor_boost , xor_res = xor_counting(tree_ss)
 
-    xor_boost , xor_res = xor_counting(tree_ss)
+    BST          = False
+    RSL          = False
+    there_is_fwd = False
 
     if(tree_ss.Boosted):
         BST = True
@@ -51,7 +50,7 @@ for event in range(tree_ss.GetEntries()):
         RSL = True
 
     for jet in jets:
-        if jet.isForward:
+        if jet.isForward and jet.isGood:
             there_is_fwd = True
     ## Counting ##
     if BST:
@@ -65,8 +64,8 @@ for event in range(tree_ss.GetEntries()):
         else:
             res_wo_fj += 1
 
-print("n boost events= ", xor_boost)
-print("n resolved events= ", xor_res)
+#print("n boost events= ", xor_boost)
+#print("n resolved events= ", xor_res)
 print("n boost with forward jets= ", boost_w_fj)
 print("n boost without forward jets=", boost_wo_fj)
 print("n resolved with forward jets=", res_w_fj)
