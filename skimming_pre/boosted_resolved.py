@@ -105,7 +105,7 @@ class boosted_resolved(Module):
                     for j in range(i):
                         for k in range(j):
                             if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
-                                terna = []
+                                
                                 tlv1 = jets[i].p4()
                                 tlv2 = jets[j].p4()
                                 tlv3 = jets[k].p4()
@@ -113,10 +113,12 @@ class boosted_resolved(Module):
                                 tlv = tlv1+tlv2+tlv3
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
-                                    
+
+                                    terna = []
                                     terna.append(i)
                                     terna.append(j)
                                     terna.append(k)
+                                    
                 if len(event_combo_pt):
                     resolv = True
             #***********************#
