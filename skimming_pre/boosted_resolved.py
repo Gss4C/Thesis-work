@@ -123,10 +123,9 @@ class boosted_resolved(Module):
             #***********************#
             ht, three= self.HT(jets)
             if ht>200 and three:
-                #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
                 event_combo_pt = []
-                index_lists = []
-                n_topres = 0
+                index_lists    = []
+                n_topres       = 0
                 for i in range(len(jets)):
                     for j in range(i):
                         for k in range(j):
@@ -137,19 +136,17 @@ class boosted_resolved(Module):
                                 tlv3 = jets[k].p4()
 
                                 tlv = tlv1+tlv2+tlv3
+
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
 
                                     terna = {"1":1, "2":1, "3":1}
-
                                     terna["1"] = i
                                     terna["2"] = j
                                     terna["3"] = k
-
                                     index_lists.append(terna)
 
                                     n_topres += 1
-                
                 self.out.fillBranch("nTopRes"  , n_topres)
                 self.out.fillBranch("TopRes_pt", event_combo_pt)
                 self.indexer("TopRes_terIdx1","TopRes_terIdx2","TopRes_terIdx3",index_lists)
