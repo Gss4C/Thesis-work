@@ -13,8 +13,15 @@ class boosted_resolved(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Boosted",  "I")
+        self.out.branch("Boosted" ,  "I")
         self.out.branch("Resolved", "I")
+
+        self.out.branch("nTopRes", "I")
+        self.out.branch("TopRes_pt",      "D", lenVar="nTopRes")
+        self.out.branch("TopRes_terIdx1", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_terIdx2", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_terIdx3", "I", lenVar="nTopRes")
+
         self.out.branch("Jet_isForward", "O", lenVar="nJet")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -56,16 +63,6 @@ class boosted_resolved(Module):
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
     
-    def forward_jet_tagger(self, jet_collection, branch = "Jet_isForward"):
-        # mi tagga i jet definibili forward
-        forward_list = []
-        for jet in jet_collection:
-            single_jet_forward = False
-            if(abs(jet.eta)>2.4):
-                single_jet_forward = True
-            forward_list.append(single_jet_forward)
-        self.out.fillBranch(branch, forward_list)
-    
     def HT(self, jets):
         #calcola HT e controlla che abbia almeno 3 jets nell'evento
         somma = 0
@@ -77,6 +74,33 @@ class boosted_resolved(Module):
                 count += 1
         if count >= 3: leastthree = True
         return somma, leastthree
+    
+    #***************************************************#
+    # taggers
+    #***************************************************#
+    def forward_jet_tagger(self, jet_collection, branch = "Jet_isForward"):
+        # mi tagga i jet definibili forward
+        forward_list = []
+        for jet in jet_collection:
+            single_jet_forward = False
+            if(abs(jet.eta)>2.4):
+                single_jet_forward = True
+            forward_list.append(single_jet_forward)
+        self.out.fillBranch(branch, forward_list)
+
+    def indexer(self, branch1 , branch2 , branch3 , lista):
+        #funzione che riempie i branch (originariamente i jet ak4 toptag) con gli indici della terna originale
+        ones   = []
+        twos   = []
+        threes = []
+        for dict in lista:
+            ones.append(  dict["1"])
+            twos.append(  dict["2"])
+            threes.append(dict["3"])
+        self.out.fillBranch(branch1, ones)
+        self.out.fillBranch(branch2, twos)
+        self.out.fillBranch(branch3, threes)
+
 
     def analyze(self,event): #qui raccolgo solo robaccia good
         HLT         = Object(event, "HLT")
@@ -101,6 +125,8 @@ class boosted_resolved(Module):
             if ht>200 and three:
                 #solo se ho le condiz precedenti inizio a calcolare le combinaz a 3 jet a volta di tlorentzvector
                 event_combo_pt = []
+                index_lists = []
+                n_topres = 0
                 for i in range(len(jets)):
                     for j in range(i):
                         for k in range(j):
@@ -114,11 +140,19 @@ class boosted_resolved(Module):
                                 if tlv.Pt() > 250:
                                     event_combo_pt.append(tlv.Pt())
 
-                                    terna = []
-                                    terna.append(i)
-                                    terna.append(j)
-                                    terna.append(k)
-                                    
+                                    terna = {"1":1, "2":1, "3":1}
+
+                                    terna["1"] = i
+                                    terna["2"] = j
+                                    terna["3"] = k
+
+                                    index_lists.append(terna)
+
+                                    n_topres += 1
+                
+                self.out.fillBranch("nTopRes"  , n_topres)
+                self.out.fillBranch("TopRes_pt", event_combo_pt)
+                self.indexer("TopRes_terIdx1","TopRes_terIdx2","TopRes_terIdx3",index_lists)
                 if len(event_combo_pt):
                     resolv = True
             #***********************#
