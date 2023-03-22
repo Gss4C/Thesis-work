@@ -83,7 +83,7 @@ class boosted_resolved(Module):
         forward_list = []
         for jet in jet_collection:
             single_jet_forward = False
-            if(abs(jet.eta)>2.4):
+            if abs(jet.eta)>2.4 and jet.pt > 30:
                 single_jet_forward = True
             forward_list.append(single_jet_forward)
         self.out.fillBranch(branch, forward_list)
