@@ -23,7 +23,7 @@ class full_selector(Module):
 
     def tagmaker(self, collect, indici, branch = "no_branch"):
         goodList = []
-        for index in range(0, len(collect)):
+        for index in range(len(collect)):
             #if index == indici[index]:
             if index in indici:
                 isGood = True
@@ -44,10 +44,23 @@ class full_selector(Module):
         #**********************#
         #Collections
         #**********************#
-        goodJets_idx    = list(filter(lambda idx: jets[idx].pt     > 30  and  abs(jets[idx].eta)               < 2.4 and jets[idx].jetId >= 3 , range(0, len(jets)))) 
-        goodFjets_idx   = list(filter(lambda idx: fatjets[idx].pt  > 200 and  abs(fatjets[idx].eta)            < 2.4 , range(0, len(fatjets))))
-        goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  electron[idx].cutBased_Fall17_V1 >= 2  , range(0, len(electron))))
-        goodMu_idx      = list(filter(lambda idx: muons[idx].pt    > 30  and  muons[idx].looseId                     , range(0, len(muons))))
+        goodJets_idx    = list(filter(lambda idx: 
+                                      jets[idx].pt                     > 30  and  
+                                      abs(jets[idx].eta)               < 2.4 and 
+                                      jets[idx].jetId                  >= 3 , 
+                                      range(0, len(jets)))) 
+        
+        goodFjets_idx   = list(filter(lambda idx: fatjets[idx].pt      > 200 and  
+                                      abs(fatjets[idx].eta)            < 2.4 ,
+                                      range(0, len(fatjets))))
+        
+        goodEle_idx     = list(filter(lambda idx: electron[idx].pt     > 30  and  
+                                      electron[idx].cutBased_Fall17_V1 >= 2  , 
+                                      range(0, len(electron))))
+        
+        goodMu_idx      = list(filter(lambda idx: muons[idx].pt        > 30  and  
+                                      muons[idx].looseId , 
+                                      range(0, len(muons))))
         #creating branches
         self.tagmaker(jets, goodJets_idx, "Jet_isGood")
         self.tagmaker(fatjets, goodFjets_idx, "FatJet_isGood")
