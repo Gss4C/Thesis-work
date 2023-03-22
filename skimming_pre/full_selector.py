@@ -40,13 +40,12 @@ class full_selector(Module):
         fatjets  = Collection(event, "FatJet")
         electron = Collection(event, "Electron")
         muons    = Collection(event, "Muon")
-
         #**********************#
         #Collections
         #**********************#
         goodJets_idx    = list(filter(lambda idx: 
                                       jets[idx].pt                     > 30  and  
-                                      abs(jets[idx].eta)               < 2.4 and 
+                                      abs(jets[idx].eta)               < 4 and 
                                       jets[idx].jetId                  >= 3 , 
                                       range(0, len(jets)))) 
         
