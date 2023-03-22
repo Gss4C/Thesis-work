@@ -158,7 +158,7 @@ class boosted_resolved(Module):
             if len(jets) and len(fatjets):
                 for fjet in fatjets:
                     tau32 = fjet.tau3/fjet.tau2
-                    if fjet.msoftdrop>150 and fjet.msoftdrop<220 and tau32 < 0.65:
+                    if fjet.msoftdrop>105 and fjet.msoftdrop<220 and tau32 < 0.65:
                         good_jets_list = self.collect_list_gfilter(jets)
                         for jet in good_jets_list:
                             if jet.btagDeepB > 0.1241:
