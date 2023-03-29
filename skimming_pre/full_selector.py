@@ -30,8 +30,7 @@ class full_selector(Module):
             else:
                 isGood = False
             goodList.append(isGood)
-        self.out.fillBranch(branch , goodList)
-            
+        self.out.fillBranch(branch , goodList)           
     def analyze(self,event):
         #creating collections for every event
         HLT      = Object(event, "HLT")
@@ -61,10 +60,10 @@ class full_selector(Module):
                                       muons[idx].looseId , 
                                       range(0, len(muons))))
         #creating branches
-        self.tagmaker(jets, goodJets_idx, "Jet_isGood")
-        self.tagmaker(fatjets, goodFjets_idx, "FatJet_isGood")
-        self.tagmaker(electron, goodEle_idx, "Electron_isGood")
-        self.tagmaker(muons, goodMu_idx, "Muon_isGood")
+        self.tagmaker(jets,     goodJets_idx,  "Jet_isGood")
+        self.tagmaker(fatjets,  goodFjets_idx, "FatJet_isGood")
+        self.tagmaker(electron, goodEle_idx,   "Electron_isGood")
+        self.tagmaker(muons,    goodMu_idx,    "Muon_isGood")
         
         #toptag
         toptaggedFjets_idx = list(filter(lambda idx: 
@@ -78,9 +77,9 @@ class full_selector(Module):
         #**********************
         #objects & boolean
         #**********************
-        isGoodHLT = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight or HLT.PFMET120_PFMHT120_IDTight
-        isGoodMET = MET.pt > 200
-        isGoodJet = len(list(filter(lambda idx: jets[idx].btagDeepB >= 0.4184 , goodJets_idx)))
+        isGoodHLT  = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight or HLT.PFMET120_PFMHT120_IDTight
+        isGoodMET  = MET.pt > 200
+        isGoodJet  = len(list(filter(lambda idx: jets[idx].btagDeepB >= 0.4184 , goodJets_idx)))
         isGoodFjet = len(goodFjets_idx)
         
         goodEvent = isGoodHLT and isGoodMET and (isGoodJet or isGoodFjet)

@@ -68,6 +68,7 @@ class Events_Init_Skim(Module):
         PassJets        = len(list(filter(lambda idx: Jets[idx].btagDeepFlavB >= self.DeepCSV_discr(2018), GoodJetsIdx)))        >=  1      
         PassFatJets     = len(GoodFatJetsIdx)                                                                                    >=  1         
         
-         
+        print()
+
         PassEvent       = PassTrigger and PassMET and (PassJets or PassFatJets)
         return PassEvent

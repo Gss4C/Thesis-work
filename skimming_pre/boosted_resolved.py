@@ -6,7 +6,9 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 class boosted_resolved(Module):
     def __init__(self):
-        pass
+        #self.lepton_ok = 0
+        #self.phis_ok = 0
+
     def beginJob(self):
         pass
     def endJob(self):
@@ -16,50 +18,60 @@ class boosted_resolved(Module):
         self.out.branch("Boosted" ,  "I")
         self.out.branch("Resolved", "I")
 
-        self.out.branch("nTopRes", "I")
-        self.out.branch("TopRes_pt",      "D", lenVar="nTopRes")
+        self.out.branch("nTopRes",        "I")
         self.out.branch("TopRes_terIdx1", "I", lenVar="nTopRes")
         self.out.branch("TopRes_terIdx2", "I", lenVar="nTopRes")
         self.out.branch("TopRes_terIdx3", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_pt",      "D", lenVar="nTopRes")
 
-        self.out.branch("Jet_isForward", "O", lenVar="nJet")
+        self.out.branch("Jet_isForward", "O", lenVar="nJet")        
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     #***************************************************#
     # My functions
     #***************************************************#
-    def deltaphis(self, collect, object): #MET is un oggetto enon una collection
+    def deltaphis(self, collect, object):
         deltas = []
         for i in range(len(collect)):
             if collect[i].isGood:
                 deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
         return deltas
-    
     def deltaR(self, object1, object2):
         quad = object1.eta*object1.eta + object2.eta*object2.eta
         distance = math.sqrt(quad)
         return distance
-
     def collect_list_gfilter(self, collection):
         collect_list = []
         for i in range(len(collection)):
             if collection[i].isGood:
                 collect_list.append(collection[i])
         return collect_list
-
     def global_veto(self, MET, deltaphis, electrons, muons):
         # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
         cond_MET = MET.pt        >200
         cond_phi = min(deltaphis)>0.6
-
         goodEle  = self.collect_list_gfilter(electrons)
         goodMu   = self.collect_list_gfilter(muons)
-
         if len(goodEle)==0 and len(goodMu)==0:
             cond_lep = True
         else:
             cond_lep = False
+        '''
+        if cond_phi and cond_lep:
+            phis_ok += 1
+            lepton_ok += 1
+            print("passing phi: ", phis_ok)
+            print("passing leps: ", lepton_ok)
+        elif cond_phi:
+            phis_ok += 1
+            print("passing phi: ", phis_ok)
+            print("passing leps: ", lepton_ok)
+        elif cond_lep:
+            lepton_ok += 1
+            print("passing phi: ", phis_ok)
+            print("passing leps: ", lepton_ok)
+        '''
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
     
@@ -115,6 +127,7 @@ class boosted_resolved(Module):
         
         if event_global_condition:
             eventsavior = True
+
             boost  = False
             resolv = False
             self.forward_jet_tagger(jets, "Jet_isForward")
@@ -126,6 +139,7 @@ class boosted_resolved(Module):
                 event_combo_pt = []
                 index_lists    = []
                 n_topres       = 0
+
                 for i in range(len(jets)):
                     for j in range(i):
                         for k in range(j):
@@ -162,11 +176,11 @@ class boosted_resolved(Module):
                         good_jets_list = self.collect_list_gfilter(jets)
                         for jet in good_jets_list:
                             if jet.btagDeepB > 0.1241:
-                                delta = self.deltaR(jet,fjet)
-                                if delta<0.8:
+                                distance = self.deltaR(jet,fjet)
+                                if distance<0.8:
                                     boost = True
             #ora devo riempire i branches
-            self.out.fillBranch("Boosted", int(boost))
+            self.out.fillBranch("Boosted" , int(boost))
             self.out.fillBranch("Resolved", int(resolv))
         else:
             eventsavior = False
