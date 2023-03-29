@@ -1,27 +1,27 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 import ROOT
 
-file_ss = ROOT.TFile("/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/tDM_mPhi1000_mChi1_Skim_Sk\
-im.root", "Open")
-tree_ss = file_ss.Events
+file_s = ROOT.TFile("/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/tDM_mPhi1000_mChi1_Skim.root", "Open")
+tree_s = file_s.Events
+#/home/iorio/public/tDM/tDM_mPhi1000_mChi1.root
 
 boost_w_fj  = 0
 boost_wo_fj = 0
 res_w_fj    = 0
 res_wo_fj   = 0
 
-for event in range(tree_ss.GetEntries()):
+for event in range(tree_s.GetEntries()):
     
-    tree_ss.GetEntry(event)
-    jets   = Collection(tree_ss, "Jet")
-    #TR     = Collection(tree_ss, "TopRes")
+    tree_s.GetEntry(event)
+    jets   = Collection(tree_s, "Jet")
+    #TR     = Collection(tree_s, "TopRes")
     BST    = False
     RSL    = False
     is_fwd = False
 
-    if(tree_ss.Boosted):
+    if(tree_s.Boosted):
         BST = True
-    if(tree_ss.Resolved and not tree_ss.Boosted):
+    if(tree_s.Resolved and not tree_s.Boosted):
         RSL = True
 
     for jet in jets:
@@ -39,7 +39,7 @@ for event in range(tree_ss.GetEntries()):
         else:
             res_wo_fj += 1
 
-print("n boost with forward jets= ", boost_w_fj)
-print("n boost without forward jets=", boost_wo_fj)
-print("n resolved with forward jets=", res_w_fj)
-print("n resolved without forward jets=", res_wo_fj)
+print("boost with forward jets=      ", float(boost_w_fj)/1000 )
+print("boost without forward jets=   ", float(boost_wo_fj)/1000)
+print("resolved with forward jets=   ", float(res_w_fj)/1000   )
+print("resolved without forward jets=", float(res_wo_fj)/1000  )
