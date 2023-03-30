@@ -43,10 +43,15 @@ for event in range(tree_s.GetEntries()):
         else:
             res_wo_fj += 1
 
-print("boost with forward jets=      ", float(boost_w_fj)/tree_get.Events.GetEntries() )
-print("boost without forward jets=   ", float(boost_wo_fj)/tree_get.Events.GetEntries())
-print("resolved with forward jets=   ", float(res_w_fj)/tree_get.Events.GetEntries()   )
-print("resolved without forward jets=", float(res_wo_fj)/tree_get.Events.GetEntries()  )
+eff_boost_w_fj = float(boost_w_fj)/tree_get.GetEntries()
+eff_boost_wo_fj = float(boost_wo_fj)/tree_get.GetEntries()
+eff_res_w_fj = float(res_w_fj)/tree_get.GetEntries()
+eff_res_wo_fj = float(res_wo_fj)/tree_get.GetEntries()
+
+print("boost with forward jets=      ", eff_boost_w_fj )
+print("boost without forward jets=   ", eff_boost_wo_fj)
+print("resolved with forward jets=   ", eff_res_w_fj   )
+print("resolved without forward jets=", eff_res_wo_fj  )
 
 epsilon = {}
 epsilon["boosted"]=[boost_w_fj*100, boost_wo_fj*100]
