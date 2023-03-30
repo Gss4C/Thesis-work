@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd 
 
-file_s = ROOT.TFile("/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/TprimeToTZM1800_Skim", "Open")
+file_s = ROOT.TFile("/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/TprimeToTZM1800_Skim.root", "Open")
 getent = ROOT.TFile("/eos/user/o/oiorio/samples/ttdm/TprimeToTZM1800.root'", "Open") 
 tree_s = file_s.Events
 tree_get = getent.Events
@@ -54,10 +54,10 @@ print("resolved with forward jets=   ", eff_res_w_fj   )
 print("resolved without forward jets=", eff_res_wo_fj  )
 
 epsilon = {}
-epsilon["boosted"]=[boost_w_fj*100, boost_wo_fj*100]
-epsilon["boosted"]=[res_w_fj*100, res_wo_fj*100]
+epsilon["boosted"]=[eff_boost_w_fj*100, eff_boost_wo_fj*100]
+epsilon["boosted"]=[eff_res_w_fj*100, eff_res_wo_fj*100]
 df = pd.DataFrame(data=epsilon , index=["fwd" , "not_fwd"])
 plt.rcParams["figure.figsize"]=[8, 5] 
 plt.rcParams["figure.autolayout"]=True 
 plt.title("Efficiencies (%)") 
-plot = sns.heatmap(epsilon, cmap="crest", annot=True)
+plot = sns.heatmap(df, cmap="summer", annot=True)
