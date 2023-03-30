@@ -36,7 +36,7 @@ class boosted_resolved(Module):
             if collect[i].isGood:
                 deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
-        return deltas
+        return (deltas if len(deltas) else [-1.0]) #sta roba serve per evitare l'empy sequence
     def deltaR(self, object1, object2):
         quad = object1.eta*object1.eta + object2.eta*object2.eta
         distance = math.sqrt(quad)
@@ -57,21 +57,6 @@ class boosted_resolved(Module):
             cond_lep = True
         else:
             cond_lep = False
-        '''
-        if cond_phi and cond_lep:
-            phis_ok += 1
-            lepton_ok += 1
-            print("passing phi: ", phis_ok)
-            print("passing leps: ", lepton_ok)
-        elif cond_phi:
-            phis_ok += 1
-            print("passing phi: ", phis_ok)
-            print("passing leps: ", lepton_ok)
-        elif cond_lep:
-            lepton_ok += 1
-            print("passing phi: ", phis_ok)
-            print("passing leps: ", lepton_ok)
-        '''
         cond_global = cond_lep and cond_phi and cond_MET
         return cond_global
     

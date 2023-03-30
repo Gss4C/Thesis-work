@@ -24,7 +24,6 @@ class full_selector(Module):
     def tagmaker(self, collect, indici, branch = "no_branch"):
         goodList = []
         for index in range(len(collect)):
-            #if index == indici[index]:
             if index in indici:
                 isGood = True
             else:
