@@ -1,7 +1,11 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 import ROOT
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd 
 
-file_s = ROOT.TFile("/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/tDM_mPhi1000_mChi1_Skim.root", "Open")
+file_s = ROOT.TFile("/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/TprimeToTZM1800_Skim", "Open")
+getent = ROOT.TFile("EOS", "Open") #da aggiungere
 tree_s = file_s.Events
 #/home/iorio/public/tDM/tDM_mPhi1000_mChi1.root
 
@@ -14,7 +18,6 @@ for event in range(tree_s.GetEntries()):
     
     tree_s.GetEntry(event)
     jets   = Collection(tree_s, "Jet")
-    #TR     = Collection(tree_s, "TopRes")
     BST    = False
     RSL    = False
     is_fwd = False
@@ -39,7 +42,10 @@ for event in range(tree_s.GetEntries()):
         else:
             res_wo_fj += 1
 
-print("boost with forward jets=      ", float(boost_w_fj)/1000 )
-print("boost without forward jets=   ", float(boost_wo_fj)/1000)
-print("resolved with forward jets=   ", float(res_w_fj)/1000   )
-print("resolved without forward jets=", float(res_wo_fj)/1000  )
+print("boost with forward jets=      ", float(boost_w_fj)/getent.Events.GetEntries() )
+print("boost without forward jets=   ", float(boost_wo_fj)/getent.Events.GetEntries())
+print("resolved with forward jets=   ", float(res_w_fj)/getent.Events.GetEntries()   )
+print("resolved without forward jets=", float(res_wo_fj)/getent.Events.GetEntries()  )
+
+epsilon = {}
+epsilon["boosted"]=[boost_w_fj*100, boost_wo_fj*100]
