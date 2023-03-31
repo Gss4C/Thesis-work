@@ -4,11 +4,14 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd 
 
-file_s = ROOT.TFile("/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/TprimeToTZM1800_Skim.root", "Open")
-getent = ROOT.TFile("/eos/user/o/oiorio/samples/ttdm/TprimeToTZM1800.root'", "Open") 
+percorso = "/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
+nome_file = "tDM_mPhi1000_mChi1_Skim.root"
+
+file_s = ROOT.TFile( percorso + nome_file,"Open")
+ot", "Open")
+genw = ROOT.TFile("/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/histOut.root", "Open")
 tree_s = file_s.Events
-tree_get = getent.Events
-#/home/iorio/public/tDM/tDM_mPhi1000_mChi1.root
+
 
 boost_w_fj  = 0
 boost_wo_fj = 0
@@ -43,10 +46,14 @@ for event in range(tree_s.GetEntries()):
         else:
             res_wo_fj += 1
 
-eff_boost_w_fj = float(boost_w_fj)/tree_get.GetEntries()
-eff_boost_wo_fj = float(boost_wo_fj)/tree_get.GetEntries()
-eff_res_w_fj = float(res_w_fj)/tree_get.GetEntries()
-eff_res_wo_fj = float(res_wo_fj)/tree_get.GetEntries()
+genw_plots = genw.plots
+histo = genw_plots.Get("h_genweight")
+weight = histo.GetBinContent(1)
+
+eff_boost_w_fj = float(boost_w_fj)/weight
+eff_boost_wo_fj = float(boost_wo_fj)/weight
+eff_res_w_fj = float(res_w_fj)/weight
+eff_res_wo_fj = float(res_wo_fj)/weight
 
 print("boost with forward jets=      ", eff_boost_w_fj )
 print("boost without forward jets=   ", eff_boost_wo_fj)
