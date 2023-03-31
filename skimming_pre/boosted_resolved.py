@@ -38,14 +38,9 @@ class boosted_resolved(Module):
                 deltas.append(deltaphi)
         return (deltas if len(deltas) else [-1.0]) #sta roba serve per evitare l'empy sequence
     def deltaR(self, object1, object2): #distanza piano eta-phi
-        '''
         Deta = object1.eta - object2.eta
         Dphi = object1.phi - object2.phi
         distance = math.sqrt(Deta*Deta + Dphi*Dphi)
-        return distance
-        '''
-        quad = object1.eta*object1.eta + object2.eta*object2.eta
-        distance = math.sqrt(quad)
         return distance
     def collect_list_gfilter(self, collection):
         collect_list = []
