@@ -37,7 +37,13 @@ class boosted_resolved(Module):
                 deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
         return (deltas if len(deltas) else [-1.0]) #sta roba serve per evitare l'empy sequence
-    def deltaR(self, object1, object2):
+    def deltaR(self, object1, object2): #distanza piano eta-phi
+        '''
+        Deta = object1.eta - object2.eta
+        Dphi = object1.phi - object2.phi
+        distance = math.sqrt(Deta*Deta + Dphi*Dphi)
+        return distance
+        '''
         quad = object1.eta*object1.eta + object2.eta*object2.eta
         distance = math.sqrt(quad)
         return distance
