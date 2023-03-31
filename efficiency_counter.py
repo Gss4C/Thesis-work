@@ -62,7 +62,7 @@ print("resolved without forward jets=", eff_res_wo_fj  )
 
 epsilon = {}
 epsilon["boosted"]=[eff_boost_w_fj*100, eff_boost_wo_fj*100]
-epsilon["boosted"]=[eff_res_w_fj*100, eff_res_wo_fj*100]
+epsilon["resolved"]=[eff_res_w_fj*100, eff_res_wo_fj*100]
 df = pd.DataFrame(data=epsilon , index=["fwd" , "not_fwd"])
 plt.rcParams["figure.figsize"]=[8, 5] 
 plt.rcParams["figure.autolayout"]=True 
