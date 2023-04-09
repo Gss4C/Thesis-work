@@ -8,7 +8,6 @@ percorso = "/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 nome_file = "tDM_mPhi1000_mChi1_Skim.root"
 
 file_s = ROOT.TFile( percorso + nome_file,"Open")
-ot", "Open")
 genw = ROOT.TFile("/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/histOut.root", "Open")
 tree_s = file_s.Events
 
@@ -68,3 +67,4 @@ plt.rcParams["figure.figsize"]=[8, 5]
 plt.rcParams["figure.autolayout"]=True 
 plt.title("Efficiencies (%)") 
 plot = sns.heatmap(df, cmap="summer", annot=True)
+plt.savefig("nome.png")
