@@ -22,34 +22,34 @@ if subgroup == 1:
 
 ########## Signals ##########
 TprimeBToTZ_M_1000 = mini_sample(sigma= 0.01362, 
-                                 name = 'TprimeBToTZ_M-1000.root', 
+                                 name = 'TprimeBToTZ_M_1000.root', 
                                  path = group_path)
 TprimeBToTZ_M_1100 = mini_sample(sigma= 0.00823,
-                                 name = 'TprimeBToTZ_M-1100.root',
+                                 name = 'TprimeBToTZ_M_1100.root',
                                  path = group_path)
 TprimeBToTZ_M_1300 = mini_sample(sigma= 0.00325,
-                                 name = 'TprimeBToTZ_M-1300.root',
+                                 name = 'TprimeBToTZ_M_1300.root',
                                  path = group_path)
 
 ########## Backgrounds ##########
 TT_Mtt_1000toInf = mini_sample(sigma = 21.3,
-                               name  = 'TT_Mtt-1000toInf.root',
+                               name  = 'TT_Mtt_1000toInf.root',
                                path  = group_path)
 TT_Mtt_700to1000 = mini_sample(sigma = 80.5,
-                               name  = 'TT_Mtt-700to1000.root',
+                               name  = 'TT_Mtt_700to1000.root',
                                path  = group_path)
 
-ZJetsToNuNu_2500ToInf  = mini_sample(sigma = 0.007*0.88, 
-                                     name  = 'ZJetsToNuNu_HT-2500ToInf.root',
+ZJetsToNuNu_HT_2500ToInf  = mini_sample(sigma = 0.007*0.88, 
+                                     name  = 'ZJetsToNuNu_HT_2500ToInf.root',
                                      path  = group_path)
-ZJetsToNuNu_1200To2500 = mini_sample(sigma = 0.29*0.88, 
-                                     name  = 'ZJetsToNuNu_HT-1200To2500.root',
+ZJetsToNuNu_HT_1200To2500 = mini_sample(sigma = 0.29*0.88, 
+                                     name  = 'ZJetsToNuNu_HT_1200To2500.root',
                                      path  = group_path)
-ZJetsToNuNu_800To1200  = mini_sample(sigma = 1.18*1.14, 
-                                     name  = 'ZJetsToNuNu_HT-800To1200.root',
+ZJetsToNuNu_HT_800To1200  = mini_sample(sigma = 1.18*1.14, 
+                                     name  = 'ZJetsToNuNu_HT_800To1200.root',
                                      path  = group_path)
-ZJetsToNuNu_600To800   = mini_sample(sigma = 2.56*1.04, 
-                                     name  = 'ZJetsToNuNu_HT-600To800.root',
+ZJetsToNuNu_HT_600To800   = mini_sample(sigma = 2.56*1.04, 
+                                     name  = 'ZJetsToNuNu_HT_600To800.root',
                                      path  = group_path)
 
 ########## Liste utili ##########
@@ -58,7 +58,7 @@ datasets_list = [TprimeBToTZ_M_1000,
                  TprimeBToTZ_M_1300,
                  TT_Mtt_1000toInf,
                  TT_Mtt_700to1000,
-                 ZJetsToNuNu_2500ToInf,
-                 ZJetsToNuNu_1200To2500,
-                 ZJetsToNuNu_800To1200,
-                 ZJetsToNuNu_600To800]
+                 ZJetsToNuNu_HT_2500ToInf,
+                 ZJetsToNuNu_HT_1200To2500,
+                 ZJetsToNuNu_HT_800To1200,
+                 ZJetsToNuNu_HT_600To800]
