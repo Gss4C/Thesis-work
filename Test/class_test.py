@@ -13,3 +13,7 @@ class sample:
 
 coso = sample(label="label_del_coso", altrastringa= "/altra string")
 coso.qualcosa = "niente"
+
+stocazzo = sample(label="label_del_coso", altrastringa= "/altra string")
+
+tizio = [4532 ,35 ,235 , 635]

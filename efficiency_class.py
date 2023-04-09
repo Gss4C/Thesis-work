@@ -1,18 +1,25 @@
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+import ROOT
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd 
+
 class efficiency_make:
     def __init__(self, mini_sample): #devo ricordare di cambiare i nomi dai datasets
         self.mini_sample = mini_sample
     def skim_name(self):
-        skim = mini_sample.name.replace(".root","_Skim.root")
+        name_string = mini_sample.name
+        skim = name_string.replace(".root","_Skim.root")
         return skim
     
     def hist_name(self):
         histo = "hist_out_" + mini_sample.name 
         return histo
     
-    def e_counting(self)
+    def e_counting(self):
         percorso  = "/home/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
-        nome_file = self.skim_name(self.mini_sample)
-        nome_hist = self.hist_name(self.mini_sample)
+        nome_file = self.skim_name()
+        nome_hist = self.hist_name()
 
         histo_file = ROOT.TFile(percorso + nome_hist,"Open")
         skimmed_file = ROOT.TFile(percorso + nome_file,"Open")
@@ -66,7 +73,7 @@ class efficiency_make:
         plt.rcParams["figure.autolayout"]=True 
         plt.title("Efficiencies (%)") 
         plot = sns.heatmap(df, cmap="summer", annot=True)
-        plt.savefig("nome.png")
+        plt.savefig(self.skim_name() +"png") #correggere qua
 
     def efficiency_plotter(self):
         eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = self.e_counting()
