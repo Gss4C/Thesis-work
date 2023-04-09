@@ -1,7 +1,7 @@
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection , Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
-ROOT.PyConfig.IgnoreCommandLineOptions = True  
+ROOT.PyConfig.IgnoreCommandLineOptions = True 
 
 class full_selector(Module):
     def __init__(self):
