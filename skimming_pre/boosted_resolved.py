@@ -115,10 +115,13 @@ class boosted_resolved(Module):
         
         if event_global_condition:
             eventsavior = True
-
-            boost  = False
+            boost_tau32  = False
+            boost_tau32btag  = False
+            boost_deeptag  = False
+            boost_deeptagbtag  = False
             resolv = False
             self.forward_jet_tagger(jets, "Jet_isForward")
+
             #########################
             #     Resolved test     #
             #########################
@@ -154,12 +157,24 @@ class boosted_resolved(Module):
                 self.indexer("TopRes_terIdx1","TopRes_terIdx2","TopRes_terIdx3",index_lists)
                 if len(event_combo_pt):
                     resolv = True
+            
             #########################
             #     Boosted test      #
             #########################
             if len(jets) and len(fatjets):
                 for fjet in fatjets:
                     if fjet.msoftdrop>105 and fjet.msoftdrop<220:
+                        #########################
+                        #   caso non deeptag    #
+                        #########################
+                        tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
+                        if tau32 < 0.65:
+                            good_jets_list = self.collect_list_gfilter(jets)
+                            for jet in good_jets_list:
+                                if jet.btagDeepB > 0.1241:
+                                    distance = self.deltaR(jet,fjet)
+                                    if distance<0.8:
+                                        boost = True
 
                     '''
                     tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
