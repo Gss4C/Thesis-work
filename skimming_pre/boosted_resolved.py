@@ -100,7 +100,7 @@ class boosted_resolved(Module):
         self.out.fillBranch(branch3, threes)
 
 
-    def analyze(self,event): #qui raccolgo solo robaccia good
+    def analyze(self,event): 
         HLT         = Object(event, "HLT")
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
