@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd 
 
-class efficiency_make:
+class classic_efficiency_make:
     def __init__(self, mini_sample): #devo ricordare di cambiare i nomi dai datasets
         self.mini_sample = mini_sample
     def skim_name(self):
