@@ -198,10 +198,10 @@ class boosted_resolved(Module):
                                     boost = True
                     '''
             #ora devo riempire i branches
-            self.out.fillBranch("Boosted_tau32" , int(boost))
-            self.out.fillBranch("Boosted_tau32btag" , int(boost))
-            self.out.fillBranch("Boosted_deeptag" , int(boost))
-            self.out.fillBranch("Boosted_deeptagbtag" , int(boost))
+            self.out.fillBranch("Boosted_tau32"       , int(boost_tau32))
+            self.out.fillBranch("Boosted_tau32btag"   , int(boost_tau32btag))
+            self.out.fillBranch("Boosted_deeptag"     , int(boost_deeptag))
+            self.out.fillBranch("Boosted_deeptagbtag" , int(boost_deeptagbtag))
             self.out.fillBranch("Resolved", int(resolv))
         else:
             eventsavior = False
