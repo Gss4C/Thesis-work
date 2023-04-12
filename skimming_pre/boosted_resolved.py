@@ -169,13 +169,13 @@ class boosted_resolved(Module):
                         #########################
                         tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
                         if tau32 < 0.65:
+                            boost_tau32 = True
                             good_jets_list = self.collect_list_gfilter(jets)
                             for jet in good_jets_list:
                                 if jet.btagDeepB > 0.1241:
                                     distance = self.deltaR(jet,fjet)
                                     if distance<0.8:
-                                        boost = True
-
+                                        boost_tau32btag = True
                     '''
                     tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
                     if fjet.msoftdrop>105 and fjet.msoftdrop<220 and tau32 < 0.65:
