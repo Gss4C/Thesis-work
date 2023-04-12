@@ -176,6 +176,17 @@ class boosted_resolved(Module):
                                     distance = self.deltaR(jet,fjet)
                                     if distance<0.8:
                                         boost_tau32btag = True
+                        #########################
+                        #     caso deeptag      #
+                        #########################
+                        if fjet.deepTag_TvsQCD > 0.802: #WP for 1% mistagging rate
+                            boost_deeptag = True
+                            good_jets_list = self.collect_list_gfilter(jets)
+                            for jet in good_jets_list:
+                                if jet.btagDeepB > 0.1241:
+                                    distance = self.deltaR(jet,fjet)
+                                    if distance<0.8:
+                                        boost_deeptagbtag = True
                     '''
                     tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
                     if fjet.msoftdrop>105 and fjet.msoftdrop<220 and tau32 < 0.65:
