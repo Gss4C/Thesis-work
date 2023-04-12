@@ -8,14 +8,17 @@ class boosted_resolved(Module):
     def __init__(self):
         #self.lepton_ok = 0
         #self.phis_ok = 0
-
+        pass
     def beginJob(self):
         pass
     def endJob(self):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Boosted" ,  "I")
+        self.out.branch("Boosted_tau32" ,  "I")
+        self.out.branch("Boosted_tau32btag" ,  "I")
+        self.out.branch("Boosted_deeptag" ,  "I")
+        self.out.branch("Boosted_deeptagbtag" ,  "I")
         self.out.branch("Resolved", "I")
 
         self.out.branch("nTopRes",        "I")
@@ -59,8 +62,7 @@ class boosted_resolved(Module):
         else:
             cond_lep = False
         cond_global = cond_lep and cond_phi and cond_MET
-        return cond_global
-    
+        return cond_global    
     def HT(self, jets):
         #calcola HT e controlla che abbia almeno 3 jets nell'evento
         somma = 0
