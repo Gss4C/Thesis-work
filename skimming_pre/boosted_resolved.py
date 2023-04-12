@@ -119,9 +119,9 @@ class boosted_resolved(Module):
             boost  = False
             resolv = False
             self.forward_jet_tagger(jets, "Jet_isForward")
-            #***********************#
-            #   Resolved test   #
-            #***********************#
+            #########################
+            #     Resolved test     #
+            #########################
             ht, three= self.HT(jets)
             if ht>200 and three:
                 event_combo_pt = []
@@ -154,11 +154,14 @@ class boosted_resolved(Module):
                 self.indexer("TopRes_terIdx1","TopRes_terIdx2","TopRes_terIdx3",index_lists)
                 if len(event_combo_pt):
                     resolv = True
-            #***********************#
-            #   Boosted test   #
-            #***********************#
+            #########################
+            #     Boosted test      #
+            #########################
             if len(jets) and len(fatjets):
                 for fjet in fatjets:
+                    if fjet.msoftdrop>105 and fjet.msoftdrop<220:
+
+                    '''
                     tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
                     if fjet.msoftdrop>105 and fjet.msoftdrop<220 and tau32 < 0.65:
                         good_jets_list = self.collect_list_gfilter(jets)
@@ -167,6 +170,7 @@ class boosted_resolved(Module):
                                 distance = self.deltaR(jet,fjet)
                                 if distance<0.8:
                                     boost = True
+                    '''
             #ora devo riempire i branches
             self.out.fillBranch("Boosted" , int(boost))
             self.out.fillBranch("Resolved", int(resolv))
