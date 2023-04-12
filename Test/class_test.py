@@ -10,6 +10,16 @@ class sample:
     def stringcombo(self):
         zz = self.label + self.altrastringa
         return zz 
+class contino:
+    def __init__(self, listino = [0], numerino = 0):
+        self.listino = listino
+        self.numerino = numerino
+    def counterino(self):
+        kakkola = len(self.listino)
+        for i in range(self.numerino):
+            kakkola += i
+        return kakkola
+
 
 coso = sample(label="label_del_coso", altrastringa= "/altra string")
 coso.qualcosa = "niente"
