@@ -221,7 +221,7 @@ class efficiency_plot:
             "boostdeep_btag": "PiYG"
         }
 
-        plot = sns.heatmap(df, cmap=colors[boost_type], annot=True)
+        plot = sns.heatmap(df, cmap= 'YlGnBu', annot=True) #colors[boost_type]
         plt.savefig(self.mini_sample.name.replace(".root","") + "_" +boost_type +".png") 
         plt.close()
 
