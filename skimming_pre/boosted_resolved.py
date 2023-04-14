@@ -30,9 +30,9 @@ class boosted_resolved(Module):
         self.out.branch("Jet_isForward", "O", lenVar="nJet")        
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-    #***************************************************#
-    # My functions
-    #***************************************************#
+    #########################
+    #       functions       #
+    #########################
     def deltaphis(self, collect, object):
         deltas = []
         for i in range(len(collect)):
@@ -75,9 +75,9 @@ class boosted_resolved(Module):
         if count >= 3: leastthree = True
         return somma, leastthree
     
-    #***************************************************#
-    # taggers
-    #***************************************************#
+    #########################
+    #        tagger         #
+    #########################
     def forward_jet_tagger(self, jet_collection, branch = "Jet_isForward"):
         # mi tagga i jet definibili forward
         forward_list = []
@@ -87,7 +87,6 @@ class boosted_resolved(Module):
                 single_jet_forward = True
             forward_list.append(single_jet_forward)
         self.out.fillBranch(branch, forward_list)
-
     def indexer(self, branch1 , branch2 , branch3 , lista):
         #funzione che riempie i branch (originariamente i jet ak4 toptag) con gli indici della terna originale
         ones   = []
@@ -100,7 +99,6 @@ class boosted_resolved(Module):
         self.out.fillBranch(branch1, ones)
         self.out.fillBranch(branch2, twos)
         self.out.fillBranch(branch3, threes)
-
 
     def analyze(self,event): 
         HLT         = Object(event, "HLT")

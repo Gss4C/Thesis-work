@@ -68,10 +68,10 @@ class full_selector(Module):
         toptaggedFjets_idx = list(filter(lambda idx: 
                                          fatjets[idx].pt >        400 and  
                                          fatjets[idx].msoftdrop > 105 and 
-                                         fatjets[idx].msoftdrop > 220 and
-                                         fatjets[idx].tau3/(fatjets[idx].tau2) < 0.65
-                                         ,range(0, len(fatjets))))
+                                         fatjets[idx].msoftdrop > 220, 
+                                         range(0, len(fatjets))))
         self.tagmaker(fatjets, toptaggedFjets_idx, "FatJet_toptagged")
+        #and fatjets[idx].tau3/(fatjets[idx].tau2) < 0.65
 
         #**********************
         #objects & boolean
