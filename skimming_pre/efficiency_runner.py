@@ -5,7 +5,7 @@ import ROOT
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd #mi servono qua?
-import argparse
+#import argparse
 
 '''
 parser = argparse.ArgumentParser(description='Description of your program')
@@ -25,12 +25,11 @@ if args["type"] == 1:
         efficiencyer.efficiency_plotter()
 if args['type'] == 2:
 '''
-
-#crearmi qui una lista nuova per i dataset skimmed col minisample
-
-maledetta_efficienza = efficiency_plot(ZJetsToNuNu_HT_600To800)
-maledetta_efficienza.efficiency_plotter()
-
-'''for dataset in dataset_list:
-        efficiencyer = efm(dataset)
-        efficiencyer.efficiency_plotter()'''
+for mini_dataset in datasets_list:
+    print("\nInizio calcolo efficienza dataset: "+ mini_dataset.name)
+    print("Processo al: " + str( float(datasets_list.index(mini_dataset))/len(datasets_list) * 100) + "%")
+    maledetta_efficienza = efficiency_plot(mini_dataset)
+    maledetta_efficienza.efficiency_plotter()
+    print('-salvataggio files-')
+numero_files = len(datasets_list) * 4
+print('operazione completa: salvati '+ str(numero_files)+ ' file .png')
