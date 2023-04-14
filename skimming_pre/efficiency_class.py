@@ -15,7 +15,6 @@ class efficiency_maker:
     def __init__(self, nome_file, nome_hist):
         self.nome_file = nome_file
         self.nome_hist = nome_hist
-        ## servono solo 4 variabili
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
         self.boost_fwd    = 0 
@@ -23,17 +22,17 @@ class efficiency_maker:
 
         self.percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab"
     def counter_32(self):
+        self.resolved_fwd = 0 
+        self.resolved_nfw = 0 
+        self.boost_fwd    = 0 
+        self.boost_nfw    = 0
+
         histo_file   = ROOT.TFile(self.percorso + self.nome_hist,"Open")
         skimmed_file = ROOT.TFile(self.percorso + self.nome_file,"Open")
         histos = histo_file.plots.Get("h_genweight")
         weight = histos.GetBinContent(1)
         small_tree = skimmed_file.Events
 
-        '''self.boost_fwd    = 0
-        self.boost_nfw    = 0
-        self.resolved_fwd = 0
-        self.resolved_nfw = 0
-        non dovrebbe servire'''
         for event in range(small_tree.GetEntries()):
             small_tree.GetEntry(event)
             jets   = Collection(small_tree, "Jet")
@@ -69,6 +68,11 @@ class efficiency_maker:
         eff_r_wo_fj = float(self.resolved_nfw)/weight
         return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
     def counter_32btag(self):
+        self.resolved_fwd = 0 
+        self.resolved_nfw = 0 
+        self.boost_fwd    = 0 
+        self.boost_nfw    = 0
+
         histo_file   = ROOT.TFile(self.percorso + self.nome_hist,"Open")
         skimmed_file = ROOT.TFile(self.percorso + self.nome_file,"Open")
         histos = histo_file.plots.Get("h_genweight")
@@ -110,6 +114,11 @@ class efficiency_maker:
         eff_r_wo_fj = float(self.resolved_nfw)/weight
         return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
     def counter_deep(self):
+        self.resolved_fwd = 0 
+        self.resolved_nfw = 0 
+        self.boost_fwd    = 0 
+        self.boost_nfw    = 0
+
         histo_file   = ROOT.TFile(self.percorso + self.nome_hist,"Open")
         skimmed_file = ROOT.TFile(self.percorso + self.nome_file,"Open")
         histos = histo_file.plots.Get("h_genweight")
@@ -151,6 +160,11 @@ class efficiency_maker:
         eff_r_wo_fj = float(self.resolved_nfw)/weight
         return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
     def counter_deepbtag(self):
+        self.resolved_fwd = 0 
+        self.resolved_nfw = 0 
+        self.boost_fwd    = 0 
+        self.boost_nfw    = 0
+
         histo_file   = ROOT.TFile(self.percorso + self.nome_hist,"Open")
         skimmed_file = ROOT.TFile(self.percorso + self.nome_file,"Open")
         histos = histo_file.plots.Get("h_genweight")
@@ -243,4 +257,3 @@ class efficiency_plot:
         eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_deepbtag()
         self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boostdeep_btag")
         print("[########]")
-        
