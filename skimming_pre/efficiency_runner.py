@@ -61,7 +61,7 @@ for mini_dataset in datasets_list:
     if options.sig:
         print('calcolo per le significance...')
         creation_time = datetime.datetime.now()
-        ## funzione significance
+        
         if datasets_list.index(mini_dataset) == 0:
             Sig_1000.append(NCount_t32)
             Sig_1000.append(NCount_t32b)
