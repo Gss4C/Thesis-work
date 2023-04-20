@@ -63,15 +63,9 @@ for mini_dataset in datasets_list:
         creation_time = datetime.datetime.now()
         
         if datasets_list.index(mini_dataset) == 0:
-            Sig_1000.append(NCount_t32)
-            Sig_1000.append(NCount_t32b)
-            Sig_1000.append(NCount_d)
-            Sig_1000.append(NCount_db)
+            Sig_1000 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif datasets_list.index(mini_dataset) == 1:
-            Sig_1100.append(NCount_t32)
-            Sig_1100.append(NCount_t32b)
-            Sig_1100.append(NCount_d)
-            Sig_1100.append(NCount_db)
+            Sig_1100 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif datasets_list.index(mini_dataset) == 2:
             Sig_1300.append(NCount_t32)
             Sig_1300.append(NCount_t32b)
