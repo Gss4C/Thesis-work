@@ -1,9 +1,9 @@
 class mini_sample:
     def __init__(self, sigma=1, name = 'FILE.root', path = 'path string'):
         '''Class for a costumized mini samples.py, for using more dataset in an optimized way \n
-        sigma = cross section in pb \n
-        name  = name of the file.root you want to use, with extension \n
-        path  = path to the folder where the file is \n
+        .sigma = cross section in pb \n
+        .name  = name of the file.root you want to use, with extension \n
+        .path  = path to the folder where the file is \n
         '''
         self.sigma = sigma
         self.name  = name

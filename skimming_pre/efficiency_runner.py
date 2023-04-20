@@ -1,35 +1,86 @@
-from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+
 from PhysicsTools.NanoAODTools.postprocessing.jon_scr.mini_samples import *
 from PhysicsTools.NanoAODTools.postprocessing.jon_scr.efficiency_class import *
 import ROOT
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd #mi servono qua?
-#import argparse
+import pandas as pd
+import numpy as np
+import datetime
+import argparse
 
-'''
-parser = argparse.ArgumentParser(description='Description of your program')
-parser.add_argument('-t','--type',
+#################
+#   ARGOMENTI   #
+#################
+parser = argparse.ArgumentParser(description='Plot efficienze e significance')
+parser.add_argument('-s', '--sig',
                     type     = int,
-                    default  = 2
-                    help     = 'type an int for the heatmap type: 1. (fwd, n_fwd) vs (boost_old, resolved), \n 2. full heatmap: (fwd, n_fwd) vs (resolved, 4 different boost)', 
+                    help     = 'True/False: if true, the program will calculate significances and will write a csv which resume everything', 
                     required = True)
-parser.add_argument('-f','--full', 
-                    help='Full heatmap: (fwd, n_fwd) vs (resolved, 4 * boost)', 
-                    required=True)
-args = vars(parser.parse_args())
+options = parser.parse_args()
+# Servono per le significance
+if options.sig:
+    Bi_t32  = 0
+    Bi_t32b = 0
+    Bi_d    = 0
+    Bi_db   = 0
+    B_sing  = []
+    Sig_1000 = []
+    Sig_1100 = []
+    Sig_1300 = []
 
-if args["type"] == 1:
-    for dataset in dataset_list:
-        efficiencyer = efm(dataset)
-        efficiencyer.efficiency_plotter()
-if args['type'] == 2:
-'''
 for mini_dataset in datasets_list:
     print("\nInizio calcolo efficienza dataset: "+ mini_dataset.name)
     print("Processo al: " + str( float(datasets_list.index(mini_dataset))/len(datasets_list) * 100) + "%")
+    
     maledetta_efficienza = efficiency_plot(mini_dataset)
-    maledetta_efficienza.efficiency_plotter()
+    NCount_t32, NCount_t32b, NCount_d, NCount_db = maledetta_efficienza.efficiency_plotter(significance = options.sig)
     print('-salvataggio files-')
+
+    if options.sig:
+        print('calcolo per le significance...')
+        creation_time = datetime.datetime.now()
+        ## funzione significance
+        if datasets_list.index(mini_dataset) == 0:
+            Sig_1000.append(NCount_t32)
+            Sig_1000.append(NCount_t32b)
+            Sig_1000.append(NCount_d)
+            Sig_1000.append(NCount_db)
+        elif datasets_list.index(mini_dataset) == 1:
+            Sig_1100.append(NCount_t32)
+            Sig_1100.append(NCount_t32b)
+            Sig_1100.append(NCount_d)
+            Sig_1100.append(NCount_db)
+        elif datasets_list.index(mini_dataset) == 2:
+            Sig_1300.append(NCount_t32)
+            Sig_1300.append(NCount_t32b)
+            Sig_1300.append(NCount_d)
+            Sig_1300.append(NCount_db)
+        elif datasets_list.index(mini_dataset) >= 2:
+            Bi_t32  += NCount_t32
+            Bi_t32b += NCount_t32b
+            Bi_d    += NCount_d
+            Bi_db   += NCount_db
+        ## fine funzione significance
+B_sing.append(Bi_t32)
+B_sing.append(Bi_t32b)
+B_sing.append(Bi_d)
+B_sing.append(Bi_db)
+
+significances = {}
+righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
+for sig1, sig2, sig3, bkg, name in zip(Sig_1000, Sig_1100, Sig_1300, B_sing, righe):
+    significance_1 = sig1/np.sqrt(bkg)
+    significance_2 = sig2/np.sqrt(bkg)
+    significance_3 = sig3/np.sqrt(bkg)
+    significances[name] = [significance_1, significance_2, significance_3]
+
+significance_dataframe = pd.DataFrame(data=significances , index=['TprimeBToTZ_M_1000', 'TprimeBToTZ_M_1100', 'TprimeBToTZ_M_1300'])
+significance_final     = significance_dataframe.transpose()
+significance_final.to_csv('significances/signinificance_'+
+                            str(creation_time.year) + '-' +
+                            str(creation_time.month) + '-' +
+                            str(creation_time.day) + '-' +
+                            str(creation_time.microsecond)+
+                            ".csv")
+
 numero_files = len(datasets_list) * 4
 print('operazione completa: salvati '+ str(numero_files)+ ' file .png')

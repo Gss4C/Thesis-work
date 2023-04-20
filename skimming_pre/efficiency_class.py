@@ -21,7 +21,22 @@ class efficiency_maker:
         self.boost_nfw    = 0
 
         self.percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab"
-    def counter_32(self):
+    def dammi_il_boolean(self, small_tree, key = 0):
+        if key == 0:
+            if(small_tree.Boosted_tau32):
+                    BST = True
+                if(small_tree.Resolved and not small_tree.Boosted_tau32):
+                    RSL = True
+
+                for jet in jets:
+                    if jet.isForward and jet.isGood:
+                        is_fwd = True
+            return BST, RSL, is_fwd
+        elif key == 1:
+            #da completare questa cosa
+        
+        
+    def counter_32(self, sig):
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
         self.boost_fwd    = 0 
@@ -39,7 +54,10 @@ class efficiency_maker:
             BST    = False
             RSL    = False
             is_fwd = False
+            
+            #BST, RSL, is_fwd = self.dammi_il_boolean(small_tree = small_tree)
 
+            '''
             if(small_tree.Boosted_tau32):
                 BST = True
             if(small_tree.Resolved and not small_tree.Boosted_tau32):
@@ -48,6 +66,7 @@ class efficiency_maker:
             for jet in jets:
                 if jet.isForward and jet.isGood:
                     is_fwd = True
+            '''
 
             ##############
             ## Counting ##
@@ -66,8 +85,11 @@ class efficiency_maker:
         eff_b_wo_fj = float(self.boost_nfw)/weight
         eff_r_w_fj  = float(self.resolved_fwd)/weight
         eff_r_wo_fj = float(self.resolved_nfw)/weight
-        return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
-    def counter_32btag(self):
+        if sig:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, self.boost_fwd, self.boost_nfw, self.resolved_fwd, self.resolved_nfw, weight
+        else:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
+    def counter_32btag(self, sig):
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
         self.boost_fwd    = 0 
@@ -112,8 +134,11 @@ class efficiency_maker:
         eff_b_wo_fj = float(self.boost_nfw)/weight
         eff_r_w_fj  = float(self.resolved_fwd)/weight
         eff_r_wo_fj = float(self.resolved_nfw)/weight
-        return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
-    def counter_deep(self):
+        if sig:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, self.boost_fwd, self.boost_nfw, self.resolved_fwd, self.resolved_nfw, weight
+        else:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
+    def counter_deep(self, sig):
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
         self.boost_fwd    = 0 
@@ -158,8 +183,11 @@ class efficiency_maker:
         eff_b_wo_fj = float(self.boost_nfw)/weight
         eff_r_w_fj  = float(self.resolved_fwd)/weight
         eff_r_wo_fj = float(self.resolved_nfw)/weight
-        return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
-    def counter_deepbtag(self):
+        if sig:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, self.boost_fwd, self.boost_nfw, self.resolved_fwd, self.resolved_nfw, weight
+        else:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
+    def counter_deepbtag(self, sig):
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
         self.boost_fwd    = 0 
@@ -204,7 +232,19 @@ class efficiency_maker:
         eff_b_wo_fj = float(self.boost_nfw)/weight
         eff_r_w_fj  = float(self.resolved_fwd)/weight
         eff_r_wo_fj = float(self.resolved_nfw)/weight
-        return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
+        if sig:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, self.boost_fwd, self.boost_nfw, self.resolved_fwd, self.resolved_nfw, weight
+        else:
+            return eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj
+        
+class significancer:
+    def __init__(self, mini_sample):
+        self.mini_sample = mini_sample
+        self.L_run2 = 138
+    def normalize_counting(self, n_sel = 10 , n_tot = 10):
+        norm_count = n_sel * self.mini_sample.sigma * self.L_run2 / n_tot
+        return norm_count
+
 
 class efficiency_plot:
     def __init__(self, mini_sample): #devo ricordare di cambiare i nomi dai datasets
@@ -239,21 +279,66 @@ class efficiency_plot:
         plt.savefig(self.mini_sample.name.replace(".root","") + "_" +boost_type +".png") 
         plt.close()
 
-    def efficiency_plotter(self):
+    def efficiency_plotter(self, significance = 1):
         skim_name = self.skim_name()
         hist_name = self.hist_name()
         the_maker = efficiency_maker(nome_file= skim_name,
                                      nome_hist= hist_name)
-        print("acquisito il dataset, inizio operazione\n[--------]")
-        eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_32()
-        self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32")
-        print("[##------]")
-        eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_32btag()
-        self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32_btag")
-        print("[####----]")
-        eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_deep()
-        self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_deep")
-        print("[######--]")
-        eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_deepbtag()
-        self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boostdeep_btag")
-        print("[########]")
+        n_boost_fwd    = 0
+        n_boost_nfw    = 0 
+        n_resolved_fwd = 0 
+        n_resolved_nfw = 0
+        NCount_db = 0
+        NCount_d = 0
+        NCount_t32 = 0
+        NCount_t32b =0
+        
+        
+        if significance:
+            print("acquisito il dataset, inizio operazione\n[--------]")
+            make_sig = significancer(self.mini_sample)
+        
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot = the_maker.counter_32(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32")
+            n_boost_tot = n_boost_fwd + n_boost_nfw 
+            NCount_t32 = make_sig.normalize_counting(n_boost_tot, Ntot)
+            print("[##------]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_32btag(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32_btag")
+            n_boost_tot = n_boost_fwd + n_boost_nfw
+            NCount_t32b = make_sig.normalize_counting(n_boost_tot, Ntot)
+            print("[####----]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_deep(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_deep")
+            n_boost_tot = n_boost_fwd + n_boost_nfw
+            NCount_d = make_sig.normalize_counting(n_boost_tot, Ntot)
+            print("[######--]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_deepbtag(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boostdeep_btag")
+            n_boost_tot = n_boost_fwd + n_boost_nfw
+            NCount_db = make_sig.normalize_counting(n_boost_tot, Ntot)
+            print("[########]")
+
+            return NCount_t32, NCount_t32b, NCount_d, NCount_db
+        else:
+            print("acquisito il dataset, inizio operazione\n[--------]")
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_32(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32")
+            print("[##------]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_32btag(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32_btag")
+            print("[####----]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_deep(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_deep")
+            print("[######--]")
+
+            eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj = the_maker.counter_deepbtag(sig=significance)
+            self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boostdeep_btag")
+            print("[########]")
+
+            return NCount_t32, NCount_t32b, NCount_d, NCount_db
