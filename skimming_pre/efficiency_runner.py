@@ -26,6 +26,29 @@ if options.sig:
     Sig_1000 = []
     Sig_1100 = []
     Sig_1300 = []
+    NCountbg_t32_bf = 0
+    NCountbg_t32_bn = 0
+    NCountbg_t32_rf = 0
+    NCountbg_t32_rn = 0
+    NCountbg_t32 = [NCountbg_t32_bf,NCountbg_t32_bn,NCountbg_t32_rf,NCountbg_t32_rn]
+
+    NCountbg_t32b_bf = 0
+    NCountbg_t32b_bn = 0
+    NCountbg_t32b_rf = 0
+    NCountbg_t32b_rn = 0
+    NCountbg_t32b = [NCountbg_t32b_bf,NCountbg_t32b_bn,NCountbg_t32b_rf,NCountbg_t32b_rn]
+
+    NCountbg_d_bf = 0
+    NCountbg_d_bn = 0
+    NCountbg_d_rf = 0
+    NCountbg_d_rn = 0
+    NCountbg_d = [NCountbg_d_bf,NCountbg_d_bn,NCountbg_d_rf,NCountbg_d_rn]
+
+    NCountbg_db_bf = 0
+    NCountbg_db_bn = 0
+    NCountbg_db_rf = 0
+    NCountbg_db_rn = 0
+    NCountbg_db = [NCountbg_db_bf,NCountbg_db_bn,NCountbg_db_rf,NCountbg_db_rn]
 
 for mini_dataset in datasets_list:
     print("\nInizio calcolo efficienza dataset: "+ mini_dataset.name)
