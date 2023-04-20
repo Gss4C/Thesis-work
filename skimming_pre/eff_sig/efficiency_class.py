@@ -300,8 +300,6 @@ class efficiency_plot:
         
             eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot = the_maker.counter_32(sig=significance)
             self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32")
-            #n_boost_tot = n_boost_fwd + n_boost_nfw 
-
             n_list = [n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw]
             NCount_t32 = []
             for i in n_list:
@@ -311,8 +309,6 @@ class efficiency_plot:
 
             eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_32btag(sig=significance)
             self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_tau32_btag")
-            #n_boost_tot = n_boost_fwd + n_boost_nfw
-
             n_list = [n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw]
             NCount_t32b = []
             for i in n_list:
@@ -322,8 +318,6 @@ class efficiency_plot:
 
             eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_deep(sig=significance)
             self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boost_deep")
-            #n_boost_tot = n_boost_fwd + n_boost_nfw
-
             n_list = [n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw]
             NCount_d = []
             for i in n_list:
@@ -333,7 +327,6 @@ class efficiency_plot:
 
             eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw, Ntot  = the_maker.counter_deepbtag(sig=significance)
             self.plotto(eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, "boostdeep_btag")
-            #n_boost_tot = n_boost_fwd + n_boost_nfw
             n_list = [n_boost_fwd, n_boost_nfw, n_resolved_fwd, n_resolved_nfw]
             NCount_db = []
             for i in n_list:

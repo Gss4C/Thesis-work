@@ -4,11 +4,8 @@ from PhysicsTools.NanoAODTools.postprocessing.jon_scr.efficiency_class import *
 import ROOT
 import pandas as pd
 import numpy as np
-import datetime
+#import datetime
 import argparse
-#####################
-#   Temporary doc   #
-#####################
 '''
 info utili per le liste quando conto i bg
 Ordine selezioni: [32, 32b, d, db]
@@ -21,18 +18,11 @@ Ordine modes: [bf, bnf, rf, rnf]
 parser = argparse.ArgumentParser(description='Plot efficienze e significance')
 parser.add_argument('-s', '--sig',
                     type     = int,
-                    help     = 'True/False: if true, the program will calculate significances and will write a csv which resume everything', 
+                    help     = '1/0: if true, the program will calculate significances and will write a csv which resume everything', 
                     required = True)
 options = parser.parse_args()
 # Servono per le significance
 if options.sig:
-    '''
-    Bi_t32  = 0
-    Bi_t32b = 0
-    Bi_d    = 0
-    Bi_db   = 0
-'''
-    B_sing  = []
     Sig_1000 = []
     Sig_1100 = []
     Sig_1300 = []
@@ -70,7 +60,7 @@ for mini_dataset in datasets_list:
 
     if options.sig:
         print('calcolo per le significance...')
-        creation_time = datetime.datetime.now()
+        #creation_time = datetime.datetime.now()
         
         if datasets_list.index(mini_dataset) == 0:
             Sig_1000 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
@@ -94,7 +84,7 @@ Bg_gigalist = [NCountbg_t32,NCountbg_t32b,NCountbg_d,NCountbg_db]
 #segnale 1000
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 sel_mode_Z = {}
-for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1000, righe): #fissata la singola selezione
+for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1000, righe): #fissata la singola selezione
     temp_list = []
     for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
         significance = si/np.sqrt(bi)
@@ -145,8 +135,6 @@ plot = sns.heatmap(sig_1300_df, cmap= 'BuPu', annot=True)
 plt.savefig("significances/significance_Tprime_1300.png") 
 plt.close()
 
-
-#commentare questo sotto
 '''
 significances = {}
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
