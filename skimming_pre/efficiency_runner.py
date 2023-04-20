@@ -6,6 +6,14 @@ import pandas as pd
 import numpy as np
 import datetime
 import argparse
+#####################
+#   Temporary doc   #
+#####################
+'''
+info utili per le liste quando conto i bg
+Ordine selezioni: [32, 32b, d, db]
+Ordine modes: [bf, bnf, rf, rnf]
+'''
 
 #################
 #   ARGOMENTI   #
@@ -18,10 +26,12 @@ parser.add_argument('-s', '--sig',
 options = parser.parse_args()
 # Servono per le significance
 if options.sig:
+    '''
     Bi_t32  = 0
     Bi_t32b = 0
     Bi_d    = 0
     Bi_db   = 0
+'''
     B_sing  = []
     Sig_1000 = []
     Sig_1100 = []
@@ -67,21 +77,77 @@ for mini_dataset in datasets_list:
         elif datasets_list.index(mini_dataset) == 1:
             Sig_1100 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif datasets_list.index(mini_dataset) == 2:
-            Sig_1300.append(NCount_t32)
-            Sig_1300.append(NCount_t32b)
-            Sig_1300.append(NCount_d)
-            Sig_1300.append(NCount_db)
+            Sig_1300 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif datasets_list.index(mini_dataset) >= 2:
-            Bi_t32  += NCount_t32
-            Bi_t32b += NCount_t32b
-            Bi_d    += NCount_d
-            Bi_db   += NCount_db
-        ## fine funzione significance
-B_sing.append(Bi_t32)
-B_sing.append(Bi_t32b)
-B_sing.append(Bi_d)
-B_sing.append(Bi_db)
+            for NCi,NCbg_index in zip(NCount_t32 , range(len(NCountbg_t32))):
+                NCountbg_t32[NCbg_index] += NCi
+            for NCi,NCbg_index in zip(NCount_t32b , range(len(NCountbg_t32b))):
+                NCountbg_t32b[NCbg_index] += NCi
+            for NCi,NCbg_index in zip(NCount_d , range(len(NCountbg_d))):
+                NCountbg_d[NCbg_index] += NCi
+            for NCi,NCbg_index in zip(NCount_db , range(len(NCountbg_db))):
+                NCountbg_db[NCbg_index] += NCi
 
+Bg_gigalist = [NCountbg_t32,NCountbg_t32b,NCountbg_d,NCountbg_db]
+
+# per ogni selezione (nelle liste Gb_gigalist e Sig_1X00) devo cacciare quattro efficienze
+#segnale 1000
+righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
+sel_mode_Z = {}
+for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1000, righe): #fissata la singola selezione
+    temp_list = []
+    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
+        significance = si/np.sqrt(bi)
+        temp_list.append(significance)
+        sel_mode_Z[name] = temp_list
+
+sig_1000_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+plt.rcParams["figure.figsize"]=[8, 5] 
+plt.rcParams["figure.autolayout"]=True 
+plt.title("Significances, dataset M=1000") 
+plot = sns.heatmap(sig_1000_df, cmap= 'BuPu', annot=True)
+plt.savefig("significances/significance_Tprime_1000.png") 
+plt.close()
+
+#segnale 1100
+righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
+sel_mode_Z = {}
+for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
+    temp_list = []
+    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
+        significance = si/np.sqrt(bi)
+        temp_list.append(significance)
+        sel_mode_Z[name] = temp_list
+
+sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+plt.rcParams["figure.figsize"]=[8, 5] 
+plt.rcParams["figure.autolayout"]=True 
+plt.title("Significances, dataset M=1000") 
+plot = sns.heatmap(sig_1300_df, cmap= 'BuPu', annot=True)
+plt.savefig("significances/significance_Tprime_1100.png") 
+plt.close()
+
+#segnale 1300
+righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
+sel_mode_Z = {}
+for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
+    temp_list = []
+    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
+        significance = si/np.sqrt(bi)
+        temp_list.append(significance)
+        sel_mode_Z[name] = temp_list
+
+sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+plt.rcParams["figure.figsize"]=[8, 5] 
+plt.rcParams["figure.autolayout"]=True 
+plt.title("Significances, dataset M=1000") 
+plot = sns.heatmap(sig_1300_df, cmap= 'BuPu', annot=True)
+plt.savefig("significances/significance_Tprime_1300.png") 
+plt.close()
+
+
+#commentare questo sotto
+'''
 significances = {}
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 for sig1, sig2, sig3, bkg, name in zip(Sig_1000, Sig_1100, Sig_1300, B_sing, righe):
@@ -98,6 +164,7 @@ significance_final.to_csv('significances/signinificance_'+
                             str(creation_time.day) + '-' +
                             str(creation_time.microsecond)+
                             ".csv")
+'''
 
 numero_files = len(datasets_list) * 4
 print('operazione completa: salvati '+ str(numero_files)+ ' file .png')
