@@ -76,9 +76,7 @@ full_range_signals_list = [TprimeBToTZ_M_1000,
                             ZJetsToNuNu_HT_600To800]
 
 signal_only_list = [TprimeBToTZ_M_600,
-                    TprimeBToTZ_M_1000,
                     TprimeBToTZ_M_1100,
-                    TprimeBToTZ_M_1300,
                     TprimeBToTZ_M_1800]
 
 signal_only_list_full = [TprimeBToTZ_M_600,
