@@ -4,7 +4,7 @@ from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.effici
 
 percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 
-variables=[("MET_pt"," MET "100,0,500)]
+variables=[("MET_pt"," MET ",100,0,500)]
 cuts = [("boosted_deeptag")]
 for dataset in signal_only_list:
     #mi piglio Tree->Events
@@ -15,4 +15,3 @@ for dataset in signal_only_list:
     cut=cuts[0]
     houtput = ROOT.TH1F(var[0],var[0],var[1],var[2],var[3])
     skimmed_tree.Project(houtput,var[0],cut[0])
-
