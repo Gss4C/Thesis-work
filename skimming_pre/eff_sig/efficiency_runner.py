@@ -76,60 +76,6 @@ for mini_dataset in datasets_list:
                 NCountbg_db[NCbg_index] += NCi
 Bg_gigalist = [NCountbg_t32,NCountbg_t32b,NCountbg_d,NCountbg_db]
 
-# per ogni selezione (nelle liste Gb_gigalist e Sig_1X00) devo cacciare quattro efficienze
-#segnale 1000
-'''
-righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
-sel_mode_Z = {}
-for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1000, righe): #fissata la singola selezione
-    temp_list = []
-    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
-        significance = si/np.sqrt(bi)
-        temp_list.append(significance)
-        sel_mode_Z[name] = temp_list
-
-sig_1000_df = pd.DataFrame(data=sel_mode_Z , index=['b_fw', 'b_notfw','r_fw','r_notfw'])
-plt.rcParams["figure.figsize"]=[8, 5] 
-plt.rcParams["figure.autolayout"]=True 
-plt.title("Significances, dataset M=1000") 
-plot = sns.heatmap(sig_1000_df, cmap= 'BuPu', annot=True)
-plt.savefig("significances/significance_Tprime_1000.png") 
-plt.close()
-
-#segnale 1100
-sel_mode_Z = {}
-for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1100, righe): #fissata la singola selezione
-    temp_list = []
-    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
-        significance = si/np.sqrt(bi)
-        temp_list.append(significance)
-        sel_mode_Z[name] = temp_list
-
-sig_1100_df = pd.DataFrame(data=sel_mode_Z , index=['b_fw', 'b_notfw','r_fw','r_notfw'])
-plt.rcParams["figure.figsize"]=[8, 5] 
-plt.rcParams["figure.autolayout"]=True 
-plt.title("Significances, dataset M=1100") 
-plot = sns.heatmap(sig_1100_df, cmap= 'BuPu', annot=True)
-plt.savefig("significances/significance_Tprime_1100.png") 
-plt.close()
-
-#segnale 1300
-sel_mode_Z = {}
-for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
-    temp_list = []
-    for bi,si in zip(Bg_sel, Sig_sel):  #fissato il singolo mode
-        significance = si/np.sqrt(bi)
-        temp_list.append(significance)
-        sel_mode_Z[name] = temp_list
-
-sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['b_fw', 'b_notfw','r_fw','r_notfw'])
-plt.rcParams["figure.figsize"]=[8, 5] 
-plt.rcParams["figure.autolayout"]=True 
-plt.title("Significances, dataset M=1300") 
-plot = sns.heatmap(sig_1300_df, cmap= 'BuPu', annot=True)
-plt.savefig("significances/significance_Tprime_1300.png") 
-plt.close()
-'''
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 signal_list = [Sig_1000, Sig_1100, Sig_1300]
 signal_names = ['Sig_1000', 'Sig_1100', 'Sig_1300']
