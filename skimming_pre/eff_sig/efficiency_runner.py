@@ -20,6 +20,7 @@ parser.add_argument('-s', '--sig',
                     help     = '1/0: if true, the program will calculate significances and will write a csv which resume everything', 
                     required = True)
 options = parser.parse_args()
+
 if options.sig: #creazione variabili per significance
     Sig_1000 = []
     Sig_1100 = []
@@ -84,7 +85,7 @@ for signal,signal_name in zip(signal_list, signal_names):
     sel_mode_Z = {}
     for Bg_sel, Sig_sel, name in zip(Bg_gigalist, signal, righe): #fissata la singola selezione
         temp_list = []
-        for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
+        for bi,si in zip(Bg_sel, Sig_sel): #fissato il singolo mode
             significance = si/np.sqrt(bi)
             temp_list.append(significance)
             sel_mode_Z[name] = temp_list
