@@ -1,6 +1,6 @@
 
-from PhysicsTools.NanoAODTools.postprocessing.jon_scr.mini_samples import *
-from PhysicsTools.NanoAODTools.postprocessing.jon_scr.efficiency_class import *
+from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.mini_samples import *
+from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.efficiency_class import *
 import ROOT
 import pandas as pd
 import numpy as np
