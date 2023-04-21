@@ -24,43 +24,43 @@ class efficiency_maker:
     def dammi_il_boolean(self, small_tree, jets, key = 0):
         if key == 0: #tau 32
             if(small_tree.Boosted_tau32):
-                BST = True
+                boosted_bool = True
             if(small_tree.Resolved and not small_tree.Boosted_tau32):
-                RSL = True
+                resolved_bool = True
             for jet in jets:
                 if jet.isForward and jet.isGood:
                     is_fwd = True
-            return BST, RSL, is_fwd
+            return boosted_bool, resolved_bool, is_fwd
         
         elif key == 1: #tau 32 btag
             if(small_tree.Boosted_tau32btag):
-                BST = True
+                boosted_bool = True
             if(small_tree.Resolved and not small_tree.Boosted_tau32btag):
-                RSL = True
+                resolved_bool = True
             for jet in jets:
                 if jet.isForward and jet.isGood:
                     is_fwd = True
-            return BST, RSL, is_fwd
+            return boosted_bool, resolved_bool, is_fwd
         
         elif key == 2: #deep
             if(small_tree.Boosted_deeptag):
-                BST = True
+                boosted_bool = True
             if(small_tree.Resolved and not small_tree.Boosted_deeptag):
-                RSL = True
+                resolved_bool = True
             for jet in jets:
                 if jet.isForward and jet.isGood:
                     is_fwd = True
-            return BST, RSL, is_fwd
+            return boosted_bool, resolved_bool, is_fwd
         
         elif key == 3: #deep btag
             if(small_tree.Boosted_deeptagbtag):
-                BST = True
+                boosted_bool = True
             if(small_tree.Resolved and not small_tree.Boosted_deeptagbtag):
-                RSL = True
+                resolved_bool = True
             for jet in jets:
                 if jet.isForward and jet.isGood:
                     is_fwd = True
-            return BST, RSL, is_fwd
+            return boosted_bool, resolved_bool, is_fwd
         
     def counter_32(self, sig):
         self.resolved_fwd = 0 
