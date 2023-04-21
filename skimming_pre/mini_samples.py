@@ -9,7 +9,7 @@ class mini_sample:
         self.name  = name
         self.path  = path
 
-    def dammi_combo_string(self):
+    def path_name(self):
         namepath = self.name + self.path
         return namepath
 
