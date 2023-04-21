@@ -20,7 +20,9 @@ eos = '/eos/user/j/jbonetti/datasets/'
 if subgroup == 1: 
     group_path = '/eos/user/j/jbonetti/datasets/05_04_2023/'
 
-########## Signals ##########
+################
+#   Signals    #
+################
 TprimeBToTZ_M_1000 = mini_sample(sigma= 0.01362, 
                                  name = 'TprimeBToTZ_M_1000.root', 
                                  path = group_path)
@@ -31,7 +33,9 @@ TprimeBToTZ_M_1300 = mini_sample(sigma= 0.00325,
                                  name = 'TprimeBToTZ_M_1300.root',
                                  path = group_path)
 
-########## Backgrounds ##########
+####################
+#   Backgrounds    #
+####################
 TT_Mtt_1000toInf = mini_sample(sigma = 21.3,
                                name  = 'TT_Mtt_1000toInf.root',
                                path  = group_path)
@@ -52,7 +56,9 @@ ZJetsToNuNu_HT_600To800   = mini_sample(sigma = 2.56*1.04,
                                      name  = 'ZJetsToNuNu_HT_600To800.root',
                                      path  = group_path)
 
-########## Liste utili ##########
+##############
+#   Liste    #
+##############
 datasets_list = [TprimeBToTZ_M_1000,
                  TprimeBToTZ_M_1100,
                  TprimeBToTZ_M_1300,
