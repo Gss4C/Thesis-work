@@ -238,7 +238,6 @@ class significancer:
         norm_count = n_sel * self.mini_sample.sigma * self.L_run2 / n_tot
         return norm_count
 
-
 class efficiency_plot:
     def __init__(self, mini_sample): #devo ricordare di cambiare i nomi dai datasets
         self.mini_sample = mini_sample
@@ -249,8 +248,7 @@ class efficiency_plot:
         return skim
     def hist_name(self):
         histo = "hist_out_" + self.mini_sample.name 
-        return histo
-    
+        return histo   
     def plotto(self, eff_b_w_fj, eff_b_wo_fj, eff_r_w_fj, eff_r_wo_fj, boost_type = ""):
         epsilon = {}
         epsilon[boost_type] = [eff_b_w_fj*100, eff_b_wo_fj*100]
@@ -271,7 +269,6 @@ class efficiency_plot:
         plot = sns.heatmap(df, cmap= 'YlGnBu', annot=True) #colors[boost_type]
         plt.savefig(self.mini_sample.name.replace(".root","") + "_" +boost_type +".png") 
         plt.close()
-
     def efficiency_plotter(self, significance = 1):
         skim_name = self.skim_name()
         hist_name = self.hist_name()
