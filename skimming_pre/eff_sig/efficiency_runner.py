@@ -60,11 +60,11 @@ for mini_dataset in full_range_sig_list:
         print('calcolo per le significance...')
         
         if full_range_sig_list.index(mini_dataset) == 0:
-            Sig_1000 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
+            sig_small = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif full_range_sig_list.index(mini_dataset) == 1:
-            Sig_1100 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
+            sig_medium = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif full_range_sig_list.index(mini_dataset) == 2:
-            Sig_1300 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
+            sig_big = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
         elif full_range_sig_list.index(mini_dataset) >= 2:
             for NCi,NCbg_index in zip(NCount_t32 , range(len(NCountbg_t32))):
                 NCountbg_t32[NCbg_index] += NCi
@@ -77,8 +77,8 @@ for mini_dataset in full_range_sig_list:
 Bg_gigalist = [NCountbg_t32,NCountbg_t32b,NCountbg_d,NCountbg_db]
 
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
-signal_list = [Sig_1000, Sig_1100, Sig_1300]
-signal_names = ['Sig_1000', 'Sig_1100', 'Sig_1300']
+signal_list = [sig_small, sig_medium, sig_big]
+signal_names = ['Sig_800', 'Sig_1100', 'Sig_1800']
 
 for signal,signal_name in zip(signal_list, signal_names):
     sel_mode_Z = {}
@@ -89,11 +89,11 @@ for signal,signal_name in zip(signal_list, signal_names):
             temp_list.append(significance)
             sel_mode_Z[name] = temp_list
 
-    sig_1000_df = pd.DataFrame(data=sel_mode_Z , index=['b_fw', 'b_notfw','r_fw','r_notfw'])
+    sig_df = pd.DataFrame(data=sel_mode_Z , index=['b_fw', 'b_notfw','r_fw','r_notfw'])
     plt.rcParams["figure.figsize"]=[8, 5] 
     plt.rcParams["figure.autolayout"]=True 
     plt.title("Significances, signal dataset" + signal_name) 
-    plot = sns.heatmap(sig_1000_df, cmap= 'BuPu', annot=True)
+    plot = sns.heatmap(sig_df, cmap= 'BuPu', annot=True)
     plt.savefig('significances/significance_Tprime_'+ signal_name + '.png') 
     plt.close()
 
