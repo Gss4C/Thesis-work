@@ -63,7 +63,6 @@ class efficiency_maker:
                         is_fwd = True
             return BST, RSL, is_fwd
         
-        
     def counter_32(self, sig):
         self.resolved_fwd = 0 
         self.resolved_nfw = 0 
