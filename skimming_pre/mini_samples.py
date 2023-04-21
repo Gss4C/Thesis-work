@@ -36,7 +36,7 @@ TprimeBToTZ_M_1300 = mini_sample(sigma= 0.00325,
                                  name = 'TprimeBToTZ_M_1300.root',
                                  path = group_path)
 TprimeBToTZ_M_1800 = mini_sample(sigma= 0.00044,
-                                 name = 'TprimeBToTZ_M_1800',
+                                 name = 'TprimeBToTZ_M_1800.root',
                                  path =group_path)
 
 ####################
