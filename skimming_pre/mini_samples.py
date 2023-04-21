@@ -23,6 +23,9 @@ if subgroup == 1:
 ################
 #   Signals    #
 ################
+TprimeBToTZ_M_600  = mini_sample(sigma= 0.13728,
+                                 name = 'TprimeBToTZ_M_600.root',
+                                 path = group_path)
 TprimeBToTZ_M_1000 = mini_sample(sigma= 0.01362, 
                                  name = 'TprimeBToTZ_M_1000.root', 
                                  path = group_path)
@@ -32,6 +35,9 @@ TprimeBToTZ_M_1100 = mini_sample(sigma= 0.00823,
 TprimeBToTZ_M_1300 = mini_sample(sigma= 0.00325,
                                  name = 'TprimeBToTZ_M_1300.root',
                                  path = group_path)
+TprimeBToTZ_M_1800 = mini_sample(sigma= 0.00044,
+                                 name = 'TprimeBToTZ_M_1800',
+                                 path =group_path)
 
 ####################
 #   Backgrounds    #
@@ -59,12 +65,12 @@ ZJetsToNuNu_HT_600To800   = mini_sample(sigma = 2.56*1.04,
 ##############
 #   Liste    #
 ##############
-datasets_list = [TprimeBToTZ_M_1000,
-                 TprimeBToTZ_M_1100,
-                 TprimeBToTZ_M_1300,
-                 TT_Mtt_1000toInf,
-                 TT_Mtt_700to1000,
-                 ZJetsToNuNu_HT_2500ToInf,
-                 ZJetsToNuNu_HT_1200To2500,
-                 ZJetsToNuNu_HT_800To1200,
-                 ZJetsToNuNu_HT_600To800]
+full_range_signals_list = [TprimeBToTZ_M_1000,
+                            TprimeBToTZ_M_1100,
+                            TprimeBToTZ_M_1300,
+                            TT_Mtt_1000toInf,
+                            TT_Mtt_700to1000,
+                            ZJetsToNuNu_HT_2500ToInf,
+                            ZJetsToNuNu_HT_1200To2500,
+                            ZJetsToNuNu_HT_800To1200,
+                            ZJetsToNuNu_HT_600To800]

@@ -5,6 +5,7 @@ import ROOT
 import pandas as pd
 import numpy as np
 import argparse
+
 '''
 info utili per le liste quando conto i bg
 Ordine selezioni: [32, 32b, d, db]
@@ -48,9 +49,9 @@ if options.sig: #creazione variabili per significance
     NCountbg_db_rn = 0
     NCountbg_db = [NCountbg_db_bf,NCountbg_db_bn,NCountbg_db_rf,NCountbg_db_rn]
 
-for mini_dataset in datasets_list:
+for mini_dataset in full_range_signals_list:
     print("\nInizio calcolo efficienza dataset: "+ mini_dataset.name)
-    print("Processo al: " + str( float(datasets_list.index(mini_dataset))/len(datasets_list) * 100) + "%")
+    print("Processo al: " + str( float(full_range_signals_list.index(mini_dataset))/len(full_range_signals_list) * 100) + "%")
     
     maledetta_efficienza = efficiency_plot(mini_dataset)
     NCount_t32, NCount_t32b, NCount_d, NCount_db = maledetta_efficienza.efficiency_plotter(significance = options.sig)
@@ -59,13 +60,13 @@ for mini_dataset in datasets_list:
     if options.sig:
         print('calcolo per le significance...')
         
-        if datasets_list.index(mini_dataset) == 0:
+        if full_range_signals_list.index(mini_dataset) == 0:
             Sig_1000 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
-        elif datasets_list.index(mini_dataset) == 1:
+        elif full_range_signals_list.index(mini_dataset) == 1:
             Sig_1100 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
-        elif datasets_list.index(mini_dataset) == 2:
+        elif full_range_signals_list.index(mini_dataset) == 2:
             Sig_1300 = [NCount_t32, NCount_t32b, NCount_d, NCount_db]
-        elif datasets_list.index(mini_dataset) >= 2:
+        elif full_range_signals_list.index(mini_dataset) >= 2:
             for NCi,NCbg_index in zip(NCount_t32 , range(len(NCountbg_t32))):
                 NCountbg_t32[NCbg_index] += NCi
             for NCi,NCbg_index in zip(NCount_t32b , range(len(NCountbg_t32b))):
@@ -97,5 +98,5 @@ for signal,signal_name in zip(signal_list, signal_names):
     plt.savefig('significances/significance_Tprime_'+ signal_name + '.png') 
     plt.close()
 
-numero_files = len(datasets_list) * 4
+numero_files = len(full_range_signals_list) * 4
 print('operazione completa: salvati '+ str(numero_files)+ ' file .png')
