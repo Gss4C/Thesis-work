@@ -5,7 +5,7 @@ from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.effici
 percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 
 variables=[("MET_pt"," MET ",100,0,500)]
-cuts = [("boosted_deeptag")]
+cuts = [("Boosted_deeptag")]
 for dataset in signal_only_list:
     #mi piglio Tree->Events
     skim_dataset_file_name = percorso + dataset.name.replace(".root","_Skim.root")
@@ -16,6 +16,6 @@ for dataset in signal_only_list:
     c = ROOT.TCanvas()
     #houtput = ROOT.TH1F(var[0],var[0],var[1],var[2],var[3])
     houtput = ROOT.TH1F('MET_pt','MET',100,0,500)
-    skimmed_tree.Project(houtput.GetName(), 'MET_pt','boosted_deeptag')
+    skimmed_tree.Project(houtput.GetName(), 'MET_pt','Boosted_deeptag')
     c.Draw()
     c.SaveAs("MET_signal_" + dataset.name + ".png")
