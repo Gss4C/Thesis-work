@@ -22,6 +22,10 @@ class efficiency_maker:
 
         self.percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
     def dammi_il_boolean(self, small_tree, jets, key = 0):
+        boosted_bool  = False
+        resolved_bool = False
+        is_fwd        = False
+
         if key == 0: #tau 32
             if(small_tree.Boosted_tau32):
                 boosted_bool = True
@@ -77,10 +81,11 @@ class efficiency_maker:
         for event in range(small_tree.GetEntries()):
             small_tree.GetEntry(event)
             jets   = Collection(small_tree, "Jet")
-            global BST    = False
-            global RSL    = False
-            global is_fwd = False
-            
+            '''
+            BST    = False
+            RSL    = False
+            is_fwd = False
+            '''
             BST, RSL, is_fwd = self.dammi_il_boolean(small_tree = small_tree, jets=jets , key=0)
 
             ##############
