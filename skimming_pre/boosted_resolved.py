@@ -6,8 +6,6 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 class boosted_resolved(Module):
     def __init__(self):
-        #self.lepton_ok = 0
-        #self.phis_ok = 0
         pass
     def beginJob(self):
         pass
@@ -39,7 +37,7 @@ class boosted_resolved(Module):
             if collect[i].isGood:
                 deltaphi = abs(collect[i].phi - object.phi)
                 deltas.append(deltaphi)
-        return (deltas if len(deltas) else [-1.0]) #sta roba serve per evitare l'empy sequence
+        return (deltas if len(deltas) else [-1.0]) #to avoid 'empty sequence' error
     def deltaR(self, object1, object2): #distanza piano eta-phi
         Deta = object1.eta - object2.eta
         Dphi = object1.phi - object2.phi
@@ -53,8 +51,8 @@ class boosted_resolved(Module):
         return collect_list
     def global_veto(self, MET, deltaphis, electrons, muons):
         # cond veto globali che valgono per entrambe le analis, senza lui non vado avanti e scarto l'evento
-        cond_MET = MET.pt        >200
-        cond_phi = min(deltaphis)>0.6
+        cond_MET = MET.pt         >200
+        cond_phi = min(deltaphis) >0.6
         goodEle  = self.collect_list_gfilter(electrons)
         goodMu   = self.collect_list_gfilter(muons)
         if len(goodEle)==0 and len(goodMu)==0:
@@ -113,9 +111,10 @@ class boosted_resolved(Module):
         
         if event_global_condition:
             eventsavior = True
-            boost_tau32  = False
-            boost_tau32btag  = False
-            boost_deeptag  = False
+
+            boost_tau32        = False
+            boost_tau32btag    = False
+            boost_deeptag      = False
             boost_deeptagbtag  = False
             resolv = False
             self.forward_jet_tagger(jets, "Jet_isForward")
@@ -185,17 +184,7 @@ class boosted_resolved(Module):
                                     distance = self.deltaR(jet,fjet)
                                     if distance<0.8:
                                         boost_deeptagbtag = True
-                    '''
-                    tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
-                    if fjet.msoftdrop>105 and fjet.msoftdrop<220 and tau32 < 0.65:
-                        good_jets_list = self.collect_list_gfilter(jets)
-                        for jet in good_jets_list:
-                            if jet.btagDeepB > 0.1241:
-                                distance = self.deltaR(jet,fjet)
-                                if distance<0.8:
-                                    boost = True
-                    '''
-            #ora devo riempire i branches
+            #branches filling
             self.out.fillBranch("Boosted_tau32"       , int(boost_tau32))
             self.out.fillBranch("Boosted_tau32btag"   , int(boost_tau32btag))
             self.out.fillBranch("Boosted_deeptag"     , int(boost_deeptag))

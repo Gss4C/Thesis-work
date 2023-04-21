@@ -3,7 +3,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True 
 
-class full_selector(Module):
+class good_tagger(Module):
     def __init__(self):
         pass
     def beginJob(self):
@@ -52,7 +52,7 @@ class full_selector(Module):
                                       range(0, len(fatjets))))
         
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt     > 30  and  
-                                      electron[idx].cutBased_Fall17_V1 >= 2  , 
+                                      electron[idx].cutBased >= 2  , 
                                       range(0, len(electron))))
         
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt        > 30  and  
