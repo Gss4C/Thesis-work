@@ -91,7 +91,7 @@ for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1000, righe): #fissata la sing
         temp_list.append(significance)
         sel_mode_Z[name] = temp_list
 
-sig_1000_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+sig_1000_df = pd.DataFrame(data=sel_mode_Z , index=['boost_fw', 'boost_notfw','resolved_fw','resolved_notfw'])
 plt.rcParams["figure.figsize"]=[8, 5] 
 plt.rcParams["figure.autolayout"]=True 
 plt.title("Significances, dataset M=1000") 
@@ -102,14 +102,14 @@ plt.close()
 #segnale 1100
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 sel_mode_Z = {}
-for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
+for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
     temp_list = []
     for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
         significance = si/np.sqrt(bi)
         temp_list.append(significance)
         sel_mode_Z[name] = temp_list
 
-sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['boost_fw', 'boost_notfw','resolved_fw','resolved_notfw'])
 plt.rcParams["figure.figsize"]=[8, 5] 
 plt.rcParams["figure.autolayout"]=True 
 plt.title("Significances, dataset M=1000") 
@@ -120,39 +120,20 @@ plt.close()
 #segnale 1300
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 sel_mode_Z = {}
-for Bg_sel, Sig_sel, names in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
+for Bg_sel, Sig_sel, name in zip(Bg_gigalist, Sig_1300, righe): #fissata la singola selezione
     temp_list = []
-    for bi,si in zip(Bg_sel, Sig_sel):             #fissato il singolo mode
+    for bi,si in zip(Bg_sel, Sig_sel):  #fissato il singolo mode
         significance = si/np.sqrt(bi)
         temp_list.append(significance)
         sel_mode_Z[name] = temp_list
 
-sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['t32', 't32_b','deep','deep_b'])
+sig_1300_df = pd.DataFrame(data=sel_mode_Z , index=['boost_fw', 'boost_notfw','resolved_fw','resolved_notfw'])
 plt.rcParams["figure.figsize"]=[8, 5] 
 plt.rcParams["figure.autolayout"]=True 
 plt.title("Significances, dataset M=1000") 
 plot = sns.heatmap(sig_1300_df, cmap= 'BuPu', annot=True)
 plt.savefig("significances/significance_Tprime_1300.png") 
 plt.close()
-
-'''
-significances = {}
-righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
-for sig1, sig2, sig3, bkg, name in zip(Sig_1000, Sig_1100, Sig_1300, B_sing, righe):
-    significance_1 = sig1/np.sqrt(bkg)
-    significance_2 = sig2/np.sqrt(bkg)
-    significance_3 = sig3/np.sqrt(bkg)
-    significances[name] = [significance_1, significance_2, significance_3]
-
-significance_dataframe = pd.DataFrame(data=significances , index=['TprimeBToTZ_M_1000', 'TprimeBToTZ_M_1100', 'TprimeBToTZ_M_1300'])
-significance_final     = significance_dataframe.transpose()
-significance_final.to_csv('significances/signinificance_'+
-                            str(creation_time.year) + '-' +
-                            str(creation_time.month) + '-' +
-                            str(creation_time.day) + '-' +
-                            str(creation_time.microsecond)+
-                            ".csv")
-'''
 
 numero_files = len(datasets_list) * 4
 print('operazione completa: salvati '+ str(numero_files)+ ' file .png')
