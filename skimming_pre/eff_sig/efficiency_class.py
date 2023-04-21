@@ -77,9 +77,9 @@ class efficiency_maker:
         for event in range(small_tree.GetEntries()):
             small_tree.GetEntry(event)
             jets   = Collection(small_tree, "Jet")
-            BST    = False
-            RSL    = False
-            is_fwd = False
+            global BST    = False
+            global RSL    = False
+            global is_fwd = False
             
             BST, RSL, is_fwd = self.dammi_il_boolean(small_tree = small_tree, jets=jets , key=0)
 
