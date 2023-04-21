@@ -20,7 +20,7 @@ class efficiency_maker:
         self.boost_fwd    = 0 
         self.boost_nfw    = 0
 
-        self.percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab"
+        self.percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
     def dammi_il_boolean(self, small_tree, jets, key = 0):
         if key == 0: #tau 32
             if(small_tree.Boosted_tau32):
