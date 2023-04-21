@@ -10,7 +10,7 @@ class mini_sample:
         self.path  = path
 
     def path_name(self):
-        namepath = self.name + self.path
+        namepath = self.path + self.name 
         return namepath
 
 ## Metas
