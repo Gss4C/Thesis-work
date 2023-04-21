@@ -24,7 +24,7 @@ class efficiency_maker:
     def dammi_il_boolean(self, small_tree, jets, key = 0):
         if key == 0: #tau 32
             if(small_tree.Boosted_tau32):
-                    BST = True
+                BST = True
             if(small_tree.Resolved and not small_tree.Boosted_tau32):
                 RSL = True
             for jet in jets:
@@ -34,7 +34,7 @@ class efficiency_maker:
         
         elif key == 1: #tau 32 btag
             if(small_tree.Boosted_tau32btag):
-                    BST = True
+                BST = True
             if(small_tree.Resolved and not small_tree.Boosted_tau32btag):
                 RSL = True
             for jet in jets:
@@ -44,7 +44,7 @@ class efficiency_maker:
         
         elif key == 2: #deep
             if(small_tree.Boosted_deeptag):
-                    BST = True
+                BST = True
             if(small_tree.Resolved and not small_tree.Boosted_deeptag):
                 RSL = True
             for jet in jets:
@@ -54,7 +54,7 @@ class efficiency_maker:
         
         elif key == 3: #deep btag
             if(small_tree.Boosted_deeptagbtag):
-                    BST = True
+                BST = True
             if(small_tree.Resolved and not small_tree.Boosted_deeptagbtag):
                 RSL = True
             for jet in jets:
