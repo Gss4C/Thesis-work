@@ -16,6 +16,6 @@ for dataset in signal_only_list:
     c = ROOT.TCanvas()
     #houtput = ROOT.TH1F(var[0],var[0],var[1],var[2],var[3])
     houtput = ROOT.TH1F('MET_pt','MET',100,0,500)
-    skimmed_tree.Project(houtput, 'MET_pt','boosted_deeptag')
+    skimmed_tree.Project(houtput.GetName(), 'MET_pt','boosted_deeptag')
     c.Draw()
     c.SaveAs("MET_signal_" + dataset.name + ".png")
