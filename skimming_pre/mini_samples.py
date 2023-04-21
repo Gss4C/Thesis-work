@@ -65,15 +65,15 @@ ZJetsToNuNu_HT_600To800   = mini_sample(sigma = 2.56*1.04,
 ##############
 #   Liste    #
 ##############
-full_range_signals_list = [TprimeBToTZ_M_1000,
-                            TprimeBToTZ_M_1100,
-                            TprimeBToTZ_M_1300,
-                            TT_Mtt_1000toInf,
-                            TT_Mtt_700to1000,
-                            ZJetsToNuNu_HT_2500ToInf,
-                            ZJetsToNuNu_HT_1200To2500,
-                            ZJetsToNuNu_HT_800To1200,
-                            ZJetsToNuNu_HT_600To800]
+full_range_sig_list = [TprimeBToTZ_M_600,
+                        TprimeBToTZ_M_1100,
+                        TprimeBToTZ_M_1800,
+                        TT_Mtt_1000toInf,
+                        TT_Mtt_700to1000,
+                        ZJetsToNuNu_HT_2500ToInf,
+                        ZJetsToNuNu_HT_1200To2500,
+                        ZJetsToNuNu_HT_800To1200,
+                        ZJetsToNuNu_HT_600To800]
 
 signal_only_list = [TprimeBToTZ_M_600,
                     TprimeBToTZ_M_1100,
