@@ -5,7 +5,7 @@ from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.effici
 
 percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 L_run2 = 138
-variables=["MET_pt"," MET ",100,0,1000]
+#variables=["MET_pt"," MET ",100,0,1000]
 cuts = ['Boosted_tau32','Boosted_tau32btag','Boosted_deeptag','Boosted_deeptagbtag']
 
 parser = argparse.ArgumentParser(description='Histogram MET_pt plots')
