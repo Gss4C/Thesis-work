@@ -29,7 +29,7 @@ if options.type == 0:
             skimmed_tree = skimmed_file.Events
 
             c = ROOT.TCanvas()
-            houtput = ROOT.TH1F('MET_pt','MET' + dataset.name ,500,0,1000)
+            houtput = ROOT.TH1F('MET_pt','MET' + dataset.name ,100,0,1000)
             skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut)
             
             houtput.Scale(w)
