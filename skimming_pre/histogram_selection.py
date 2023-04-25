@@ -3,10 +3,10 @@ import argparse
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.mini_samples import *
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.efficiency_class import *
 
-percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
-L_run2 = 138
 #variables=["MET_pt"," MET ",100,0,1000]
+percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 cuts = ['Boosted_tau32','Boosted_tau32btag','Boosted_deeptag','Boosted_deeptagbtag']
+L_run2 = 138
 
 parser = argparse.ArgumentParser(description='Histogram MET_pt plots')
 parser.add_argument('-t', '--type',
