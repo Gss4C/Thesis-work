@@ -42,6 +42,7 @@ if options.type == 0:
 if options.type == 1:
     bkg_histos = ROOT.TH1F()
     for cut in cuts:
+        print("inizio del processo per il cut "+ cut)
         c = ROOT.TCanvas()
         c.Draw()
 
@@ -74,7 +75,7 @@ if options.type == 1:
             skimmed_tree = skimmed_file.Events
 
             h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
-            skimmed_tree.Project(hsignal.GetName(), 'MET_pt', cut)
+            skimmed_tree.Project(h_signal.GetName(), 'MET_pt', cut)
 
             h_bg_sum.SetLineColor(2)
             h_bg_sum.SetFillColorAlpha(2,1)
