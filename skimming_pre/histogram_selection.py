@@ -22,15 +22,15 @@ if options.type == 0:
             weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
             weight_histo = weights_histo_file.plots.Get('h_genweight')
             n_mc_tot = weight_histo.GetBinContent(1) 
-            w = dataset.sigma * L_run2 / (n_mc_tot)
+            w = dataset.sigma * L_run2 / (n_mc_tot) #questo serve per scalare
 
             skim_dataset_file_name = percorso + dataset.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_dataset_file_name,"Open")
             skimmed_tree = skimmed_file.Events
 
             c = ROOT.TCanvas()
-            houtput = ROOT.TH1F('MET_pt','MET' + dataset.name ,100,0,1000)
-            skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut)
+            houtput = ROOT.TH1F('MET_pt','MET ' + dataset.name.replace('.root','') ,100,0,1000)
+            skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut) #getname() ??
             
             houtput.Scale(w)
             c.Draw()
