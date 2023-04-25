@@ -41,6 +41,47 @@ if options.type == 0:
 
 if options.type == 1:
     bkg_histos = ROOT.TH1F()
+    for cut in cuts:
+        c = ROOT.TCanvas()
+        c.Draw()
+        houtput = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
+
+        h_bg_sum = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
+
+        for background in bkg_only_list:
+            weights_histo_name = percorso + "hist_out_" + background.name
+            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
+            weight_histo = weights_histo_file.plots.Get('h_genweight')
+            n_mc_tot = weight_histo.GetBinContent(1) 
+            w = background.sigma * L_run2 / (n_mc_tot)
+
+            skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
+            skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
+            skimmed_tree = skimmed_file.Events
+
+            h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,0,1000)
+            skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
+            h_bg_sum.Add(h_single_bg)
+
+        for signal in signal_only_list:
+            weights_histo_name = percorso + "hist_out_" + signal.name
+            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
+            weight_histo = weights_histo_file.plots.Get('h_genweight')
+            n_mc_tot = weight_histo.GetBinContent(1) 
+            w = signal.sigma * L_run2 / (n_mc_tot)
+
+            skim_signal_file_name = percorso + signal.name.replace(".root","_Skim.root")
+            skimmed_file = ROOT.TFile(skim_signal_file_name,"Open")
+            skimmed_tree = skimmed_file.Events
+
+            hsignal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
+            skimmed_tree.Project(hsignal.GetName(), 'MET_pt', cut)
+        
+            h_bg_sum.Draw()
+            hsignal.Draw("SAME")
+            c.SaveAs("MET_cutplot_" + cut + dataset.name.replace(".root", "") + ".png")
+
+'''
     for background in bkg_only_list:
         for cut in cuts:
             weights_histo_name = percorso + "hist_out_" + background.name
