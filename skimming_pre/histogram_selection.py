@@ -18,13 +18,13 @@ options = parser.parse_args()
 if options.type == 0:
     for dataset in signal_only_list:
         for cut in cuts:
-            weights_histo_name = percorso + "hist_out_" + dataset.name
+            weights_histo_name = percorso + "hist_out_" + dataset.name #riesce ad essere una funzione intera da solo?
             weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
             weight_histo = weights_histo_file.plots.Get('h_genweight')
             n_mc_tot = weight_histo.GetBinContent(1) 
             w = dataset.sigma * L_run2 / (n_mc_tot) #questo serve per scalare
 
-            skim_dataset_file_name = percorso + dataset.name.replace(".root","_Skim.root")
+            skim_dataset_file_name = percorso + dataset.name.replace(".root","_Skim.root") #forse questi 3 righi riesco a farli come funzione
             skimmed_file = ROOT.TFile(skim_dataset_file_name,"Open")
             skimmed_tree = skimmed_file.Events
 
@@ -44,8 +44,7 @@ if options.type == 1:
     for cut in cuts:
         c = ROOT.TCanvas()
         c.Draw()
-        houtput = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
-
+        
         h_bg_sum = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
 
         for background in bkg_only_list:
