@@ -94,7 +94,7 @@ if options.type == 1:
             leg.AddEntry(h_passing_probes, "Passing probes","f")
             leg.Draw()
             '''
-            c.SaveAs("MET_cutplot_" + cut + dataset.name.replace(".root", "") + ".png")
+            c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
 
 '''
     for background in bkg_only_list:
