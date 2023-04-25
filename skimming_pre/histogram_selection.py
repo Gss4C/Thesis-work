@@ -47,7 +47,7 @@ if options.type == 1:
         c.Draw()
 
         h_bg_sum = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
-
+        print(h_bg_sum)
         for background in bkg_only_list:
             weights_histo_name = percorso + "hist_out_" + background.name
             weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
@@ -58,9 +58,11 @@ if options.type == 1:
             skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
             skimmed_tree = skimmed_file.Events
+            print(h_bg_sum)
 
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,0,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
+            print(h_bg_sum)
             h_bg_sum.Add(h_single_bg)
 
         for signal in signal_only_list:
