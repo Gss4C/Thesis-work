@@ -73,7 +73,7 @@ if options.type == 1:
             skimmed_file = ROOT.TFile(skim_signal_file_name,"Open")
             skimmed_tree = skimmed_file.Events
 
-            hsignal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
+            h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
             skimmed_tree.Project(hsignal.GetName(), 'MET_pt', cut)
 
             h_bg_sum.SetLineColor(2)
