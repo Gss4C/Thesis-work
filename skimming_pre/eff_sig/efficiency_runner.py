@@ -17,7 +17,7 @@ Ordine modes: [bf, bnf, rf, rnf]
 parser = argparse.ArgumentParser(description='Plot efficienze e significance')
 parser.add_argument('-s', '--sig',
                     type     = int,
-                    help     = '1/0: if true, the program will calculate significances and will write a csv which resume everything', 
+                    help     = '1/0: if true, the program will also calculate significances and make an heatmap resuming results', 
                     required = True)
 options = parser.parse_args()
 
