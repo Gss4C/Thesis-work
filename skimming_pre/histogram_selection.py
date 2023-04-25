@@ -46,7 +46,7 @@ if options.type == 1:
         c = ROOT.TCanvas()
         c.Draw()
 
-        h_bg_sum = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
+        h_bg_sum = ROOT.TH1F('MET_pt' + cut, 'MET backgrounds', 100,0,1000)
         print(h_bg_sum)
         for background in bkg_only_list:
             weights_histo_name = percorso + "hist_out_" + background.name
