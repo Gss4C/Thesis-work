@@ -79,7 +79,7 @@ Bg_gigalist = [NCountbg_t32,NCountbg_t32b,NCountbg_d,NCountbg_db]
 
 righe = ['tau32', 'tau32_B', 'deep', 'deep_B']
 signal_list = [sig_small, sig_medium, sig_big]
-signal_names = ['Sig_800', 'Sig_1100', 'Sig_1800']
+signal_names = ['Sig_600', 'Sig_1100', 'Sig_1800']
 
 for signal,signal_name in zip(signal_list, signal_names):
     sel_mode_Z = {}
