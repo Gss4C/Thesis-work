@@ -44,7 +44,7 @@ if options.type == 1:
     for cut in cuts:
         c = ROOT.TCanvas()
         c.Draw()
-        
+
         h_bg_sum = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,0,1000)
 
         for background in bkg_only_list:
@@ -75,9 +75,24 @@ if options.type == 1:
 
             hsignal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
             skimmed_tree.Project(hsignal.GetName(), 'MET_pt', cut)
-        
+
+            h_bg_sum.SetLineColor(2)
+            h_bg_sum.SetFillColorAlpha(2,1)
+            h_bg_sum.GetXaxis().SetTitle("E [Gev]")
+            h_bg_sum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
             h_bg_sum.Draw()
-            hsignal.Draw("SAME")
+
+            h_signal.SetLineColor(9)
+            h_signal.SetFillColorAlpha(9,0.7)
+            h_signal.Draw("SAME")
+
+            '''            
+            leg = ROOT.TLegend(0.1,0.7,0.4,0.9) #0.4,0.7,0.6,0.9
+            leg.SetHeader("Legenda", "C")                         
+            leg.AddEntry(h_all_probes, "All probes","f")            
+            leg.AddEntry(h_passing_probes, "Passing probes","f")
+            leg.Draw()
+            '''
             c.SaveAs("MET_cutplot_" + cut + dataset.name.replace(".root", "") + ".png")
 
 '''
