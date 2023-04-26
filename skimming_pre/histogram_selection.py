@@ -41,13 +41,26 @@ if options.type == 0:
 
 if options.type == 1:
     bkg_histos = ROOT.TH1F()
-    for cut in cuts:
+    #istogrammi che servono
+    h_bgsum_tau32 = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_bgsum_tau32b = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_bgsum_deep = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_bgsum_deepb = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    histo_bgsum_list=[h_bgsum_tau32, h_bgsum_tau32b, h_bgsum_deep, h_bgsum_deepb]
+
+    h_signal_tau32 = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_signal_tau32b = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_signal_deep = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    h_signal_deepb = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
+    histo_signal_list=[h_signal_tau32, h_signal_tau32b, h_signal_deep, h_signal_deepb]
+    
+    for cut, h_bkgsum, h_signal in zip(cuts, histo_bgsum_list, histo_signal_list):
         print("inizio del processo per il cut "+ cut)
         c = ROOT.TCanvas()
         c.Draw()
 
-        h_bg_sum = ROOT.TH1F('MET_pt' + cut, 'MET backgrounds', 100,0,1000)
-        print(h_bg_sum)
+        #h_bg_sum = ROOT.TH1F('MET_pt' + cut, 'MET backgrounds', 100,200,1000)
+        #print(h_bg_sum)
         for background in bkg_only_list:
             weights_histo_name = percorso + "hist_out_" + background.name
             weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
@@ -58,12 +71,13 @@ if options.type == 1:
             skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
             skimmed_tree = skimmed_file.Events
-            print(h_bg_sum)
+            #print(h_bg_sum)
 
-            h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,0,1000)
+            h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
-            print(h_bg_sum)
-            h_bg_sum.Add(h_single_bg)
+            #print(h_bg_sum)
+            #h_bg_sum.Add(h_single_bg)
+            h_bkgsum.Add(h_single_bg)
 
         for signal in signal_only_list:
             weights_histo_name = percorso + "hist_out_" + signal.name
@@ -76,15 +90,15 @@ if options.type == 1:
             skimmed_file = ROOT.TFile(skim_signal_file_name,"Open")
             skimmed_tree = skimmed_file.Events
 
-            h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
+            h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,200,1000)
             skimmed_tree.Project(h_signal.GetName(), 'MET_pt', cut)
 
-            h_bg_sum.SetLineColor(2)
-            h_bg_sum.SetFillColorAlpha(2,1)
-            h_bg_sum.GetXaxis().SetTitle("E [Gev]")
-            h_bg_sum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
-            h_bg_sum.Draw()
-
+            h_bkgsum.SetLineColor(2)
+            h_bkgsum.SetFillColorAlpha(2,1)
+            h_bkgsum.GetXaxis().SetTitle("E [Gev]")
+            h_bkgsum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
+            h_bkgsum.Draw()
+            #h->SetTitle("Histogram title;Another X title Axis");
             h_signal.SetLineColor(9)
             h_signal.SetFillColorAlpha(9,0.7)
             h_signal.Draw("SAME")
