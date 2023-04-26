@@ -74,6 +74,7 @@ if options.type == 1:
 
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
+
             h_single_bg.Scale(w)
             h_bkgsum.Add(h_single_bg)
 
@@ -90,6 +91,9 @@ if options.type == 1:
 
             h_signal.Scale(w)
 
+            ########################
+            #    Drawing Histos    #
+            ########################
             h_bkgsum.SetLineColor(2)
             h_bkgsum.SetFillColorAlpha(2,1)
             h_bkgsum.GetXaxis().SetTitle("E [Gev]")
@@ -100,13 +104,15 @@ if options.type == 1:
             max_signal = h_signal.GetMaximum()
             max_Y = int(max(max_bkg, max_signal)) + 15
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
-            h_bkgsum.Draw()
+            h_bkgsum.SetLogy()
+            h_bkgsum.Draw('hist')
 
             h_signal.GetYaxis().SetRange(0,max_Y)
             h_signal.SetTitle(cut + signal.name.replace('.root',''))
             h_signal.SetLineColor(9)
             h_signal.SetFillColorAlpha(9,0.7)
-            h_signal.Draw("SAME")
+            h_signal.SetLogy()
+            h_signal.Draw("SAME,hist")
 
                         
             leg = ROOT.TLegend(0.1,0.7,0.4,0.9) #0.4,0.7,0.6,0.9
