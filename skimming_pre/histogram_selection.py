@@ -104,14 +104,14 @@ if options.type == 1:
             max_signal = h_signal.GetMaximum()
             max_Y = int(max(max_bkg, max_signal)) + 15
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
-            h_bkgsum.SetLogy()
+            #h_bkgsum.SetLogy()
             h_bkgsum.Draw('hist')
 
             h_signal.GetYaxis().SetRange(0,max_Y)
             h_signal.SetTitle(cut + signal.name.replace('.root',''))
             h_signal.SetLineColor(9)
             h_signal.SetFillColorAlpha(9,0.7)
-            h_signal.SetLogy()
+            #h_signal.SetLogy()
             h_signal.Draw("SAME,hist")
 
                         
@@ -120,5 +120,5 @@ if options.type == 1:
             leg.AddEntry(h_signal, "signal","f")            
             leg.AddEntry(h_bkgsum, "backgrounds sum","f")
             leg.Draw()
-            
+            c.SetLogy()
             c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
