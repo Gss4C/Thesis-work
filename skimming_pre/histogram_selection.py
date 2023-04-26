@@ -98,7 +98,7 @@ if options.type == 1:
 
             max_bkg = h_bkgsum.GetMaximum()
             max_signal = h_signal.GetMaximum()
-            max_Y = int(max(max_bkg, max_signal)) 
+            max_Y = int(max(max_bkg, max_signal)) +15
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
 
             h_bkgsum.Draw()
