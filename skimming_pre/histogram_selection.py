@@ -95,12 +95,12 @@ if options.type == 1:
             h_bkgsum.SetFillColorAlpha(2,1)
             h_bkgsum.GetXaxis().SetTitle("E [Gev]")
             h_bkgsum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
+            h_bkgsum.SetTitle(cut + signal.name.replace('.root',''))
 
             max_bkg = h_bkgsum.GetMaximum()
             max_signal = h_signal.GetMaximum()
             max_Y = int(max(max_bkg, max_signal)) +15
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
-
             h_bkgsum.Draw()
 
             h_signal.GetYaxis().SetRange(0,max_Y)
