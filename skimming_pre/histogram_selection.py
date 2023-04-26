@@ -75,10 +75,9 @@ if options.type == 1:
             skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
             skimmed_tree = skimmed_file.Events
+
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
-            #print(h_bg_sum)
-            #h_bg_sum.Add(h_single_bg)
             h_bkgsum.Add(h_single_bg)
 
         for signal in signal_only_list:
@@ -96,8 +95,16 @@ if options.type == 1:
             h_bkgsum.SetFillColorAlpha(2,1)
             h_bkgsum.GetXaxis().SetTitle("E [Gev]")
             h_bkgsum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
+
+            max_bkg = h_bkgsum.GetMaximum()
+            max_signal = h_signal.GetMaxiumum()
+            max_Y = max(max_bkg, max_signal)
+            h_bkgsum.GetYaxis().SetRange(0,max_Y)
+
             h_bkgsum.Draw()
-            #h->SetTitle("Histogram title;Another X title Axis");
+
+            h_signal.GetYaxis().SetRange(0,max_Y)
+            h_signal.SetTitle(cut + signal.name.replace('.root',''))
             h_signal.SetLineColor(9)
             h_signal.SetFillColorAlpha(9,0.7)
             h_signal.Draw("SAME")
