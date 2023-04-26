@@ -26,13 +26,13 @@ if options.type == 0:
     for dataset in signal_only_list:
         for cut in cuts:
             w = weights(percorso, dataset)
-            
+
             skim_dataset_file_name = percorso + dataset.name.replace(".root","_Skim.root") #forse questi 3 righi riesco a farli come funzione
             skimmed_file = ROOT.TFile(skim_dataset_file_name,"Open")
             skimmed_tree = skimmed_file.Events
 
             c = ROOT.TCanvas()
-            houtput = ROOT.TH1F('MET_pt','MET ' + dataset.name.replace('.root','') ,100,0,1000)
+            houtput = ROOT.TH1F('MET_pt','MET ' + dataset.name.replace('.root','') ,100,200,1000)
             skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut) #getname() ??
             
             houtput.Scale(w)
@@ -74,6 +74,7 @@ if options.type == 1:
 
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
+            h_single_bg.scale(w)
             h_bkgsum.Add(h_single_bg)
 
         for signal in signal_only_list:
@@ -87,10 +88,12 @@ if options.type == 1:
             h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,200,1000)
             skimmed_tree.Project(h_signal.GetName(), 'MET_pt', cut)
 
+            h_signal.scale(w)
+
             h_bkgsum.SetLineColor(2)
             h_bkgsum.SetFillColorAlpha(2,1)
             h_bkgsum.GetXaxis().SetTitle("E [Gev]")
-            h_bkgsum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
+            h_bkgsum.GetYaxis().SetTitle("Scaled Counts/8 GeV")
             h_bkgsum.SetTitle(cut + signal.name.replace('.root',''))
 
             max_bkg = h_bkgsum.GetMaximum()
