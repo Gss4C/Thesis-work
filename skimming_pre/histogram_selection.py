@@ -9,7 +9,7 @@ def weights(path_to_histo, sample):
     weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
     weight_histo = weights_histo_file.plots.Get('h_genweight')
     n_mc_tot = weight_histo.GetBinContent(1) 
-    w = signal.sigma * L_run2 / (n_mc_tot)
+    w = sample.sigma * L_run2 / (n_mc_tot)
     return w
 
 percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
