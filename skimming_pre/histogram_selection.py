@@ -74,7 +74,7 @@ if options.type == 1:
 
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
-            h_single_bg.scale(w)
+            h_single_bg.Scale(w)
             h_bkgsum.Add(h_single_bg)
 
         for signal in signal_only_list:
@@ -88,7 +88,7 @@ if options.type == 1:
             h_signal = ROOT.TH1F('MET_pt','MET' + signal.name ,100,200,1000)
             skimmed_tree.Project(h_signal.GetName(), 'MET_pt', cut)
 
-            h_signal.scale(w)
+            h_signal.Scale(w)
 
             h_bkgsum.SetLineColor(2)
             h_bkgsum.SetFillColorAlpha(2,1)
