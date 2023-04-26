@@ -3,10 +3,17 @@ import argparse
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.mini_samples import *
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.efficiency_class import *
 
-#variables=["MET_pt"," MET ",100,0,1000]
+def weights(path_to_histo, sample):
+    L_run2 = 138
+    weights_histo_name = path_to_histo + "hist_out_" + sample.name
+    weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
+    weight_histo = weights_histo_file.plots.Get('h_genweight')
+    n_mc_tot = weight_histo.GetBinContent(1) 
+    w = signal.sigma * L_run2 / (n_mc_tot)
+    return w
+
 percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
 cuts = ['Boosted_tau32','Boosted_tau32btag','Boosted_deeptag','Boosted_deeptagbtag']
-L_run2 = 138
 
 parser = argparse.ArgumentParser(description='Histogram MET_pt plots')
 parser.add_argument('-t', '--type',
@@ -41,7 +48,7 @@ if options.type == 0:
 
 if options.type == 1:
     bkg_histos = ROOT.TH1F()
-    #istogrammi che servono
+
     h_bgsum_tau32 = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
     h_bgsum_tau32b = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
     h_bgsum_deep = ROOT.TH1F('MET_pt', 'MET backgrounds', 100,200,1000)
@@ -62,17 +69,12 @@ if options.type == 1:
         #h_bg_sum = ROOT.TH1F('MET_pt' + cut, 'MET backgrounds', 100,200,1000)
         #print(h_bg_sum)
         for background in bkg_only_list:
-            weights_histo_name = percorso + "hist_out_" + background.name
-            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
-            weight_histo = weights_histo_file.plots.Get('h_genweight')
-            n_mc_tot = weight_histo.GetBinContent(1) 
-            w = background.sigma * L_run2 / (n_mc_tot)
+            w = weights(path_to_histo = percorso,
+                        sample        = background)
 
             skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
             skimmed_tree = skimmed_file.Events
-            #print(h_bg_sum)
-
             h_single_bg = ROOT.TH1F('MET_pt','MET' + background.name ,100,200,1000)
             skimmed_tree.Project(h_single_bg.GetName(), 'MET_pt', cut)
             #print(h_bg_sum)
@@ -80,11 +82,8 @@ if options.type == 1:
             h_bkgsum.Add(h_single_bg)
 
         for signal in signal_only_list:
-            weights_histo_name = percorso + "hist_out_" + signal.name
-            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
-            weight_histo = weights_histo_file.plots.Get('h_genweight')
-            n_mc_tot = weight_histo.GetBinContent(1) 
-            w = signal.sigma * L_run2 / (n_mc_tot)
+            w = weights(path_to_histo = percorso,
+                        sample        = signal)
 
             skim_signal_file_name = percorso + signal.name.replace(".root","_Skim.root")
             skimmed_file = ROOT.TFile(skim_signal_file_name,"Open")
@@ -103,48 +102,11 @@ if options.type == 1:
             h_signal.SetFillColorAlpha(9,0.7)
             h_signal.Draw("SAME")
 
-            '''            
+                        
             leg = ROOT.TLegend(0.1,0.7,0.4,0.9) #0.4,0.7,0.6,0.9
             leg.SetHeader("Legenda", "C")                         
-            leg.AddEntry(h_all_probes, "All probes","f")            
-            leg.AddEntry(h_passing_probes, "Passing probes","f")
+            leg.AddEntry(h_signal, "signal","f")            
+            leg.AddEntry(h_bkgsum, "backgrounds sum","f")
             leg.Draw()
-            '''
-            c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
-
-'''
-    for background in bkg_only_list:
-        for cut in cuts:
-            weights_histo_name = percorso + "hist_out_" + background.name
-            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
-            weight_histo = weights_histo_file.plots.Get('h_genweight')
-            n_mc_tot = weight_histo.GetBinContent(1) 
-            w = background.sigma * L_run2 / (n_mc_tot)
-
-            skim_background_file_name = percorso + background.name.replace(".root","_Skim.root")
-            skimmed_file = ROOT.TFile(skim_background_file_name,"Open")
-            skimmed_tree = skimmed_file.Events
-
-            houtput = ROOT.TH1F('MET_pt','MET' + background.name ,100,0,1000)
-            skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut)
-
-    for signal in signal_only_list:
-        for cut in cuts:
-            weights_histo_name = percorso + "hist_out_" + signal.name
-            weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
-            weight_histo = weights_histo_file.plots.Get('h_genweight')
-            n_mc_tot = weight_histo.GetBinContent(1) 
-            w = signal.sigma * L_run2 / (n_mc_tot)
-
-            skim_signal_file_name = percorso + signal.name.replace(".root","_Skim.root")
-            skimmed_file = ROOT.TFile(skim_signal_file_name,"Open")
-            skimmed_tree = skimmed_file.Events
-
-            c = ROOT.TCanvas()
-            houtput = ROOT.TH1F('MET_pt','MET' + signal.name ,100,0,1000)
-            skimmed_tree.Project(houtput.GetName(), 'MET_pt', cut)
             
-            houtput.Scale(w)
-            c.Draw()
-            houtput.Draw()
-    '''
+            c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
