@@ -97,7 +97,7 @@ if options.type == 1:
             h_bkgsum.GetYaxis().SetTitle("Scaled Counts/10 GeV")
 
             max_bkg = h_bkgsum.GetMaximum()
-            max_signal = h_signal.GetMaxiumum()
+            max_signal = h_signal.GetMaximum()
             max_Y = max(max_bkg, max_signal)
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
 
