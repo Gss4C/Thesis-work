@@ -39,7 +39,6 @@ if options.type == 0:
             c.Draw()
             houtput.Draw()
             #n_mc = houtput.Integral()
-            
             c.SaveAs("MET_signal_" + cut + dataset.name.replace(".root", "") + ".png")
 
 if options.type == 1:
@@ -61,9 +60,6 @@ if options.type == 1:
         print("inizio del processo per il cut "+ cut)
         c = ROOT.TCanvas()
         c.Draw()
-
-        #h_bg_sum = ROOT.TH1F('MET_pt' + cut, 'MET backgrounds', 100,200,1000)
-        #print(h_bg_sum)
         for background in bkg_only_list:
             w = weights(path_to_histo = percorso,
                         sample        = background)
@@ -100,10 +96,12 @@ if options.type == 1:
             h_bkgsum.GetYaxis().SetTitle("Scaled Counts/8 GeV")
             h_bkgsum.SetTitle(cut + signal.name.replace('.root',''))
 
+            '''
             max_bkg = h_bkgsum.GetMaximum()
             max_signal = h_signal.GetMaximum()
             max_Y = int(max(max_bkg, max_signal)) + 15
             h_bkgsum.GetYaxis().SetRange(0,max_Y)
+            '''
             #h_bkgsum.SetLogy()
             h_bkgsum.Draw('hist')
 
@@ -120,5 +118,6 @@ if options.type == 1:
             leg.AddEntry(h_signal, "signal","f")            
             leg.AddEntry(h_bkgsum, "backgrounds sum","f")
             leg.Draw()
+
             c.SetLogy()
             c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
