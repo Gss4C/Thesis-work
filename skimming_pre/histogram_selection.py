@@ -115,7 +115,7 @@ if options.type == 1:
             h_signal.Draw("SAME,hist")
 
                         
-            leg = ROOT.TLegend(0.1,0.7,0.4,0.9) #0.4,0.7,0.6,0.9
+            leg = ROOT.TLegend(0.98,0.9,0.78,0.75) #0.1,0.7,0.4,0.9 #0.98,0.9,0.78,0.75
             leg.SetHeader("Legenda", "C")                         
             leg.AddEntry(h_signal, "signal","f")            
             leg.AddEntry(h_bkgsum, "backgrounds sum","f")
