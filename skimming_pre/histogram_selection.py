@@ -105,7 +105,7 @@ if options.type == 1:
             #h_bkgsum.SetLogy()
             h_bkgsum.Draw('hist')
 
-            h_signal.GetYaxis().SetRange(0,max_Y)
+            #h_signal.GetYaxis().SetRange(0,max_Y)
             h_signal.SetTitle(cut + signal.name.replace('.root',''))
             h_signal.SetLineColor(9)
             h_signal.SetFillColorAlpha(9,0.7)
