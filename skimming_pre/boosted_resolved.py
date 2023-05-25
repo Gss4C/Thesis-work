@@ -99,7 +99,7 @@ class boosted_resolved(Module):
         self.out.fillBranch(branch3, threes)
 
     def analyze(self,event): 
-        HLT         = Object(event, "HLT")
+        HLT         = Object(event, "HLT") #useless?
         MET         = Object(event, "MET")
         jets        = Collection(event, "Jet")
         fatjets     = Collection(event, "FatJet")
@@ -123,7 +123,7 @@ class boosted_resolved(Module):
             #     Resolved test     #
             #########################
             ht, three= self.HT(jets)
-            if ht>200 and three:
+            if ht>200 and three: #voglio pt totale dei jets sopra una certa soglia
                 event_combo_pt = []
                 index_lists    = []
                 n_topres       = 0
