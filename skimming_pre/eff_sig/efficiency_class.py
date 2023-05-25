@@ -232,7 +232,7 @@ class efficiency_maker:
 class significancer:
     def __init__(self, mini_sample):
         self.mini_sample = mini_sample
-        self.L_run2 = 138
+        self.L_run2 = 137000
     def normalize_counting(self, n_sel = 10 , n_tot = 10):
         norm_count = n_sel * self.mini_sample.sigma * self.L_run2 / n_tot
         return norm_count
