@@ -26,7 +26,7 @@ class preskim_goodtag:
         self.out.branch("FatJet_toptagged","O", lenVar="nFatJet")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-    def tagmaker(self, collect, indici, branch = "no_branch"):
+    def index_tagmaker(self, collect, indici, branch = "no_branch"):
         goodList = []
         for index in range(len(collect)):
             if index in indici:
@@ -64,12 +64,13 @@ class preskim_goodtag:
                                          fatjets[idx].msoftdrop > 105 and 
                                          fatjets[idx].msoftdrop > 220, 
                                          range(0, len(fatjets))))
-        #creating branches
-        self.tagmaker(jets,     goodJets_idx,  "Jet_isGood")
-        self.tagmaker(fatjets,  goodFjets_idx, "FatJet_isGood")
-        self.tagmaker(electron, goodEle_idx,   "Electron_isGood")
-        self.tagmaker(muons,    goodMu_idx,    "Muon_isGood")
-        self.tagmaker(fatjets, toptaggedFjets_idx, "FatJet_toptagged")
+        self.index_tagmaker(jets,     goodJets_idx,  "Jet_isGood")
+        self.index_tagmaker(fatjets,  goodFjets_idx, "FatJet_isGood")
+        self.index_tagmaker(electron, goodEle_idx,   "Electron_isGood")
+        self.index_tagmaker(muons,    goodMu_idx,    "Muon_isGood")
+        self.index_tagmaker(fatjets, toptaggedFjets_idx, "FatJet_toptagged")
+        return True
+
 
 ##########################
 #    SKIMMING MODULES    #
@@ -85,7 +86,34 @@ class first_skimmer:
         pass
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
+    def good_btagged_jet(self, jets_collection):
+        is_good_jet = False
+        for i in range(len(jets_collection)):
+            if jets_collection[i].isGood and jets_collection[i].btagDeepB >= 0.4184:
+                is_good_jet = True
+        return is_good_jet
+
     def analyze(self,event):
+        HLT      = Object(event, "HLT")
+        MET      = Object(event, "MET")
+        jets     = Collection(event, "Jet")
+        fatjets  = Collection(event, "FatJet")
+
+        isGoodHLT  = HLT.PFMETNoMu120_PFMHTNoMu120_IDTight or HLT.PFMET120_PFMHT120_IDTight
+        isGoodMET  = MET.pt > 200
+        isGoodJet = any(jet.isGood and jet.btagDeepB >= 0.4184 for jet in jets)
+        #questo sopra fa quando scritto sotto con la funzione
+        #isGoodJet  = self.good_btagged_jet(jets) 
+        #isGoodJet  = len(list(filter(lambda idx: jets[idx].btagDeepB >= 0.4184 , goodJets_idx)))
+        isGoodFjet = any(fjet.isGood for fjet in fatjets)
+        #la funzione sopra è il modo python di scrivere quello sotto
+        #isGoodFjet = False
+        #for fjet in fatjets:
+        #    if fjet.isGood:
+        #        isGoodFjet = True
+        #isGoodFjet = len(goodFjets_idx)
+        goodEvent = isGoodHLT and isGoodMET and (isGoodJet or isGoodFjet)
+        return goodEvent
 
 class veto_skimmer:
     def __init__(self):
