@@ -4,7 +4,7 @@ from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.mini_samples i
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.skimming_pre.eff_sig.efficiency_class import *
 
 def weights(path_to_histo, sample):
-    L_run2 = 138
+    L_run2 = 137000
     weights_histo_name = path_to_histo + "hist_out_" + sample.name
     weights_histo_file = ROOT.TFile(weights_histo_name, 'Open')
     weight_histo = weights_histo_file.plots.Get('h_genweight')
