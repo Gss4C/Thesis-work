@@ -23,7 +23,6 @@ class preskim_goodtag:
         self.out.branch("FatJet_isGood",   "O", lenVar="nFatJet")
         self.out.branch("Electron_isGood", "O", lenVar="nElectron")
         self.out.branch("Muon_isGood",     "O", lenVar="nMuon")
-        self.out.branch("FatJet_toptagged","O", lenVar="nFatJet")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def index_tagmaker(self, collect, indici, branch = "no_branch"):
@@ -34,7 +33,7 @@ class preskim_goodtag:
             else:
                 isGood = False
             goodList.append(isGood)
-        self.out.fillBranch(branch , goodList)   
+        self.out.fillBranch(branch , goodList)
 
     def analyze(self,event):
         jets     = Collection(event, "Jet")
@@ -48,28 +47,193 @@ class preskim_goodtag:
         goodJets_idx    = list(filter(lambda idx: 
                                       jets[idx].pt       > 30  and  
                                       abs(jets[idx].eta) < 4 and 
-                                      jets[idx].jetId    >= 3 , 
+                                      jets[idx].jetId    >= 3, 
                                       range(0, len(jets)))) 
         goodFjets_idx   = list(filter(lambda idx: fatjets[idx].pt > 200 and  
-                                      abs(fatjets[idx].eta)       < 2.4 ,
+                                      abs(fatjets[idx].eta)       < 2.4,
                                       range(0, len(fatjets))))
         goodEle_idx     = list(filter(lambda idx: electron[idx].pt > 30  and  
                                       electron[idx].cutBased >= 2, 
                                       range(0, len(electron))))
         goodMu_idx      = list(filter(lambda idx: muons[idx].pt > 30  and  
-                                      muons[idx].looseId , 
+                                      muons[idx].looseId, 
                                       range(0, len(muons))))
+        
+        self.index_tagmaker(jets,     goodJets_idx,  "Jet_isGood")
+        self.index_tagmaker(fatjets,  goodFjets_idx, "FatJet_isGood")
+        self.index_tagmaker(electron, goodEle_idx,   "Electron_isGood")
+        self.index_tagmaker(muons,    goodMu_idx,    "Muon_isGood")
+        return True
+
+class jets_NBR_tag:
+    def __init__(self):
+        pass
+    def beginJob(self):
+        pass
+    def endJob(self):
+        pass
+    def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.out = wrappedOutputTree
+        self.out.branch("FatJet_toptagged","O", lenVar="nFatJet")
+        self.out.branch("Jet_isForward", "O", lenVar="nJet")
+    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        pass
+    def index_tagmaker(self, collect, indici, branch = "no_branch"):
+        goodList = []
+        for index in range(len(collect)):
+            if index in indici:
+                isGood = True
+            else:
+                isGood = False
+            goodList.append(isGood)
+        self.out.fillBranch(branch , goodList)
+    
+    def analyze(self,event):
+        jets        = Collection(event, "Jet")
+        fatjets     = Collection(event, "FatJet")
+
+        forward_list = [abs(jet.eta) > 2.4 and jet.pt > 30 for jet in jets]
+        self.out.fillBranch("Jet_isForward", forward_list)
+
+        #questa funzione pure è da riscrivere più pythonic
         toptaggedFjets_idx = list(filter(lambda idx: 
                                          fatjets[idx].pt        > 400 and  
                                          fatjets[idx].msoftdrop > 105 and 
                                          fatjets[idx].msoftdrop > 220, 
                                          range(0, len(fatjets))))
-        self.index_tagmaker(jets,     goodJets_idx,  "Jet_isGood")
-        self.index_tagmaker(fatjets,  goodFjets_idx, "FatJet_isGood")
-        self.index_tagmaker(electron, goodEle_idx,   "Electron_isGood")
-        self.index_tagmaker(muons,    goodMu_idx,    "Muon_isGood")
         self.index_tagmaker(fatjets, toptaggedFjets_idx, "FatJet_toptagged")
         return True
+
+class Resolved_tagger:
+    def __init__(self):
+        pass
+    def beginJob(self):
+        pass
+    def endJob(self):
+        pass
+    def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.out = wrappedOutputTree
+        self.out.branch("Resolved", "I")
+        self.out.branch("nTopRes",        "I")
+        self.out.branch("TopRes_terIdx1", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_terIdx2", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_terIdx3", "I", lenVar="nTopRes")
+        self.out.branch("TopRes_pt",      "D", lenVar="nTopRes")
+    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        pass
+
+    def HT(self, jets):
+        #calcola HT e controlla che abbia almeno 3 jets nell'evento
+        somma = 0
+        count = 0
+        leastthree = False
+        for jet in jets:
+            if jet.isGood: 
+                somma += jet.pt 
+                count += 1
+        if count >= 3: leastthree = True
+        return somma, leastthree
+    
+    def indexer(self, branch1 , branch2 , branch3 , lista):
+        #funzione che riempie i branch (originariamente i jet ak4 toptag) con gli indici della terna originale
+        ones   = []
+        twos   = []
+        threes = []
+        for dict in lista:
+            ones.append(  dict["1"])
+            twos.append(  dict["2"])
+            threes.append(dict["3"])
+        self.out.fillBranch(branch1, ones)
+        self.out.fillBranch(branch2, twos)
+        self.out.fillBranch(branch3, threes)
+    
+    def analyze(self,event):
+        resolv = False
+        ht, three= self.HT(jets)
+        if ht>200 and three: #voglio pt totale dei jets sopra una certa soglia
+            event_combo_pt = []
+            index_lists    = []
+            n_topres       = 0
+            for i in range(len(jets)):
+                for j in range(i):
+                    for k in range(j):
+                        if(jets[i].isGood and jets[j].isGood and jets[i].isGood):
+                            
+                            tlv1 = jets[i].p4()
+                            tlv2 = jets[j].p4()
+                            tlv3 = jets[k].p4()
+
+                            tlv = tlv1+tlv2+tlv3
+
+                            if tlv.Pt() > 250:
+                                event_combo_pt.append(tlv.Pt())
+
+                                terna = {"1":1, "2":1, "3":1}
+                                terna["1"] = i
+                                terna["2"] = j
+                                terna["3"] = k
+                                index_lists.append(terna)
+
+                                n_topres += 1
+            self.out.fillBranch("nTopRes"  , n_topres)
+            self.out.fillBranch("TopRes_pt", event_combo_pt)
+            self.indexer("TopRes_terIdx1","TopRes_terIdx2","TopRes_terIdx3",index_lists)
+            if len(event_combo_pt):
+                resolv = True
+        self.out.fillBranch("Resolved", int(resolv))
+        return True
+    
+class Boost_tagger:
+    def __init__(self):
+        pass
+    def beginJob(self):
+        pass
+    def endJob(self):
+        pass
+    def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.out = wrappedOutputTree
+        self.out.branch("Boosted_tau32" ,  "I")
+        self.out.branch("Boosted_tau32btag" ,  "I")
+        self.out.branch("Boosted_deeptag" ,  "I")
+        self.out.branch("Boosted_deeptagbtag" ,  "I")
+    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        pass
+    
+    def analyze(self,event):
+        if len(jets) and len(fatjets):
+            for fjet in fatjets:
+                if fjet.msoftdrop>105 and fjet.msoftdrop<220:
+
+                    #########################
+                    #   caso non deeptag    #
+                    #########################
+                    tau32 = fjet.tau3/fjet.tau2 if fjet.tau2 != 0 else 50
+                    if tau32 < 0.65:
+                        boost_tau32 = True
+                        good_jets_list = self.collect_list_gfilter(jets)
+                        for jet in good_jets_list:
+                            if jet.btagDeepB > 0.1241:
+                                distance = self.deltaR(jet,fjet)
+                                if distance<0.8:
+                                    boost_tau32btag = True
+                    #########################
+                    #     caso deeptag      #
+                    #########################
+                    if fjet.deepTag_TvsQCD > 0.802: #WP for 1% mistagging rate
+                        boost_deeptag = True
+                        good_jets_list = self.collect_list_gfilter(jets)
+                        for jet in good_jets_list:
+                            if jet.btagDeepB > 0.1241:
+                                distance = self.deltaR(jet,fjet)
+                                if distance<0.8:
+                                    boost_deeptagbtag = True
+        self.out.fillBranch("Boosted_tau32"       , int(boost_tau32))
+        self.out.fillBranch("Boosted_tau32btag"   , int(boost_tau32btag))
+        self.out.fillBranch("Boosted_deeptag"     , int(boost_deeptag))
+        self.out.fillBranch("Boosted_deeptagbtag" , int(boost_deeptagbtag))
+        return True
+
+
 
 
 ##########################
