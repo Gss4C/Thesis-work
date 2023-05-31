@@ -205,7 +205,11 @@ class Boost_tagger:
             if collection[i].isGood:
                 collect_list.append(collection[i])
         return collect_list
-    
+    def deltaR(self, object1, object2): #distanza piano eta-phi
+        Deta = object1.eta - object2.eta
+        Dphi = object1.phi - object2.phi
+        distance = math.sqrt(Deta*Deta + Dphi*Dphi)
+        return distance
     def analyze(self,event):
         jets        = Collection(event, "Jet")
         fatjets     = Collection(event, "FatJet")
