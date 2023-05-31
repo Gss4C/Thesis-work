@@ -95,7 +95,7 @@ class jets_NBR_tag:
         forward_list = [abs(jet.eta) > 2.4 and jet.pt > 30 for jet in jets]
         self.out.fillBranch("Jet_isForward", forward_list)
 
-        #questa funzione pure è da riscrivere più pythonic
+        #questa funzione pure si deve riscrivere più pythonic
         toptaggedFjets_idx = list(filter(lambda idx: 
                                          fatjets[idx].pt        > 400 and  
                                          fatjets[idx].msoftdrop > 105 and 
@@ -123,7 +123,7 @@ class Resolved_tagger:
         pass
 
     def HT(self, jets):
-        #calcola HT e controlla che abbia almeno 3 jets nell'evento
+        #calcola HT e controlla che abbia almeno 3 jets nell evento
         somma = 0
         count = 0
         leastthree = False
@@ -270,7 +270,7 @@ class first_skimmer:
         #isGoodJet  = self.good_btagged_jet(jets) 
         #isGoodJet  = len(list(filter(lambda idx: jets[idx].btagDeepB >= 0.4184 , goodJets_idx)))
         isGoodFjet = any(fjet.isGood for fjet in fatjets)
-        #la funzione sopra è il modo python di scrivere quello sotto
+        #la funzione sopra e il modo python di scrivere quello sotto
         #isGoodFjet = False
         #for fjet in fatjets:
         #    if fjet.isGood:
