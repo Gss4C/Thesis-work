@@ -95,7 +95,7 @@ class jets_NBR_tag:
         forward_list = [abs(jet.eta) > 2.4 and jet.pt > 30 for jet in jets]
         self.out.fillBranch("Jet_isForward", forward_list)
 
-        #questa funzione pure si deve riscrivere più pythonic
+        #questa funzione pure si deve riscrivere piu pythonic
         toptaggedFjets_idx = list(filter(lambda idx: 
                                          fatjets[idx].pt        > 400 and  
                                          fatjets[idx].msoftdrop > 105 and 
