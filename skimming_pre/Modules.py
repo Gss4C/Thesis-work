@@ -199,6 +199,12 @@ class Boost_tagger:
         self.out.branch("Boosted_deeptagbtag" ,  "I")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
+    def collect_list_gfilter(self, collection):
+        collect_list = []
+        for i in range(len(collection)):
+            if collection[i].isGood:
+                collect_list.append(collection[i])
+        return collect_list
     
     def analyze(self,event):
         jets        = Collection(event, "Jet")
@@ -206,7 +212,6 @@ class Boost_tagger:
         if len(jets) and len(fatjets):
             for fjet in fatjets:
                 if fjet.msoftdrop>105 and fjet.msoftdrop<220:
-
                     #########################
                     #   caso non deeptag    #
                     #########################
