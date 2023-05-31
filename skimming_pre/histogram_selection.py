@@ -120,4 +120,6 @@ if options.type == 1:
             leg.Draw()
 
             c.SetLogy()
+            print(cut)
+            print(signal.name.replace(".root", ""))
             c.SaveAs("MET_cutplot_" + cut + signal.name.replace(".root", "") + ".png")
