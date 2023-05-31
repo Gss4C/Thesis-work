@@ -201,6 +201,8 @@ class Boost_tagger:
         pass
     
     def analyze(self,event):
+        jets        = Collection(event, "Jet")
+        fatjets     = Collection(event, "FatJet")
         if len(jets) and len(fatjets):
             for fjet in fatjets:
                 if fjet.msoftdrop>105 and fjet.msoftdrop<220:
