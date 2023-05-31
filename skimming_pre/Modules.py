@@ -148,6 +148,7 @@ class Resolved_tagger:
         self.out.fillBranch(branch3, threes)
     
     def analyze(self,event):
+        jets   = Collection(event, "Jet")
         resolv = False
         ht, three= self.HT(jets)
         if ht>200 and three: #voglio pt totale dei jets sopra una certa soglia
