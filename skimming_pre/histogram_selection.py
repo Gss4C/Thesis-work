@@ -12,7 +12,7 @@ def weights(path_to_histo, sample):
     w = sample.sigma * L_run2 / (n_mc_tot)
     return w
 
-percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/"
+percorso  = "/afs/cern.ch/user/j/jbonetti/CMSSW_12_4_7/src/PhysicsTools/NanoAODTools/crab/"
 cuts = ['Boosted_tau32','Boosted_tau32btag','Boosted_deeptag','Boosted_deeptagbtag']
 
 parser = argparse.ArgumentParser(description='Histogram MET_pt plots')
