@@ -1,0 +1,8 @@
+{
+    "numeri": [5,19,7,11], 
+    "lettere": {
+        "vocali": ["a", "e", "i"],
+        "consonanti": ["AIUTOOOOO", "PYTHON MERDA"] 
+        },
+    "mucche": 55
+}
