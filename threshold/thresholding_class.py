@@ -57,7 +57,7 @@ class thrashold_histomaker:
         filenames = self.json_reader(self.json_name)
         root_files = self.read_and_list(filenames["parent_path"] + filenames["TT_2018"][0]) #qui va aggiunta la possibilità di selezionarsi la monnezza
         
-        single_tree  = NanoEventsFactory.from_root(root_files[1], schemaclass=NanoAODSchema.v6).events()
+        tree  = NanoEventsFactory.from_root(root_files[1], schemaclass=NanoAODSchema.v6).events()
         scores_lowF  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==0)].scoreDNN)
         scores_lowT  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==1)].scoreDNN)
         scores_highF = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==0)].score2)
