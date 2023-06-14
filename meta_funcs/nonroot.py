@@ -1,6 +1,7 @@
-def read_and_list(path_to_txtfile):
+def read_and_list(path_to_txtfile): 
     '''
-    input to a txt file containing a column and output a strings list
+    Input to a txt file containing a column and output a strings list \n
+    Python3 necessary
     '''
     lista_file = []
     with open(path_to_txtfile, "r") as file:
