@@ -2,6 +2,7 @@ import ROOT
 import json
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from coffea.nanoevents import NanoEventsFactory, NanoAODSchema
+import awkward as ak
 
 #################
 #    Classes    #
