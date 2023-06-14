@@ -33,7 +33,6 @@ class thrashold_histomaker:
     '''
     def __init__(self, json_name = "crabout_files.json"):
         self.json_name       = json_name
-        self.output_filename = output_filename
 
     def json_reader(self, nome_file):
         with open(nome_file, "r") as file:
