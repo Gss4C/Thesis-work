@@ -71,6 +71,7 @@ class thrashold_histomaker:
         h_highT = ROOT.TH1F("Highpt_True" + testing_dataset ,"Highpt_True" + testing_dataset , 200, 0 ,1)
         
         for score_lf, score_lt, scote_hf, score_ht in zip(scores_lowF, scores_lowT, scores_highF, scores_highT):
+            '''penso di poter fare uno zip anche con gli histo, devo provare ma ora mi scoccio'''
             h_lowF.Fill(score_lf)
             h_lowT.Fill(score_lt)
             h_highF.Fill(score_hf)
