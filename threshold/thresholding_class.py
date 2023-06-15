@@ -53,6 +53,7 @@ class thrashold_histomaker:
                 lista_file.append(riga)
             return lista_file
         
+        
     def crea_4histo(self):
         filenames = self.json_reader(self.json_name)
         root_files = self.read_and_list(filenames["parent_path"] + filenames["TT_2018"][0]) #qui va aggiunta la possibilità di selezionarsi la monnezza
