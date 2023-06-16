@@ -61,6 +61,8 @@ class thrashold_histomaker:
         tree  = NanoEventsFactory.from_root(root_files[1], schemaclass=NanoAODSchema.v6).events()
         scores_lowF  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==0)].scoreDNN)
         scores_lowT  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==1)].scoreDNN)
+        print(tree.TopHighPt.score2)
+        print(tree.TopHighPt.truth)
         scores_highF = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==0)].score2)
         scores_highT = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==1)].score2)
 
