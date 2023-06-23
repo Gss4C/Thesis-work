@@ -32,7 +32,6 @@ for cluster in filenames["meta_info"]["cluster_names"]:
         print("Completamento cluster: " + str(percentuale_troncata) + "%")
         
         batch_files_list = read_and_list(filenames["meta_info"]["parent_path"] + filenames[cluster][index])
-        #testing_dataset  = filenames[cluster][index].replace(".txt","")
         dataset_name  = filenames[cluster][index].replace(".txt","")
         root_filename    = filenames[cluster][index].replace(".txt",".root") 
 
@@ -45,6 +44,10 @@ for cluster in filenames["meta_info"]["cluster_names"]:
         histomaker = thrashold_histomaker()
         histomaker.crea_4histo(batch_files_list, h_lowF, h_lowT, h_highF, h_highT, dataset_name)
 
+        LFI = h_lowF.Integral()
+        HFI = h_highF.Integral()
+        #print("stampo il full integral prima che schiatta tutto.\nFull Integral di LOW_FALSE: " + str(LFI) + "\nFull Integral di HIGH_FALSE: " + str(HFI))
+
         file = ROOT.TFile("/eos/user/j/jbonetti/Th_outputs/" + root_filename, "RECREATE")
         
         h_highF.Write()
@@ -54,14 +57,3 @@ for cluster in filenames["meta_info"]["cluster_names"]:
         
         file.Close()
         print('DONE')
-
-#batch_files_list = read_and_list(filenames["meta_info"]["parent_path"] + filenames["TT_2018"][1])
-#testing_dataset = filenames["TT_2018"][1].replace(".txt","")
-#file = ROOT.TFile("/eos/user/j/jbonetti/Th_outputs/out_test_01.root", "RECREATE")
-#histomaker = thrashold_histomaker()
-#h_lowF, h_lowT, h_highF, h_highT = histomaker.crea_4histo()
-#h_highF.Write()
-#h_highT.Write()
-#h_lowF.Write()
-#h_lowT.Write()
-#file.Close()
