@@ -1,6 +1,9 @@
 import ROOT
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.threshold.thresholding_class import *
 
+import warnings
+warnings.filterwarnings("ignore")
+
 def json_reader(nome_file):
     with open(nome_file, "r") as file:
         contenuto = file.read()
