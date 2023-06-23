@@ -23,13 +23,13 @@ def read_and_list(path_to_txtfile):
         return lista_file
 
 filenames = json_reader("crabout_files.json")
-
 for cluster in filenames["meta_info"]["cluster_names"]:
-    print("\ninizio del cluster:" + cluster + "\n")
+    print("\ninizio del cluster: " + cluster + "\n")
     for index in range(len(filenames[cluster])):
         completamento = index/(len(filenames[cluster]))
         percentuale   = completamento*100
-        print("Completamento cluster: " + str(percentuale) + "%")
+        percentuale_troncata = round(percentuale, 2)
+        print("Completamento cluster: " + str(percentuale_troncata) + "%")
         
         batch_files_list = read_and_list(filenames["meta_info"]["parent_path"] + filenames[cluster][index])
         #testing_dataset  = filenames[cluster][index].replace(".txt","")
