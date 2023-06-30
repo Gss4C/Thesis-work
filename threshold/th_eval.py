@@ -1,9 +1,22 @@
 import ROOT
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.threshold.thresholding_class import *
-
 import warnings
+import argparse
 warnings.filterwarnings("ignore")
 
+###################
+#    Arguments    #
+###################
+parser = argparse.ArgumentParser(description = "Threshold computation")
+parser.add_argument("-e", "--efficiency",
+                    type     = int,
+                    help     = "Input the threshold background percentage: how much background will survive above this threshold",
+                    required = True)
+options = parser.parse_args()
+
+###################
+#    Functions    #
+###################
 def json_reader(nome_file):
     with open(nome_file, "r") as file:
         contenuto = file.read()
@@ -23,17 +36,21 @@ def read_and_list(path_to_txtfile):
         return lista_file
 
 filenames = json_reader("crabout_files.json")
+print('I will compute threshold with the '+ str(options.efficiency) + '%' +' background efficiency')
+bg_efficiency = options.efficiency/100
+
 for cluster in filenames["meta_info"]["cluster_names"]:
     print("\ninizio del cluster: " + cluster + "\n")
     for index in range(len(filenames[cluster])):
-        completamento = index/(len(filenames[cluster]))
+        completamento = index/(len(filenames[cluster])) #controllo completamento
         percentuale   = completamento*100
         percentuale_troncata = round(percentuale, 2)
         print("Completamento cluster: " + str(percentuale_troncata) + "%")
         
         batch_files_list = read_and_list(filenames["meta_info"]["parent_path"] + filenames[cluster][index])
         dataset_name  = filenames[cluster][index].replace(".txt","")
-        root_filename    = filenames[cluster][index].replace(".txt",".root") 
+        root_filename = filenames[cluster][index].replace(".txt",".root") 
+        print("Elaborazione del dataset: "+ dataset_name)
 
         N_bins = 250
         h_lowF  = ROOT.TH1F("Lowpt_False" + dataset_name ,"Lowpt_False" + dataset_name , N_bins, 0 ,1)
@@ -42,11 +59,13 @@ for cluster in filenames["meta_info"]["cluster_names"]:
         h_highT = ROOT.TH1F("Highpt_True" + dataset_name ,"Highpt_True" + dataset_name , N_bins, 0 ,1)
 
         histomaker = thrashold_histomaker()
-        histomaker.crea_4histo(batch_files_list, h_lowF, h_lowT, h_highF, h_highT, dataset_name)
-
-        LFI = h_lowF.Integral()
-        HFI = h_highF.Integral()
-        #print("stampo il full integral prima che schiatta tutto.\nFull Integral di LOW_FALSE: " + str(LFI) + "\nFull Integral di HIGH_FALSE: " + str(HFI))
+        histomaker.crea_4histo(batch_files_list = batch_files_list, 
+                               h_lowF  = h_lowF, 
+                               h_lowT  = h_lowT, 
+                               h_highF = h_highF, 
+                               h_highT = h_highT, 
+                               dataset_name  = dataset_name,
+                               bg_efficiency = bg_efficiency)
 
         file = ROOT.TFile("/eos/user/j/jbonetti/Th_outputs/" + root_filename, "RECREATE")
         
