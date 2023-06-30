@@ -1,9 +1,11 @@
 {
     "meta_info": {
         "parent_path": "../../../../../../../src/PhysicsTools/NanoAODTools/crab/macros/files/",
-        "cluster_names": ["QCD_2018","TT_2018","Tprime"],
+        "eos_path": "/eos/user/j/jbonetti/Th_outputs/",
+        "cluster_names": ["QCD_2018","TT_2018","ZJetsToNuNu_2018","Tprime"],
         "cluster_local": ["L_ZJetsToNuNU_2018"],
-        "cluster_len": [6,4,7,3]
+        "cluster_len": [6,4,7,3],
+        "cluster_has_trues": ["TT_2018", "Tprime"]
     },
     "L_ZJetsToNuNU_2018": [
         "L_ZJetsToNuNu_HT200to400_2018.txt"
