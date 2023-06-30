@@ -1,0 +1,119 @@
+{
+    "QCDHT_2000toInf_2018": {
+        "Low_Threshold": 0.012000000104308128,
+        "High_Threshold": 0.004000000189989805
+    },
+    "QCDHT_1500to2000_2018": {
+        "Low_Threshold": 0.01600000075995922,
+        "High_Threshold": 0.004000000189989805
+    },
+    "QCDHT_1000to1500_2018": {
+        "Low_Threshold": 0.02800000086426735,
+        "High_Threshold": 0.004000000189989805
+    },
+    "QCDHT_700to1000_2018": {
+        "Low_Threshold": 0.06400000303983688,
+        "High_Threshold": 0.01600000075995922
+    },
+    "QCDHT_500to700_2018": {
+        "Low_Threshold": 0.10000000149011612,
+        "High_Threshold": 0.03200000151991844
+    },
+    "QCDHT_300to500_2018": {
+        "Low_Threshold": 0.00800000037997961,
+        "High_Threshold": 0.019999999552965164
+    },
+    "TT_hadr_2018": {
+        "Low_Threshold": 0.1120000034570694,
+        "High_Threshold": 0.019999999552965164,
+        "High_Efficiency": 0.8788598574821853,
+        "Low_Efficiency": 0.4583333333333333
+    },
+    "TT_semilep_2018": {
+        "Low_Threshold": 0.3160000145435333,
+        "High_Threshold": 0.13199999928474426,
+        "High_Efficiency": 0.8171893620533632,
+        "Low_Efficiency": 0.391763763749883
+    },
+    "TT_Mtt1000toInf_2018": {
+        "Low_Threshold": 0.12800000607967377,
+        "High_Threshold": 0.03999999910593033,
+        "High_Efficiency": 0.9513061310092513,
+        "Low_Efficiency": 0.3466175214635681
+    },
+    "TT_Mtt700to1000_2018": {
+        "Low_Threshold": 0.24799999594688416,
+        "High_Threshold": 0.1080000028014183,
+        "High_Efficiency": 0.8813099689011434,
+        "Low_Efficiency": 0.3300894924588522
+    },
+    "ZJetsToNuNu_HT200to400_2018": {
+        "Low_Threshold": 0.14800000190734863,
+        "High_Threshold": 0.1080000028014183
+    },
+    "ZJetsToNuNu_HT400to600_2018": {
+        "Low_Threshold": 0.08399999886751175,
+        "High_Threshold": 0.04399999976158142
+    },
+    "ZJetsToNuNu_HT600to800_2018": {
+        "Low_Threshold": 0.052000001072883606,
+        "High_Threshold": 0.024000000208616257
+    },
+    "ZJetsToNuNu_HT800to1200_2018": {
+        "Low_Threshold": 0.02800000086426735,
+        "High_Threshold": 0.00800000037997961
+    },
+    "ZJetsToNuNu_HT1200to2500_2018": {
+        "Low_Threshold": 0.01600000075995922,
+        "High_Threshold": 0.004000000189989805
+    },
+    "ZJetsToNuNu_HT2500toInf_2018": {
+        "Low_Threshold": 0.01600000075995922,
+        "High_Threshold": 0.004000000189989805
+    },
+    "TprimeToTZ_1800_2018": {
+        "Low_Threshold": 0.03999999910593033,
+        "High_Threshold": 0.012000000104308128,
+        "High_Efficiency": 0.9441076982451361,
+        "Low_Efficiency": 0.1553398058252427
+    },
+    "TprimeToTZ_1000_2018": {
+        "Low_Threshold": 0.07999999821186066,
+        "High_Threshold": 0.03999999910593033,
+        "High_Efficiency": 0.9538463741551151,
+        "Low_Efficiency": 0.18303828209880488
+    },
+    "TprimeToTZ_700_2018": {
+        "Low_Threshold": 0.15600000321865082,
+        "High_Threshold": 0.07199999690055847,
+        "High_Efficiency": 0.9065731690041082,
+        "Low_Efficiency": 0.4403470715835141
+    },
+    "meta_info": {
+        "data_names": [
+            "QCDHT_2000toInf_2018",
+            "QCDHT_1500to2000_2018",
+            "QCDHT_1000to1500_2018",
+            "QCDHT_700to1000_2018",
+            "QCDHT_500to700_2018",
+            "QCDHT_300to500_2018",
+            "TT_hadr_2018",
+            "TT_semilep_2018",
+            "TT_Mtt1000toInf_2018",
+            "TT_Mtt700to1000_2018",
+            "ZJetsToNuNu_HT200to400_2018",
+            "ZJetsToNuNu_HT400to600_2018",
+            "ZJetsToNuNu_HT600to800_2018",
+            "ZJetsToNuNu_HT800to1200_2018",
+            "ZJetsToNuNu_HT1200to2500_2018",
+            "ZJetsToNuNu_HT2500toInf_2018",
+            "TprimeToTZ_1800_2018",
+            "TprimeToTZ_1000_2018",
+            "TprimeToTZ_700_2018"
+        ],
+        "lowhigh": [
+            "Low_Threshold",
+            "High_Threshold"
+        ]
+    }
+}
