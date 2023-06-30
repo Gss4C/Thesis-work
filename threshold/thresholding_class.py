@@ -3,11 +3,32 @@ import json
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from coffea.nanoevents import NanoEventsFactory, NanoAODSchema
 import awkward as ak
+import copy
+
+###################
+#    FUNCTIONS    #
+###################
+def json_reader(nome_file):
+    with open(nome_file, "r") as file:
+        contenuto = file.read()
+        dizionario = json.loads(contenuto)
+        return dizionario
+
+def read_and_list(path_to_txtfile): 
+    '''
+    Input to a txt file containing a column and output a strings list \n
+    Python3 necessary
+    '''
+    lista_file = []
+    with open(path_to_txtfile, "r") as file:
+        for riga in file:
+            riga = riga.strip()
+            lista_file.append(riga)
+        return lista_file
 
 #################
 #    Classes    #
 #################
-
 class threshold_evalutator:
     '''
     Classe che dati gli istogrammi (con qualsiasi variabile lungo x) dove ci sono 
@@ -18,7 +39,6 @@ class threshold_evalutator:
         self.histo_true  = histo_true
         self.histo_false = histo_false
         self.N_bins = N_bins
-
 
     def threshold_F_seeker(self, bg_efficiency = 0.1):
         full_integral = float(self.histo_false.Integral())
@@ -44,11 +64,11 @@ class threshold_evalutator:
 
             th_bin = self.N_bins - bin_idx
             if epsilon == 0:
-                print('^^^^    impossible to find threshold    ^^^^')
-                print("FAIL")
+                print('^^^    impossible to find threshold    ^^^')
+                #print("FAIL")
             else:
                 print("^^^    Trovata la TH al bin: " + str(th_bin) + "   ^^^")
-                print("SUCCESS")
+                #print("SUCCESS")
             return th_bin, epsilon
 
     def threshold_binTodec(self, th_bin):
@@ -58,7 +78,6 @@ class threshold_evalutator:
 
 
 
-    
 class thrashold_histomaker:
     '''
     Classe per la creazione ed il salvataggio degli istogrammi necessari alla valutazione della threshold
@@ -84,8 +103,15 @@ class thrashold_histomaker:
                 lista_file.append(riga)
             return lista_file
         
-        
-    def crea_4histo(self, batch_files_list, h_lowF, h_lowT, h_highF, h_highT, dataset_name,evalutate_threshold = True, N_bins = 250):
+    def crea_4histo(self, batch_files_list, 
+                    h_lowF, 
+                    h_lowT, 
+                    h_highF, 
+                    h_highT, 
+                    dataset_name,
+                    evalutate_threshold = True,
+                    bg_efficiency       = 10,
+                    N_bins              = 250):
         for i in range(len(batch_files_list)):
             if i%10 == 0:
                 completion_percentage = (i / len(batch_files_list)) * 100
@@ -124,20 +150,20 @@ class thrashold_histomaker:
         print('Inizio calcolo soglie per il dataset...')
         if evalutate_threshold:
             LowEval = threshold_evalutator(N_bins      = N_bins,
-                                            histo_true  = h_lowT,
-                                            histo_false = h_lowF)
+                                           histo_true  = h_lowT,
+                                           histo_false = h_lowF)
             HighEval = threshold_evalutator(N_bins      = N_bins, 
                                             histo_true  = h_highT, 
                                             histo_false = h_highF)
 
-            LowTh_Bin,  LowEpsilon  = LowEval.threshold_F_seeker()
+            LowTh_Bin,  LowEpsilon  = LowEval.threshold_F_seeker(bg_efficiency = bg_efficiency)
             LowTh = LowEval.threshold_binTodec(LowTh_Bin)
-            print("Soglia in decimale di Low: " + str(LowTh))
+            print("^^^    Soglia in decimale di Low: " + str(LowTh) + "   ^^^")
             h_lowF.SetBinContent(0,LowTh)
             h_lowT.SetBinContent(0,LowTh)
 
-            HighTh_Bin, HighEpsilon = HighEval.threshold_F_seeker()
+            HighTh_Bin, HighEpsilon = HighEval.threshold_F_seeker(bg_efficiency = bg_efficiency)
             HighTh = HighEval.threshold_binTodec(HighTh_Bin)
-            print("Soglia in decimale di High: " + str(HighTh))
+            print("^^^    Soglia in decimale di High: " + str(HighTh) + "   ^^^")
             h_highF.SetBinContent(0,HighTh)
             h_highT.SetBinContent(0,HighTh)
