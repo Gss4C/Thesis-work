@@ -193,10 +193,10 @@ class Boost_tagger:
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("Boosted_tau32" ,  "I")
-        self.out.branch("Boosted_tau32btag" ,  "I")
-        self.out.branch("Boosted_deeptag" ,  "I")
-        self.out.branch("Boosted_deeptagbtag" ,  "I")
+        self.out.branch("Boosted_tau32" ,      "I")
+        self.out.branch("Boosted_tau32btag",   "I")
+        self.out.branch("Boosted_deeptag",     "I")
+        self.out.branch("Boosted_deeptagbtag", "I")
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def collect_list_gfilter(self, collection):
@@ -249,7 +249,51 @@ class Boost_tagger:
         self.out.fillBranch("Boosted_deeptagbtag" , int(boost_deeptagbtag))
         return True
 
+class TopDNN_threshold_tagger:
+    '''
+    tagger che nasce dopo una valutazione con una dnn ed i suoi scoring
+    le threshold sono state scelte tramite i programmi th_extract.py, qui si crea una flag che mi dice se la threshold è rispettata
+    in particolare la threshold è stata scelta basandosi sul dataset tprimetotz 1000
+    '''
+    def __init__(self):
+        pass
+    def beginJob(self):
+        pass
+    def endJob(self):
+        pass
+    def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.out = wrappedOutputTree
+        self.out.branch("TopHighPt_thgood", "I", lenVar="nTopHighPt")
+        self.out.branch("TopLowPt_thgood",  "I", lenVar="nTopLowPt")
+    def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        pass
+    def analyze(self, event):
+        tophigh_dnn = Collection(event, "TopHighPt")
+        toplow_dnn  = Collection(event,  "TopLowPt")
 
+        th_high = 0.164000004529953
+        th_low  = 0.23199999332427979
+
+        #hightag
+        Hthgood_list = []
+        for hjet in tophigh_dnn:
+            if hjet.score2 > th_high:
+                goodness = True
+            else:
+                goodness = False
+            Hthgood_list.append(int(goodness))
+        self.out.fillBranch("TopHighPt_thgood", Hthgood_list)
+            
+        #lowtag
+        Lthgood_list = []
+        for ljet in toplow_dnn:
+            if ljet.scoreDNN > th_low:
+                goodness = True
+            else:
+                goodness = False
+            Lthgood_list.append(int(goodness))
+        self.out.fillBranch("TopLowPt_thgood", Lthgood_list)
+        return True
 
 
 ##########################

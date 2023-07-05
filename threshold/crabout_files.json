@@ -1,23 +1,41 @@
 {
-    "parent_path": "../../../../../../../src/PhysicsTools/NanoAODTools/crab/macros/files/",
-    "QCD_2018": ["QCDHT_300to500_2018.txt", 
-                 "QCDHT_500to700_2018.txt", 
-                 "QCDHT_700to1000_2018.txt", 
-                 "QCDHT_1000to1500_2018.txt", 
-                 "QCDHT_1500to2000_2018.txt", 
-                 "QCDHT_2000toInf_2018.txt"],
-    "TT_2018": ["TT_hadr_2018.txt", 
-                "TT_semilep_2018.txt", 
-                "TT_Mtt1000toInf_2018.txt", 
-                "TT_Mtt700to1000_2018.txt"],
-    "ZJetsToNuNu_2018": ["ZJetsToNuNu_HT100to200_2018.txt", 
-                         "ZJetsToNuNu_HT200to400_2018.txt", 
-                         "ZJetsToNuNu_HT400to600_2018.txt", 
-                         "ZJetsToNuNu_HT600to800_2018.txt", 
-                         "ZJetsToNuNu_HT800to1200_2018.txt", 
-                         "ZJetsToNuNu_HT1200to2500_2018.txt", 
-                         "ZJetsToNuNu_HT2500toInf_2018.txt"],
-    "Tprime": ["TprimeToTZ_1800_2018.txt",
-               "TprimeToTZ_1000_2018.txt",
-               "TprimeToTZ_700_2018.txt"]
+    "meta_info": {
+        "parent_path": "../../../../../../../src/PhysicsTools/NanoAODTools/crab/macros/files/",
+        "eos_path": "/eos/user/j/jbonetti/Th_outputs/",
+        "eos_path_bond": "/eos/user/j/jbonetti/th_outputs_ptbonded/",
+        "cluster_names": ["QCD_2018","TT_2018","ZJetsToNuNu_2018","Tprime"],
+        "cluster_local": ["L_ZJetsToNuNU_2018"],
+        "cluster_len": [6,4,7,3],
+        "cluster_has_trues": ["TT_2018", "Tprime"]
+    },
+    "L_ZJetsToNuNU_2018": [
+        "L_ZJetsToNuNu_HT200to400_2018.txt"
+    ],
+    "QCD_2018": [
+        "QCDHT_2000toInf_2018.txt",
+        "QCDHT_1500to2000_2018.txt",
+        "QCDHT_1000to1500_2018.txt",
+        "QCDHT_700to1000_2018.txt",
+        "QCDHT_500to700_2018.txt",
+        "QCDHT_300to500_2018.txt"
+    ],
+    "TT_2018": [
+        "TT_hadr_2018.txt",
+        "TT_semilep_2018.txt",
+        "TT_Mtt1000toInf_2018.txt",
+        "TT_Mtt700to1000_2018.txt"
+    ],
+    "ZJetsToNuNu_2018": [
+        "ZJetsToNuNu_HT200to400_2018.txt",
+        "ZJetsToNuNu_HT400to600_2018.txt",
+        "ZJetsToNuNu_HT600to800_2018.txt",
+        "ZJetsToNuNu_HT800to1200_2018.txt",
+        "ZJetsToNuNu_HT1200to2500_2018.txt",
+        "ZJetsToNuNu_HT2500toInf_2018.txt"
+    ],
+    "Tprime": [
+        "TprimeToTZ_1800_2018.txt",
+        "TprimeToTZ_1000_2018.txt",
+        "TprimeToTZ_700_2018.txt"
+    ]
 }
