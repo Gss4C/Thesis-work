@@ -1,0 +1,15 @@
+Proxy_filename          = x509up
+Proxy_path              = /afs/cern.ch/user/j/jbonetti/private/$(Proxy_filename)
+universe                = vanilla
+x509userproxy           = $(Proxy_path)
+use_x509userproxy       = true
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+transfer_input_files    = $(Proxy_path)
++JobFlavour             = "tomorrow"
+executable              = runner.sh
+arguments               = TP_700
+output                  = condor/output/histo1TP_700.out
+error                   = condor/error/histo1TP_700.err
+log                     = condor/log/histo1TP_700.log
+queue

@@ -41,7 +41,7 @@ class preskim_goodtag:
         electron = Collection(event, "Electron")
         muons    = Collection(event, "Muon")
 
-        ########################
+        ######################## deep
         #    List filtering    #
         ########################
         goodJets_idx    = list(filter(lambda idx: 
@@ -388,4 +388,4 @@ class veto_skimmer:
         
         delta_list = self.deltaphis(jets, MET)
         passing_veto = self.global_veto(MET, delta_list, electrons, muons)
-        return passing_veto
+        return passing_veto 

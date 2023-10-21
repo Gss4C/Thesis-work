@@ -1,0 +1,90 @@
+{
+    "info":{
+        "clusters": ["QCD_2018","TT_2018","ZJetsToNuNu_2018","Tprime"],
+        "background": ["QCD_2018","TT_2018","ZJetsToNuNu_2018"],
+        "signals": ["Tprime"],
+        "type": ["TopHigh_fwd", "TopHigh", "TopLow_fwd", "TopLow"]
+    },
+
+    "Tprime": {
+        "dataset_list": [
+            "TprimeToTZ_1800_2018",
+            "TprimeToTZ_1000_2018",
+            "TprimeToTZ_700_2018"
+        ],
+        "TprimeToTZ_1800_2018": {
+            "TopHigh_fwd": 769,
+            "TopHigh": 39345,
+            "TopLow_fwd": 36578,
+            "TopLow": 3536,
+            "weight": 3523432
+        },
+        "TprimeToTZ_1000_2018": {
+            "TopHigh_fwd": 783,
+            "TopHigh": 38659,
+            "TopLow_fwd": 37413,
+            "TopLow": 2029
+        },
+        "TprimeToTZ_700_2018": {
+            "TopHigh_fwd": 745,
+            "TopHigh": 31381,
+            "TopLow_fwd": 30602,
+            "TopLow": 1524
+        }
+    },
+
+    "QCD_2018": {
+        "dataset_list":[
+            "QCDHT_2000toInf_2018",
+            "QCDHT_1500to2000_2018",
+            "QCDHT_1000to1500_2018",
+            "QCDHT_700to1000_2018",
+            "QCDHT_500to700_2018",
+            "QCDHT_300to500_2018"
+        ],
+        "QCDHT_2000toInf_2018": {
+            "TopHigh_fwd": 11,
+            "TopHigh": 2484,
+            "TopLow_fwd": 2339,
+            "TopLow": 156
+        },
+        "QCDHT_1500to2000_2018": {
+            "TopHigh_fwd": 17,
+            "TopHigh": 2242,
+            "TopLow_fwd": 2079,
+            "TopLow": 180
+        },
+        "QCDHT_1000to1500_2018": {
+            "TopHigh_fwd": 8,
+            "TopHigh": 1100,
+            "TopLow_fwd": 970,
+            "TopLow": 138
+        },
+        "QCDHT_700to1000_2018": {
+            "TopHigh_fwd": 10,
+            "TopHigh": 698,
+            "TopLow_fwd": 589,
+            "TopLow": 119
+        },
+        "QCDHT_500to700_2018": {
+            "TopHigh_fwd": 0,
+            "TopHigh": 122,
+            "TopLow_fwd": 85,
+            "TopLow": 37
+        },
+        "QCDHT_300to500_2018": {
+            "TopHigh_fwd": 0,
+            "TopHigh": 7,
+            "TopLow_fwd": 1,
+            "TopLow": 6
+        }
+    },
+
+    "ZJetsToNuNu_2018":{
+
+    },
+
+    "TT_2018":{
+
+    }
+}

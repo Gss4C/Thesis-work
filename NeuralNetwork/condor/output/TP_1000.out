@@ -1,0 +1,82 @@
+Acquisizione batchfile 0/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Event: 4000
+Event: 5000
+Event: 6000
+Event: 7000
+Event: 8000
+Acquisizione batchfile 1/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Event: 4000
+Acquisizione batchfile 2/12
+Event: 0
+Event: 1000
+Acquisizione batchfile 3/12
+Event: 0
+Acquisizione batchfile 4/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Event: 4000
+Event: 5000
+Event: 6000
+Acquisizione batchfile 5/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Event: 4000
+Event: 5000
+Event: 6000
+Acquisizione batchfile 6/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Acquisizione batchfile 7/12
+Event: 0
+Event: 1000
+Event: 2000
+Event: 3000
+Event: 4000
+Acquisizione batchfile 8/12
+Event: 0
+Event: 1000
+Acquisizione batchfile 9/12
+Event: 0
+Event: 1000
+Acquisizione batchfile 10/12
+Event: 0
+Acquisizione batchfile 11/12
+Event: 0
+Processo completo.
+Print test...
+Caso full:
+(39156, 11)
+(39156, 10)
+(39156, 6)
+(39156, 12)
+(39156, 1)
+()
+400000.0
+Caso Forward:
+(21535, 11)
+(21535, 10)
+(21535, 6)
+(21535, 12)
+(21535, 1)
+()
+Caso Non Forward:
+(17622, 11)
+(17622, 10)
+(17622, 6)
+(17622, 12)
+(17622, 1)
+()

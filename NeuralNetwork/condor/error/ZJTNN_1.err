@@ -1,0 +1,8 @@
+Error in <TNetXNGFile::Open>: [ERROR] Server responded with an error: [3011] No servers are available to read the file.
+
+Traceback (most recent call last):
+  File "/afs/cern.ch/user/j/jbonetti/CMSSW_12_4_7/src/PhysicsTools/NanoAODTools/python/postprocessing/Thesis/NeuralNetwork/data_making.py", line 27, in <module>
+    rfile = ROOT.TFile.Open(batch_file)
+  File "/cvmfs/cms.cern.ch/slc7_amd64_gcc10/lcg/root/6.24.07-bf41b0420bc269850b74e23486e2953a/lib/ROOT/pythonization/_tfile.py", line 67, in _TFileOpen
+    raise OSError('Failed to open file {}'.format(str(args[0])))
+OSError: Failed to open file root://cms-xrd-global.cern.ch//store/user/jbonetti/DM_Run3_v0/ZJetsToNuNu_HT-200To400_13TeV-madgraph/ZJetsToNuNu_HT200to400_2018/230630_141313/0000/tree_hadd_2.root

@@ -1,0 +1,220 @@
+import ROOT
+import json
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+from coffea.nanoevents import NanoEventsFactory, NanoAODSchema
+import awkward as ak
+import copy
+
+###################
+#    FUNCTIONS    #
+###################
+def json_reader(nome_file):
+    with open(nome_file, "r") as file:
+        contenuto = file.read()
+        dizionario = json.loads(contenuto)
+        return dizionario
+
+def read_and_list(path_to_txtfile): 
+    '''
+    Input to a txt file containing a column and output a strings list \n
+    Python3 necessary
+    '''
+    lista_file = []
+    with open(path_to_txtfile, "r") as file:
+        for riga in file:
+            riga = riga.strip()
+            lista_file.append(riga)
+        return lista_file
+
+def data_storing(json_file, efficiency, verbose = False):
+    data_storage = {} 
+    data_names = []
+    print("Lettura e storing dei dati...")
+    for cluster in json_file["meta_info"]["cluster_names"]:
+        print("\n\nCluster " + cluster )
+        for index in range(len(json_file[cluster])):
+            
+            root_file_pathname = json_file["meta_info"]["eos_path"] + 'threshold_outputs/' + str(efficiency) + '/'+ json_file[cluster][index].replace(".txt", ".root")
+            
+            root_file = ROOT.TFile(root_file_pathname, "Open")
+            data_name = json_file[cluster][index].replace(".txt", "")
+            data_names.append(data_name)
+            if data_name not in data_storage:
+                data_storage[data_name] = {}  # Inizializza il dizionario, altrimenti rompe il cazzo
+
+            h_LF = root_file.Get("Lowpt_False"  + data_name)
+            h_HF = root_file.Get("Highpt_False" + data_name)
+
+            low_th  = h_LF.GetBinContent(0)
+            high_th = h_HF.GetBinContent(0)
+
+            data_storage[data_name]["Low_Threshold"]  = low_th
+            data_storage[data_name]["High_Threshold"] = high_th
+
+            if verbose:
+                print("\nDataset: " + data_name)
+                print("Low Pt Threshold: " + str(data_storage[data_name]["Low_Threshold"]))
+                print("High Pt Threshold:" + str(data_storage[data_name]["High_Threshold"]))
+    return data_storage, data_names
+
+def saveas_json(dict, filename):
+    with open(filename, 'w') as file:
+        json.dump(dict, file)
+
+#################
+#    Classes    #
+#################
+class threshold_evalutator:
+    '''
+    Classe che dati gli istogrammi (con qualsiasi variabile lungo x) dove ci sono 
+    gli eventi True (o di tipo A) e gli eventi False (o di tibo B), permette di 
+    gestire tutte le operazioni riguardanti la thrashold per la selezione del segnale
+    '''
+    def __init__(self, histo_true, histo_false, N_bins = 250):
+        self.histo_true  = histo_true
+        self.histo_false = histo_false
+        self.N_bins = N_bins
+
+    def threshold_F_seeker(self, bg_efficiency = 0.1):
+        full_integral = float(self.histo_false.Integral())
+        print("full integral: " + str(full_integral))
+        
+        epsilon = 0.001
+        th_bin  = 0
+
+        if full_integral < 1e-10: #se l'histo è vuoto deve fermarsi
+            print("Warning: Full integral is very close to zero. Cannot evalutate this threshold")
+            return th_bin, epsilon
+        else:        
+            bin_idx = 0
+            while epsilon < bg_efficiency and epsilon > 0:
+                bin_idx += 1
+                right_integral = self.histo_false.Integral(self.N_bins - bin_idx, self.N_bins)
+                
+                if right_integral > 1e-10 and full_integral > 1e-10:
+                    if full_integral != 0:
+                        epsilon = right_integral/full_integral
+                    else:
+                        epsilon = 0
+
+            th_bin = self.N_bins - bin_idx
+            if epsilon == 0:
+                print('^^^    impossible to find threshold    ^^^')
+                #print("FAIL")
+            else:
+                print("^^^    Trovata la TH al bin: " + str(th_bin) + "   ^^^")
+                #print("SUCCESS")
+            return th_bin, epsilon
+
+    def threshold_binTodec(self, th_bin):
+        unit = 1/(self.N_bins)
+        th_double = th_bin * unit
+        return th_double
+
+
+
+class thrashold_histomaker:
+    '''
+    Classe per la creazione ed il salvataggio degli istogrammi necessari alla valutazione della threshold
+    '''
+    def __init__(self, json_name = "crabout_files.json"):
+        self.json_name       = json_name
+
+    def json_reader(self, nome_file):
+        with open(nome_file, "r") as file:
+            contenuto = file.read()
+            dizionario = json.loads(contenuto)
+            return dizionario
+        
+    def read_and_list(self, path_to_txtfile): 
+        '''
+        Input to a txt file containing a column and output a strings list \n
+        Python3 necessary
+        '''
+        lista_file = []
+        with open(path_to_txtfile, "r") as file:
+            for riga in file:
+                riga = riga.strip()
+                lista_file.append(riga)
+            return lista_file
+        
+    def crea_4histo(self, 
+                    batch_files_list, 
+                    h_lowF, 
+                    h_lowT, 
+                    h_highF, 
+                    h_highT, 
+                    dataset_name,
+                    evalutate_threshold = True,
+                    bg_efficiency       = 10,
+                    N_bins              = 250,
+                    pt_bond             = False):
+        for i in range(len(batch_files_list)):
+            if i%10 == 0:
+                completion_percentage = (i / len(batch_files_list)) * 100
+                print(f"Percentuale di completamento dataset: {completion_percentage:.2f}%")
+            
+            tree = NanoEventsFactory.from_root(batch_files_list[i], schemaclass=NanoAODSchema.v6).events()
+            #print(len(tree))
+            ########################
+            #    Histo Creation    #
+            ########################
+            if pt_bond:
+                if ak.any(tree.TopLowPt.scoreDNN): #lo * serve per fare and senza che awkward si rompa
+                    scores_lowF  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==0) * (tree.TopLowPt.pt < 300)].scoreDNN)
+                    scores_lowT  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==1) * (tree.TopLowPt.pt < 300)].scoreDNN)
+                else:
+                    scores_lowF  = []
+                    scores_lowT  = []
+                if ak.any(tree.TopHighPt.score2):
+                    scores_highF = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==0) * (tree.TopHighPt.pt > 300)].score2)
+                    scores_highT = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==1) * (tree.TopHighPt.pt > 300)].score2)
+                else:
+                    scores_highF  = []
+                    scores_highT  = []
+            else:
+                if ak.any(tree.TopLowPt.scoreDNN):
+                    scores_lowF  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==0)].scoreDNN)
+                    scores_lowT  = ak.flatten(tree.TopLowPt[(tree.TopLowPt.truth==1)].scoreDNN)
+                else:
+                    scores_lowF  = []
+                    scores_lowT  = []
+                if ak.any(tree.TopHighPt.score2):
+                    scores_highF = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==0)].score2)
+                    scores_highT = ak.flatten(tree.TopHighPt[(tree.TopHighPt.truth==1)].score2)
+                else:
+                    scores_highF  = []
+                    scores_highT  = []
+
+            for score_lf in scores_lowF:
+                h_lowF.Fill(score_lf)
+            for score_lt in scores_lowT:
+                h_lowT.Fill(score_lt)
+            for score_hf in scores_highF:
+                h_highF.Fill(score_hf)
+            for score_ht in scores_highT:
+                h_highT.Fill(score_ht)
+
+        ########################
+        #    Calcolo Soglie    #    
+        ########################
+        print('Inizio calcolo soglie per il dataset...')
+        if evalutate_threshold:
+            LowEval = threshold_evalutator(N_bins      = N_bins,
+                                           histo_true  = h_lowT,
+                                           histo_false = h_lowF)
+            HighEval = threshold_evalutator(N_bins      = N_bins, 
+                                            histo_true  = h_highT, 
+                                            histo_false = h_highF)
+
+            LowTh_Bin,  LowEpsilon  = LowEval.threshold_F_seeker(bg_efficiency = bg_efficiency)
+            LowTh = LowEval.threshold_binTodec(LowTh_Bin)
+            print("^^^    Soglia in decimale di Low: " + str(LowTh) + "   ^^^")
+            h_lowF.SetBinContent(0,LowTh)
+            h_lowT.SetBinContent(0,LowTh)
+
+            HighTh_Bin, HighEpsilon = HighEval.threshold_F_seeker(bg_efficiency = bg_efficiency)
+            HighTh = HighEval.threshold_binTodec(HighTh_Bin)
+            print("^^^    Soglia in decimale di High: " + str(HighTh) + "   ^^^")
+            h_highF.SetBinContent(0,HighTh)
+            h_highT.SetBinContent(0,HighTh)

@@ -78,7 +78,7 @@ class efficiency_maker:
         histos = histo_file.plots.Get("h_genweight")
         weight = histos.GetBinContent(1)
         small_tree = skimmed_file.Events
-
+        
         for event in range(small_tree.GetEntries()):
             small_tree.GetEntry(event)
             jets   = Collection(small_tree, "Jet")
@@ -269,6 +269,7 @@ class efficiency_plot:
         plot = sns.heatmap(df, cmap= 'YlGnBu', annot=True) #colors[boost_type]
         plt.savefig(self.mini_sample.name.replace(".root","") + "_" +boost_type +".png") 
         plt.close()
+        
     def efficiency_plotter(self, significance = 1):
         skim_name = self.skim_name()
         hist_name = self.hist_name()

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/afs/cern.ch/user/j/jbonetti/CMSSW_12_4_7/src/PhysicsTools/NanoAODTools/python/postprocessing/Thesis/final_eval/stk_histo.py", line 18, in <module>
+    batch_files_list = read_and_list(crabout["meta_info"]["parent_path"] + single_dataset[index] + ".txt")
+NameError: name 'index' is not defined

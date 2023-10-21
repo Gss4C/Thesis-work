@@ -1,0 +1,117 @@
+{
+    "meta_info": {
+        "parent_path": "../../../../../../../src/PhysicsTools/NanoAODTools/crab/macros/files/",
+        
+        "eos_plot_path":          "/eos/user/j/jbonetti/outputs_folder/efficiency_outputs/plot/",
+        "eos_count_path":         "/eos/user/j/jbonetti/outputs_folder/efficiency_outputs/countings/",
+        "eos_sigp_path":          "/eos/user/j/jbonetti/outputs_folder/significances_output/",
+        "eos_sigp_path_json":     "/eos/user/j/jbonetti/outputs_folder/significances_output/jsons/",
+        "eos_histo":              "/eos/user/j/jbonetti/outputs_folder/histograms_outputs/",
+        "eos_nn":                 "/eos/user/j/jbonetti/NN/",
+        "eos_dnn_models":         "/eos/user/j/jbonetti/NN/DNNmodel",
+
+        "eos_plot_path_fwdj":     "/eos/user/j/jbonetti/outputs_folder/correzione_jetfwd/efficiency_outputs/plot/",
+        "eos_count_path_fwdj":    "/eos/user/j/jbonetti/outputs_folder/correzione_jetfwd/efficiency_outputs/countings/",
+        "eos_sigp_path_json_fwdj":"/eos/user/j/jbonetti/outputs_folder/correzione_jetfwd/significances_output/jsons/",
+        "eos_sigp_path_fwdj":     "/eos/user/j/jbonetti/outputs_folder/correzione_jetfwd/significances_output/",
+        "eos_histo_fwdj":         "/eos/user/j/jbonetti/outputs_folder/correzione_jetfwd/histograms_outputs/",
+        
+        "cluster_names": ["QCD_2018","TT_2018","ZJetsToNuNu_2018","Tprime"],
+        "cluster_has_trues": ["TT_2018", "Tprime"],
+        "cluster_signal": ["Tprime"],
+        "cluster_background": ["QCD_2018","TT_2018","ZJetsToNuNu_2018"]
+    },
+
+    "QCD_2018": [
+        "QCDHT_2000toInf_2018.txt",
+        "QCDHT_1500to2000_2018.txt",
+        "QCDHT_1000to1500_2018.txt",
+        "QCDHT_700to1000_2018.txt",
+        "QCDHT_500to700_2018.txt",
+        "QCDHT_300to500_2018.txt"
+    ],
+    "TT_2018": [
+        "TT_Mtt1000toInf_2018.txt",
+        "TT_Mtt700to1000_2018.txt",
+        "TT_hadr_2018.txt",
+        "TT_semilep_2018.txt"
+    ],
+    "ZJetsToNuNu_2018": [
+        "ZJetsToNuNu_HT100to200_2018.txt",
+        "ZJetsToNuNu_HT200to400_2018.txt",
+        "ZJetsToNuNu_HT400to600_2018.txt",
+        "ZJetsToNuNu_HT600to800_2018.txt",
+        "ZJetsToNuNu_HT800to1200_2018.txt",
+        "ZJetsToNuNu_HT1200to2500_2018.txt",
+        "ZJetsToNuNu_HT2500toInf_2018.txt"
+    ],
+    "Tprime": [
+        "TprimeToTZ_1800_2018.txt",
+        "TprimeToTZ_1000_2018.txt",
+        "TprimeToTZ_700_2018.txt"
+    ],
+
+    "QCD_1": [
+        "QCDHT_2000toInf_2018.txt"
+    ],
+    "QCD_2": [
+        "QCDHT_1500to2000_2018.txt"
+    ],
+    "QCD_3": [
+        "QCDHT_1000to1500_2018.txt"
+    ],
+    "QCD_4": [
+        "QCDHT_700to1000_2018.txt"
+    ],
+    "QCD_5": [
+        "QCDHT_500to700_2018.txt"
+    ],
+    "QCD_6": [
+        "QCDHT_300to500_2018.txt"
+    ],
+
+    "ZJTNN_1": [
+        "ZJetsToNuNu_HT200to400_2018.txt"
+    ],
+    "ZJTNN_2": [
+        "ZJetsToNuNu_HT400to600_2018.txt"
+    ],
+    "ZJTNN_3": [
+        "ZJetsToNuNu_HT600to800_2018.txt"
+    ],
+    "ZJTNN_4": [
+        "ZJetsToNuNu_HT800to1200_2018.txt"
+    ],
+    "ZJTNN_5": [
+        "ZJetsToNuNu_HT1200to2500_2018.txt"
+    ],
+    "ZJTNN_6": [
+        "ZJetsToNuNu_HT2500toInf_2018.txt"
+    ],
+    "ZJTNN_7": [
+        "ZJetsToNuNu_HT100to200_2018.txt"
+    ],
+
+    "TT_1": [
+        "TT_Mtt1000toInf_2018.txt"
+    ],
+    "TT_2": [
+        "TT_Mtt700to1000_2018.txt"
+    ],
+    "TT_3": [
+        "TT_hadr_2018.txt"
+    ],
+    "TT_4": [
+        "TT_semilep_2018.txt"
+    ],
+    
+    "TP_1000": [
+        "TprimeToTZ_1000_2018.txt"
+    ],
+    "TP_700": [
+        "TprimeToTZ_700_2018.txt"
+    ],
+    "TP_1800": [
+        "TprimeToTZ_1800_2018.txt"
+    ]
+}

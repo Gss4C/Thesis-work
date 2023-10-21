@@ -26,6 +26,41 @@ def read_and_list(path_to_txtfile):
             lista_file.append(riga)
         return lista_file
 
+def data_storing(json_file, efficiency, verbose = False):
+    data_storage = {} 
+    data_names = []
+    print("Lettura e storing dei dati...")
+    for cluster in json_file["meta_info"]["cluster_names"]:
+        print("\n\nCluster " + cluster )
+        for index in range(len(json_file[cluster])):
+            
+            root_file_pathname = json_file["meta_info"]["eos_path"] + 'threshold_outputs/' + str(efficiency) + '/'+ json_file[cluster][index].replace(".txt", ".root")
+            
+            root_file = ROOT.TFile(root_file_pathname, "Open")
+            data_name = json_file[cluster][index].replace(".txt", "")
+            data_names.append(data_name)
+            if data_name not in data_storage:
+                data_storage[data_name] = {}  # Inizializza il dizionario, altrimenti rompe il cazzo
+
+            h_LF = root_file.Get("Lowpt_False"  + data_name)
+            h_HF = root_file.Get("Highpt_False" + data_name)
+
+            low_th  = h_LF.GetBinContent(0)
+            high_th = h_HF.GetBinContent(0)
+
+            data_storage[data_name]["Low_Threshold"]  = low_th
+            data_storage[data_name]["High_Threshold"] = high_th
+
+            if verbose:
+                print("\nDataset: " + data_name)
+                print("Low Pt Threshold: " + str(data_storage[data_name]["Low_Threshold"]))
+                print("High Pt Threshold:" + str(data_storage[data_name]["High_Threshold"]))
+    return data_storage, data_names
+
+def saveas_json(dict, filename):
+    with open(filename, 'w') as file:
+        json.dump(dict, file)
+
 #################
 #    Classes    #
 #################
@@ -103,14 +138,15 @@ class thrashold_histomaker:
                 lista_file.append(riga)
             return lista_file
         
-    def crea_4histo(self, batch_files_list, 
+    def crea_4histo(self, 
+                    batch_files_list, 
                     h_lowF, 
                     h_lowT, 
                     h_highF, 
                     h_highT, 
                     dataset_name,
                     evalutate_threshold = True,
-                    bg_efficiency       = 10,
+                    bg_efficiency       = 0.1,
                     N_bins              = 250,
                     pt_bond             = False):
         for i in range(len(batch_files_list)):

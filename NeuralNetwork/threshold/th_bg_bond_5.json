@@ -1,0 +1,105 @@
+{
+    "QCDHT_2000toInf_2018": {
+        "Low_Threshold": 0.14800000190734863,
+        "High_Threshold": 0.004000000189989805
+    },
+    "QCDHT_1500to2000_2018": {
+        "Low_Threshold": 0.12399999797344208,
+        "High_Threshold": 0.00800000037997961
+    },
+    "QCDHT_1000to1500_2018": {
+        "Low_Threshold": 0.11999999731779099,
+        "High_Threshold": 0.03999999910593033
+    },
+    "QCDHT_700to1000_2018": {
+        "Low_Threshold": 0.18000000715255737,
+        "High_Threshold": 0.11999999731779099
+    },
+    "QCDHT_500to700_2018": {
+        "Low_Threshold": 0.19200000166893005,
+        "High_Threshold": 0.1080000028014183
+    },
+    "QCDHT_300to500_2018": {
+        "Low_Threshold": 0.00800000037997961,
+        "High_Threshold": 0
+    },
+    "TT_hadr_2018": {
+        "Low_Threshold": 0.31200000643730164,
+        "High_Threshold": 0.052000001072883606
+    },
+    "TT_semilep_2018": {
+        "Low_Threshold": 0.46799999475479126,
+        "High_Threshold": 0.2280000001192093
+    },
+    "TT_Mtt1000toInf_2018": {
+        "Low_Threshold": 0.2680000066757202,
+        "High_Threshold": 0.15199999511241913
+    },
+    "TT_Mtt700to1000_2018": {
+        "Low_Threshold": 0.3959999978542328,
+        "High_Threshold": 0.2759999930858612
+    },
+    "ZJetsToNuNu_HT200to400_2018": {
+        "Low_Threshold": 0.25600001215934753,
+        "High_Threshold": 0.2720000147819519
+    },
+    "ZJetsToNuNu_HT400to600_2018": {
+        "Low_Threshold": 0.18799999356269836,
+        "High_Threshold": 0.15199999511241913
+    },
+    "ZJetsToNuNu_HT600to800_2018": {
+        "Low_Threshold": 0.164000004529953,
+        "High_Threshold": 0.06800000369548798
+    },
+    "ZJetsToNuNu_HT800to1200_2018": {
+        "Low_Threshold": 0.14000000059604645,
+        "High_Threshold": 0.03200000151991844
+    },
+    "ZJetsToNuNu_HT1200to2500_2018": {
+        "Low_Threshold": 0.13600000739097595,
+        "High_Threshold": 0.00800000037997961
+    },
+    "ZJetsToNuNu_HT2500toInf_2018": {
+        "Low_Threshold": 0.13600000739097595,
+        "High_Threshold": 0.004000000189989805
+    },
+    "TprimeToTZ_1800_2018": {
+        "Low_Threshold": 0.18799999356269836,
+        "High_Threshold": 0.04800000041723251
+    },
+    "TprimeToTZ_1000_2018": {
+        "Low_Threshold": 0.23199999332427979,
+        "High_Threshold": 0.164000004529953
+    },
+    "TprimeToTZ_700_2018": {
+        "Low_Threshold": 0.3160000145435333,
+        "High_Threshold": 0.25200000405311584
+    },
+    "meta_info": {
+        "data_names": [
+            "QCDHT_2000toInf_2018",
+            "QCDHT_1500to2000_2018",
+            "QCDHT_1000to1500_2018",
+            "QCDHT_700to1000_2018",
+            "QCDHT_500to700_2018",
+            "QCDHT_300to500_2018",
+            "TT_hadr_2018",
+            "TT_semilep_2018",
+            "TT_Mtt1000toInf_2018",
+            "TT_Mtt700to1000_2018",
+            "ZJetsToNuNu_HT200to400_2018",
+            "ZJetsToNuNu_HT400to600_2018",
+            "ZJetsToNuNu_HT600to800_2018",
+            "ZJetsToNuNu_HT800to1200_2018",
+            "ZJetsToNuNu_HT1200to2500_2018",
+            "ZJetsToNuNu_HT2500toInf_2018",
+            "TprimeToTZ_1800_2018",
+            "TprimeToTZ_1000_2018",
+            "TprimeToTZ_700_2018"
+        ],
+        "lowhigh": [
+            "Low_Threshold",
+            "High_Threshold"
+        ]
+    }
+}
