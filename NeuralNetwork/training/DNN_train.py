@@ -21,12 +21,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, roc_auc_score, accuracy_score, f1_score, confusion_matrix, auc, roc_curve
 from tensorflow.keras.layers import Dense, Dropout, LSTM, concatenate, GRU,Masking, Activation, TimeDistributed, Conv1D, BatchNormalization, MaxPooling1D, Reshape, Flatten
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.utils import plot_model, to_categorical
-from tensorflow.keras.backend import sigmoid
-from tensorflow.keras import regularizers
-from keras.utils.generic_utils import get_custom_objects
+from tensorflow.keras.wrappers.scikit_learn import KerasClassifier #Non usata
+from tensorflow.keras.callbacks import EarlyStopping #Non usata
+from tensorflow.keras.utils import plot_model, to_categorical #Non usata
+from tensorflow.keras.backend import sigmoid #Non usata
+from tensorflow.keras import regularizers #Non usata
+from keras.utils.generic_utils import get_custom_objects #Non usata
 from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 from PhysicsTools.NanoAODTools.postprocessing.Thesis.NeuralNetwork.training.dnn_utils import *
 
